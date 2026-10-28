@@ -2,7 +2,10 @@
 
 Vidéos TikTok de @htm.invest et modèles utilisés pour les fabriquer.
 
-- `videos/` : vidéos finales (MP4 9:16, 60 i/s), nommées `AAAA-MM-JJ_sujet.mp4`. Metricool les récupère par leur lien `raw.githubusercontent.com`.
+- `videos/` : vidéos parrainage (@htm.invest, publiées automatiquement via Metricool)
+- `videos-hacoo/` : vidéos Hacoo (compte affiliation, envoyées à Badr chaque jour, publiées à la main)
+- `STYLE.md` : règles de style v2 (accroche, rythme, sous-titres, zones de sécurité) à appliquer à toutes les vidéos
+- Format des vidéos finales (MP4 9:16, 60 i/s), nommées `AAAA-MM-JJ_sujet.mp4`. Metricool les récupère par leur lien `raw.githubusercontent.com`.
 - `modeles/` : modèles motion design (pages HTML animées image par image), script de rendu et scripts de bruitages.
 
 ## Fabrication d'une vidéo
