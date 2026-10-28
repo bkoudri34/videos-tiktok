@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Bourso v2</title>
+<style>
+:root{--bg:#141a2b;--bg2:#1b2338;--pink:#ff3f8e;--mint:#3ee0a1;--cream:#f4efe6}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:
+  radial-gradient(120% 70% at 30% 20%,#1d2640 0%,rgba(20,26,43,0) 60%),
+  linear-gradient(180deg,#151b2d 0%,#121726 100%)}
+.abs{position:absolute}
+/* top pill */
+#brand{left:100px;top:240px;font:600 34px Inter;color:#cfd5e6;letter-spacing:.5px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);padding:12px 24px;border-radius:40px;white-space:nowrap}
+#total{left:100px;top:322px;font:800 40px Inter;color:#fff;white-space:nowrap}
+#total b{color:var(--mint);font-weight:900}
+/* hook */
+#hook{left:100px;width:820px;top:470px}
+#hook .l1{font:800 70px Inter;line-height:1.08;color:var(--cream);letter-spacing:-1px}
+#hook .big{font:900 300px 'Inter Display',Inter;letter-spacing:-12px;line-height:1;color:var(--pink);margin-top:10px;white-space:nowrap}
+#hook .l2{font:700 56px Inter;color:#cfd5e6;margin-top:12px}
+/* cards */
+.card{left:100px;width:820px;height:178px;background:#f7f4ee;border-radius:34px;color:#141a2b;
+ box-shadow:0 18px 40px rgba(0,0,0,.35);display:flex;align-items:center;padding:0 34px;gap:26px}
+.ic{width:104px;height:104px;border-radius:26px;background:#141a2b;color:var(--mint);font:900 54px Inter;display:flex;align-items:center;justify-content:center;flex:none}
+.tx{flex:1;min-width:0}
+.tx .t{font:800 42px Inter;letter-spacing:-.5px;white-space:nowrap}
+.tx .s{font:500 30px Inter;color:#5b6274;margin-top:6px;white-space:nowrap}
+.amt{font:900 64px Inter;color:#0e9e68;white-space:nowrap;flex:none;letter-spacing:-1px}
+/* finale */
+#mega{left:0;width:990px;top:520px;text-align:center}
+#mega .n{font:900 330px 'Inter Display',Inter;letter-spacing:-14px;color:var(--pink);line-height:1;white-space:nowrap}
+#mega .c{font:700 50px Inter;color:#cfd5e6;margin-top:6px}
+#cta{left:100px;width:820px;top:470px}
+#cta .a{font:800 74px Inter;line-height:1.1;color:var(--cream);letter-spacing:-1px}
+#cta .k{display:inline-block;margin-top:26px;background:var(--pink);color:#fff;font:900 80px Inter;padding:14px 30px;border-radius:24px;letter-spacing:1px;white-space:nowrap}
+#cta .p{font:800 74px Inter;color:var(--cream);margin-top:18px}
+#cta .d{font:600 40px Inter;color:#cfd5e6;margin-top:40px;line-height:1.3}
+#cond{left:100px;width:820px;top:1440px;font:600 32px Inter;color:#aab2c6;white-space:nowrap}
+/* subtitles */
+#sub{left:60px;width:870px;top:1300px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px}
+#sub .hl{color:#ffe14d}
+#grain{position:absolute;inset:-200px;opacity:.09;mix-blend-mode:overlay;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.45) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="brand" class="abs">BoursoBank (ex-Boursorama)</div>
+  <div id="total" class="abs">Total : <b id="tv">0 €</b></div>
+  <div id="hook" class="abs"><div class="l1">Une banque en ligne peut te verser jusqu'à</div><div class="big">180 €</div><div class="l2">pour ouvrir un compte.</div></div>
+  <div id="c1" class="abs card"><div class="ic">€</div><div class="tx"><div class="t">Prime d'ouverture</div><div class="s">Compte ouvert · auto</div></div><div class="amt">+20 €</div></div>
+  <div id="c2" class="abs card"><div class="ic">€</div><div class="tx"><div class="t">1er versement</div><div class="s">dès 300 € sous 30 j</div></div><div class="amt">+40 €</div></div>
+  <div id="c3" class="abs card"><div class="ic">€</div><div class="tx"><div class="t">Carte utilisée</div><div class="s">1 achat / mois · 3 mois</div></div><div class="amt">+40 €</div></div>
+  <div id="c4" class="abs card"><div class="ic">€</div><div class="tx"><div class="t">EasyMove</div><div class="s">transfert de ta banque</div></div><div class="amt">+80 €</div></div>
+  <div id="mega" class="abs"><div class="n">180 €</div><div class="c">jusqu'à, en cumulé</div></div>
+  <div id="cta" class="abs"><div class="a">Envoie-moi</div><div class="k">« PARRAINAGE »</div><div class="p">en privé 📩</div><div class="d">20 € + 40 € + 40 € + 80 €<br>= jusqu'à 180 €</div></div>
+  <div id="cond" class="abs">Offre soumise aux conditions en vigueur</div>
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// scene starts (voice offsets)
+const S=[0.15,3.85,6.35,8.55,11.2,14.7], END=18.6;
+// subtitle groups: [time offset in line (s), text, highlight]
+const W=[
+ [0,0.00,"BoursoBank peut"],[0,1.00,"te verser"],[0,1.40,"jusqu'à <span class=hl>180 €</span>"],[0,2.90,"Regarde."],
+ [1,0.00,"<span class=hl>20 €</span>"],[1,0.80,"rien que pour"],[1,1.40,"ouvrir ton compte."],
+ [2,0.00,"Jusqu'à <span class=hl>40 €</span>"],[2,0.90,"sur ton premier"],[2,1.20,"sur ton premier versement."],
+ [3,0.00,"Puis <span class=hl>40 €</span>"],[3,0.70,"avec ta carte,"],[3,1.70,"sur trois mois."],
+ [4,0.00,"Et <span class=hl>80 €</span>"],[4,1.00,"si tu transfères"],[4,1.70,"ta banque"],[4,2.10,"avec EasyMove."],
+ [5,0.00,"Envoie-moi"],[5,0.50,"<span class=hl>PARRAINAGE</span>"],[5,1.10,"en privé,"],[5,1.80,"et enregistre"],[5,2.50,"la vidéo."]
+];
+const LEN=[3.47,2.28,1.99,2.44,3.27,2.93];
+// grain
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=7;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=s%255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function show(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.display=o<=0.001?'none':'block'}
+function showF(el,o,tx,ty,sc){show(el,o,tx,ty,sc);if(o>0.001)el.style.display='flex'}
+function renderAt(t){
+ // handheld camera
+ const hx=Math.sin(t*1.3)*7+Math.sin(t*2.9+1)*4, hy=Math.cos(t*1.1)*6+Math.sin(t*3.3)*3, hr=Math.sin(t*0.9)*0.45;
+ // punch zoom on each cut
+ let pz=0;for(const s of S){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07)}
+ // slow-mo strong moment: 180 reveal around 12.9-14.5
+ const mT=12.95, md=t-mT; let mzoom=0; if(md>0&&md<1.7) mzoom=0.05*Math.sin(cl(md/1.7)*Math.PI);
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mzoom})`;
+ // hook (visible from frame 0)
+ const hookOut=eo((t-3.7)/0.25);
+ show($('hook'),1-hookOut,-hookOut*120,0,1+Math.sin(t*2)*0.006);
+ // cards
+ const cards=['c1','c2','c3','c4'], cin=[S[1]+0.05,S[2]+0.05,S[3]+0.05,S[4]+0.05];
+ const baseY=[470,670,870,1070];
+ const out=eo((t-(mT-0.22))/0.2); // cards leave for finale
+ cards.forEach((id,i)=>{const d=t-cin[i];const a=eb(d/0.4);
+  const o=d<0?0:cl(d/0.15)*(1-out);
+  showF($(id),o,(1-a)*-900,baseY[i]-470+out*-60,1-out*0.05);
+  $(id).style.top='470px';});
+ // total counter
+ const steps=[[0,0],[S[1]+0.35,20],[S[2]+0.35,60],[S[3]+0.35,100],[S[4]+0.45,180]];
+ let v=0;for(let i=1;i<steps.length;i++){const [ts,val]=steps[i];const pv=steps[i-1][1];if(t>=ts)v=val;else if(t>ts-0.3){v=Math.round(pv+(val-pv)*eo((t-(ts-0.3))/0.3));break}else break}
+ $('tv').textContent=v+' €';
+ const tOp=t<S[1]-0.1?0:cl((t-(S[1]-0.1))/0.2)*(1-eo((t-mT)/0.25));
+ show($('total'),tOp,0,0,1+ (t>S[1]&&t<S[4]+1? 0:0));
+ // mega reveal (slow motion moment)
+ const mo=cl(md/0.25)*(1-eo((t-(S[5]-0.05))/0.25));
+ const ms=md<0?1.08:1+0.08*Math.pow(1-cl(md/1.5),2.5);
+ show($('mega'),mo,0,0,ms);
+ if(md>=0&&md<0.12)$('flash').style.opacity=0.35*(1-md/0.12);else $('flash').style.opacity=0;
+ // CTA
+ const cd=t-S[5];
+ show($('cta'),cl(cd/0.15),(1-eb(cd/0.4))*700,0,1);
+ // loop: last 0.5s brings 180 back like the hook
+ const lp=t-(END-0.55);
+ if(lp>0){show($('cta'),1-eo(lp/0.2),0,0,1);show($('mega'),eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));}
+ show($('cond'),cl((cd-0.2)/0.3),0,0,1);
+ // brand pill always (except mega)
+ show($('brand'),1,0,0,1);
+ // subtitles
+ let txt='';let st=-1;
+ for(const [li,off,s] of W){const ts=S[li]+off;if(t>=ts&&t<S[li]+LEN[li]+0.25){txt=s;st=ts}}
+ const sub=$('sub');sub.innerHTML=txt;
+ const sd=t-st; sub.style.transform=`scale(${txt?1+0.12*(1-eo(sd/0.12)):1})`;
+ sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
