@@ -18,6 +18,7 @@ Vidéos TikTok de @htm.invest et modèles utilisés pour les fabriquer.
 
 ## Règles
 
+- Hacoo (règle de Badr du 03/11/2026) : ne JAMAIS publier ni programmer de vidéo Hacoo sur @htm.invest (ni Metricool, ni `videos/`). Dans la rotation de la tâche quotidienne, le sujet « hacoo » est sauté : après « 3-banques » on revient à « boursorama ». Les vidéos Hacoo vont dans `videos-hacoo/` et sont seulement envoyées à Badr (SendUserFile) ; il les publie lui-même.
 - Code Hacoo : toujours `hzklink`, en minuscules, sans espace.
 - Montants des offres bancaires : vérifiés en ligne avant chaque vidéo ; pas de logos de marques ; mention « Offre(s) soumise(s) aux conditions en vigueur ».
 - Pas de vidéos pour des produits contrefaits.
