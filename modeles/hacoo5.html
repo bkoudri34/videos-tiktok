@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo v5</title>
+<style>
+:root{--bg:#e3f5ec;--ink:#141a17;--acc:#6c3cf0;--mute:#5f6e66;--card:#ffffff;--dark:#141a17}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:520px 880px}
+#bgtex{position:absolute;inset:-60px;background:linear-gradient(180deg,#e9f8f0 0%,#d5efe2 100%)}
+.abs{position:absolute}
+#brand{left:96px;top:236px;font:700 34px Inter;color:#fff;background:var(--dark);padding:10px 24px;border-radius:40px;white-space:nowrap}
+/* hook */
+#hook{left:96px;width:830px;top:450px}
+#hook .l1{font:800 96px Inter;line-height:1.04;letter-spacing:-2px}
+#hook .big{font:900 170px 'Inter Display',Inter;letter-spacing:-6px;line-height:1.0;color:#fff;background:var(--acc);display:inline-block;padding:4px 26px 16px;margin-top:20px;border-radius:20px;transform-origin:0 60%;white-space:nowrap}
+#hook .l2{font:800 84px Inter;margin-top:26px;letter-spacing:-2px;line-height:1.08}
+/* cart */
+#cart{left:96px;width:830px;top:420px;background:var(--card);border-radius:40px;padding:30px 38px 30px;box-shadow:0 24px 60px rgba(20,50,35,.16)}
+#cart .h{display:flex;justify-content:space-between;font:800 30px Inter;color:#6f7d75;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.it{display:flex;align-items:center;gap:24px;padding:18px 0;border-top:2px solid #e6efe9}
+.th{width:84px;height:84px;border-radius:20px;flex:none}
+.it .tx{flex:1}
+.it .tt{font:800 42px Inter;letter-spacing:-.5px;white-space:nowrap}
+.it .ss{font:500 28px Inter;color:#6f7d75;margin-top:4px;white-space:nowrap}
+.it .pr{font:800 44px Inter;white-space:nowrap}
+#code{display:flex;gap:16px;margin-top:14px}
+#cfield{flex:1;height:96px;border:4px solid #d7e3dc;border-radius:22px;display:flex;align-items:center;padding:0 26px;font:800 48px 'JetBrains Mono',ui-monospace,monospace;letter-spacing:2px;white-space:nowrap}
+#cfield .ph{color:#a3b1a9;font:600 34px Inter;letter-spacing:0}
+#caret{display:inline-block;width:5px;height:52px;background:var(--acc);margin-left:4px;vertical-align:middle}
+#capply{width:230px;height:96px;border-radius:22px;background:var(--dark);color:#fff;font:800 36px Inter;display:flex;align-items:center;justify-content:center}
+#cok{font:800 34px Inter;color:#0e9f6e;margin-top:14px;height:42px;white-space:nowrap}
+#tot{display:flex;align-items:center;justify-content:space-between;border-top:4px solid var(--dark);padding-top:18px;margin-top:10px}
+#tot .k{font:800 36px Inter;letter-spacing:2px;text-transform:uppercase}
+#tot .old{font:700 40px Inter;color:#8e9a93;text-decoration:line-through;margin-right:44px;white-space:nowrap}
+#tot .v{font:900 76px Inter;letter-spacing:-2px;white-space:nowrap;transform-origin:100% 60%;display:inline-block}
+#stamp{left:700px;top:255px;width:226px;height:226px;border-radius:50%;background:var(--acc);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ font:900 74px Inter;letter-spacing:-3px;box-shadow:0 20px 50px rgba(108,60,240,.35);white-space:nowrap}
+#stamp small{font:800 25px Inter;letter-spacing:1px}
+/* cta */
+#cta{left:96px;width:830px;top:450px}
+#cta .a{font:800 92px Inter;line-height:1.05;letter-spacing:-2px;white-space:nowrap}
+#cta .a b{color:var(--acc)}
+#cta .w{font:800 60px Inter;margin-top:20px}
+#cta .k{display:inline-block;margin-top:16px;background:var(--dark);color:#fff;font:900 110px 'JetBrains Mono',ui-monospace,monospace;padding:10px 34px 18px;border-radius:24px;letter-spacing:2px;white-space:nowrap}
+#cta .d{font:700 50px Inter;margin-top:36px;line-height:1.2}
+#cta .d span{background:#fff;padding:4px 16px;border-radius:12px}
+#cond{left:96px;width:830px;top:1480px;font:600 32px Inter;color:var(--mute);white-space:nowrap;line-height:1.35}
+/* subtitles */
+#sub{left:60px;width:870px;top:1275px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px;word-spacing:16px}
+#sub .hl{color:#c3adff}
+#grain{position:absolute;inset:-200px;opacity:.06;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(20,50,35,.16) 100%)}
+#flash{position:absolute;inset:0;background:var(--acc);opacity:0}
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="brand" class="abs">Code promo Hacoo</div>
+  <div id="hook" class="abs"><div class="l1">Arrête de payer<br>plein tarif sur</div><div class="big">Hacoo</div><div class="l2">Regarde.</div></div>
+  <div id="cart" class="abs"><div class="h"><span>Exemple de panier</span></div>
+   <div class="it" id="i1"><div class="th" style="background:linear-gradient(150deg,#d9d2c4,#a89c86)"></div><div class="tx"><div class="tt">Doudoune courte</div><div class="ss">taille M</div></div><div class="pr">36,00 €</div></div>
+   <div class="it" id="i2"><div class="th" style="background:linear-gradient(150deg,#d8c8ff,#9b7cf5)"></div><div class="tx"><div class="tt">Bonnet en maille</div><div class="ss">lilas</div></div><div class="pr">9,00 €</div></div>
+   <div class="it" id="i3"><div class="th" style="background:linear-gradient(150deg,#c9b39b,#8a6b4e)"></div><div class="tx"><div class="tt">Bottines</div><div class="ss">pointure 39</div></div><div class="pr">35,00 €</div></div>
+   <div id="code"><div id="cfield"><span class="ph" id="ph">Code promo</span><span id="ctext"></span><span id="caret"></span></div><div id="capply">Appliquer</div></div>
+   <div id="cok"></div>
+   <div id="tot"><div class="k">Total</div><div><span class="old" id="old"></span><span class="v" id="totv">80,00 €</span></div></div>
+  </div>
+  <div id="stamp" class="abs">-14 %<small>avec le code</small></div>
+  <div id="cta" class="abs"><div class="a"><b>-14 %</b> sur Hacoo</div><div class="w">avec le code</div><div class="k">hzklink</div><div class="d"><span>Articles tendance : liens en bio</span></div></div>
+  <div id="cond" class="abs">Prix d'exemple · réduction selon les conditions<br>du code sur Hacoo</div>
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const S=[0.1,2.5,5.6,10.0,12.6], END=15.8;
+const W=[
+ [0,0.00,"Arrête de payer"],[0,0.75,"plein tarif"],[0,1.25,"sur Hacoo."],
+ [1,0.00,"Exemple :"],[1,0.84,"un panier d'hiver"],[1,1.75,"à <span class=hl>80 €.</span>"],
+ [2,0.00,"Au paiement,"],[2,1.75,"tu tapes le code"],[2,2.84,"<span class=hl>hzklink</span>"],
+ [3,0.00,"Et hop,"],[3,0.87,"<span class=hl>-14 %</span>"],
+ [4,0.00,"Les articles tendance"],[4,1.05,"sont dans ma bio."]
+];
+const LEN=[2.2,2.9,4.2,2.4,2.4];
+const CODE='hzklink';
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=31;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function show(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const fmt=v=>v.toFixed(2).replace('.',',')+' €';
+function renderAt(t){
+ const hx=Math.sin(t*1.1)*9+Math.sin(t*3.3+1)*3, hy=Math.cos(t*0.95)*7+Math.sin(t*2.6)*3, hr=Math.sin(t*0.7)*0.6;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07)}
+ const mT=S[3]+0.87, md=t-mT; let mzoom=0; if(md>0&&md<1.4) mzoom=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mzoom})`;
+ // hook
+ const hookOut=eo((t-(S[1]-0.12))/0.2);
+ show($('hook'),1-hookOut,-hookOut*140,0,1);
+ const big=$('hook').querySelector('.big');
+ big.style.transform=`scale(${t>=0.1?1+0.12*Math.max(0,1-(t-0.1)/0.3):1})`;
+ // cart (scenes 1-3)
+ const c1=t-S[1], cOut=eo((t-(S[4]-0.1))/0.2);
+ show($('cart'),c1<0?0:cl(c1/0.12)*(1-cOut),(1-eb(c1/0.42))*900,0,1-cOut*0.05);
+ ['i1','i2','i3'].forEach((id,i)=>{const d=t-(S[1]+0.35+i*0.3);$(id).style.opacity=d<0?0:cl(d/0.15);$(id).style.transform=`translateX(${(1-eo(d/0.3))*60}px)`});
+ // code field
+ const tStart=S[2]+2.84, tEnd=S[2]+3.9;
+ const n=t<tStart?0:Math.min(CODE.length,Math.floor((t-tStart)/(tEnd-tStart)*CODE.length)+1);
+ $('ctext').textContent=CODE.slice(0,n); $('ph').style.display=n?'none':'inline';
+ $('cfield').style.borderColor=t>=S[2]+0.2&&t<S[3]?'var(--acc)':'#d7e3dc';
+ $('caret').style.visibility=(t>=S[2]+0.2&&t<S[3]+0.3&&Math.floor(t*3)%2===0)?'visible':'hidden';
+ const ap=t-(S[2]+4.0);$('capply').style.transform=`scale(${ap>=0&&ap<0.25?0.92:1})`;
+ const ok=t>=S[3]+0.15;$('cok').textContent=ok?'✓ Code appliqué : -14 %':'';
+ // total drop: slow-motion moment on "-14 %"
+ const dr=cl(md/0.9), val=80-11.2*(md<0?0:eo(dr));
+ $('totv').textContent=fmt(val); $('totv').style.color=md>=0?'var(--acc)':'var(--ink)';
+ $('old').textContent=md>=0?'80,00 €':'';
+ $('totv').style.transform=`scale(${md>=0?1+0.16*Math.pow(1-cl(md/1.3),2.5):1})`;
+ if(md>=0&&md<0.12)$('flash').style.opacity=0.28*(1-md/0.12);else $('flash').style.opacity=0;
+ show($('stamp'),md<0?0:cl(md/0.12)*(1-cOut),0,0,md<0?1:1+0.5*(1-eb(md/0.5)),-12+6*eo(md/0.6));
+ // CTA
+ const cd=t-S[4];
+ show($('cta'),cd<0?0:cl(cd/0.15),(1-eb(cd/0.4))*700,0,1);
+ show($('cond'),cd<0?0:cl((cd-0.2)/0.3),0,0,1);
+ const lp=t-(END-0.5);
+ if(lp>0){show($('cta'),1-eo(lp/0.2),0,0,1);show($('cond'),1-eo(lp/0.2),0,0,1);show($('hook'),eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));big.style.transform='scale(1)';}
+ show($('brand'),1,0,0,1);
+ let txt='',st=-1;
+ for(const [li,off,s] of W){const ts=S[li]+off;if(t>=ts&&t<S[li]+LEN[li]+0.15){txt=s;st=ts}}
+ const sub=$('sub');sub.innerHTML=txt;
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
