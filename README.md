@@ -18,6 +18,8 @@ Vidéos TikTok de @htm.invest et modèles utilisés pour les fabriquer.
 
 ## Règles
 
+- Cadence (règle de Badr du 05/11/2026) : 3 vidéos parrainage par jour sur @htm.invest, publiées automatiquement à 16:00, 18:00 et 21:00 (Europe/Paris), sur 3 sujets consécutifs de la rotation. Chaque vidéo est ajoutée dans son propre commit, dans l'ordre de publication : la rotation repart du fichier le plus récemment ajouté selon git (`git log --diff-filter=A --name-only --format= -- videos/ | head -1`), pas de l'ordre alphabétique.
+
 - Hacoo (règle de Badr du 03/11/2026) : ne JAMAIS publier ni programmer de vidéo Hacoo sur @htm.invest (ni Metricool, ni `videos/`). Dans la rotation de la tâche quotidienne, le sujet « hacoo » est sauté : après « 3-banques » on revient à « boursorama ». Les vidéos Hacoo vont dans `videos-hacoo/` et sont seulement envoyées à Badr (SendUserFile) ; il les publie lui-même.
 - Code Hacoo : toujours `hzklink`, en minuscules, sans espace.
 - Montants des offres bancaires : vérifiés en ligne avant chaque vidéo ; pas de logos de marques ; mention « Offre(s) soumise(s) aux conditions en vigueur ».
