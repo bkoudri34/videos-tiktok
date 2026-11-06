@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Trio v4</title>
+<style>
+:root{--bg:#efe6d4;--ink:#141a3a;--acc:#2346ff;--sec:#ffcf3a;--mute:#6c6a73;--card:#ffffff;--dark:#141a3a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:520px 840px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(180deg,#f2eada 0%,#e8ddc7 100%)}
+.abs{position:absolute}
+#brand{left:96px;top:236px;font:700 34px Inter;color:#fff;background:var(--acc);padding:10px 24px;border-radius:40px;white-space:nowrap}
+/* hook */
+#hook{left:96px;width:830px;top:440px}
+#hook .l1{font:800 92px Inter;line-height:1.04;color:var(--ink);letter-spacing:-2px}
+#hook .big{font:900 200px 'Inter Display',Inter;letter-spacing:-7px;line-height:1.0;color:#fff;background:var(--acc);display:inline-block;padding:6px 28px 18px;margin-top:14px;border-radius:22px;transform-origin:0 60%;white-space:nowrap}
+#hook .l2{font:800 80px Inter;color:var(--ink);margin-top:26px;letter-spacing:-2px;line-height:1.08}
+#hook .l2 b{background:var(--sec);padding:0 12px;border-radius:12px}
+/* receipt */
+#rcpt{left:96px;width:830px;top:430px;background:var(--card);color:var(--dark);border-radius:36px;padding:30px 40px 26px;box-shadow:0 26px 60px rgba(20,26,58,.18)}
+#rcpt .h{font:800 30px Inter;color:#8a8790;letter-spacing:3px;text-transform:uppercase;padding-bottom:10px}
+.row{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-top:3px dashed #e3ddd0}
+.row .nm{font:800 52px Inter;letter-spacing:-.5px;white-space:nowrap}
+.row .tg{font:600 29px Inter;color:#6c6a73;margin-top:6px;white-space:nowrap}
+.row .tg.u{color:#c2410c}
+.row .am{font:900 64px Inter;color:var(--acc);white-space:nowrap;letter-spacing:-1px}
+#tot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:22px;border-top:4px solid var(--dark)}
+#tot .l{font:800 40px Inter}
+#tot .v{font:900 72px Inter;background:var(--sec);padding:2px 18px 6px;border-radius:14px;white-space:nowrap}
+/* mega */
+#mega{left:96px;width:830px;top:520px}
+#mega .k{font:800 80px Inter;color:var(--ink);letter-spacing:-1.5px}
+#mega .n{font:900 230px 'Inter Display',Inter;letter-spacing:-8px;line-height:1;color:var(--acc);white-space:nowrap;transform-origin:0 70%;margin-top:10px}
+#mega .f{font:800 64px Inter;color:var(--ink);margin-top:14px}
+/* cta */
+#cta{left:96px;width:830px;top:430px}
+#cta .a{font:800 88px Inter;line-height:1.1;color:var(--ink);letter-spacing:-1.5px}
+#cta .k{display:inline-block;margin-top:24px;background:var(--acc);color:#fff;font:900 84px Inter;padding:12px 28px 18px;border-radius:24px;letter-spacing:0;white-space:nowrap}
+#cta .p{font:800 88px Inter;color:var(--ink);margin-top:18px}
+#cta .d{font:600 40px Inter;color:var(--mute);margin-top:30px;line-height:1.3}
+#cond{left:96px;width:830px;top:1390px;font:600 29px Inter;color:#5f5d66;white-space:nowrap;line-height:1.35}
+/* subtitles */
+#sub{left:60px;width:870px;top:1170px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px;word-spacing:16px}
+#sub .hl{color:var(--sec)}
+#grain{position:absolute;inset:-200px;opacity:.06;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(60,50,20,.18) 100%)}
+#flash{position:absolute;inset:0;background:var(--sec);opacity:0}
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="brand" class="abs">3 banques · offres en cours</div>
+  <div id="hook" class="abs"><div class="l1">Plus de</div><div class="big">700 €</div><div class="l2">offerts par<br><b>3 banques.</b> 👀</div></div>
+  <div id="rcpt" class="abs"><div class="h">Ce que tu peux toucher</div>
+   <div class="row" id="r1"><div><div class="nm">Hello bank</div><div class="tg u">⏳ parrainage avant le 09/11, 15h</div></div><div class="am">330 €</div></div>
+   <div class="row" id="r2"><div><div class="nm">Fortuneo</div><div class="tg">carte Gold · jusqu'au 20/12</div></div><div class="am">260 €</div></div>
+   <div class="row" id="r3"><div><div class="nm">BoursoBank</div><div class="tg">à l'ouverture du compte</div></div><div class="am">180 €</div></div>
+   <div id="tot"><div class="l">Total possible</div><div class="v" id="tv">0 €</div></div>
+  </div>
+  <div id="mega" class="abs"><div class="k">Au total, jusqu'à</div><div class="n">770 €</div><div class="f">en cumulé.</div></div>
+  <div id="cta" class="abs"><div class="a">Envoie-moi</div><div class="k">« PARRAINAGE »</div><div class="p">en privé</div><div class="d">et je t'envoie tout</div></div>
+  <div id="cond" class="abs">Offres soumises aux conditions en vigueur<br>Montants maximum, chacun sous conditions<br>Fortuneo, BoursoBank : offres de bienvenue</div>
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const K=1/1.07; // voice played with atempo 1.07
+const S=[0.0,2.7,6.32,10.04,13.2,16.92], END=19.95;
+const W=[
+ [0,0.10,"Plus de"],[0,0.40,"<span class=hl>700 €</span>"],[0,1.20,"offerts par"],[0,1.70,"trois banques."],[0,2.30,"Regarde."],
+ [1,0.10,"Hello bank :"],[1,1.10,"jusqu'à"],[1,1.50,"<span class=hl>330 €,</span>"],[1,2.50,"mais avant"],[1,2.90,"le 9 novembre."],
+ [2,0.10,"Fortuneo :"],[2,1.20,"jusqu'à"],[2,1.50,"<span class=hl>260 €</span>"],[2,2.80,"avec la carte Gold."],
+ [3,0.10,"BoursoBank :"],[3,1.20,"jusqu'à"],[3,1.50,"<span class=hl>180 €</span>"],[3,2.40,"à l'ouverture."],
+ [4,0.10,"Au total :"],[4,1.00,"jusqu'à"],[4,1.40,"<span class=hl>770 €,</span>"],[4,3.00,"en cumulé."],
+ [5,0.10,"Envoie-moi"],[5,0.60,"<span class=hl>« PARRAINAGE »</span>"],[5,1.20,"en privé,"],[5,1.90,"je t'envoie tout."]
+].map(([a,b,c])=>[a,b*K,c]);
+const LEN=[2.73,3.71,3.82,3.22,3.66,2.6].map(x=>x*K);
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function show(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+function renderAt(t){
+ const hx=Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3, hy=Math.cos(t*0.85)*7+Math.sin(t*2.7)*3, hr=Math.sin(t*0.6+1)*0.6;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07)}
+ const mT=S[4]+1.40*K, md=t-mT; let mzoom=0; if(md>0&&md<1.4) mzoom=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mzoom})`;
+ // hook
+ const hookOut=eo((t-(S[1]-0.12))/0.2);
+ show($('hook'),1-hookOut,hookOut*-160,0,1);
+ const big=$('hook').querySelector('.big');
+ const p1=t>=0.4*K?1+0.12*Math.max(0,1-(t-0.4*K)/0.3):1;
+ big.style.transform=`scale(${p1})`;
+ // receipt (scenes 1-3)
+ const r0=t-S[1], rOut=eo((t-(S[4]-0.1))/0.2);
+ show($('rcpt'),r0<0?0:cl(r0/0.12)*(1-rOut),0,(1-eb(r0/0.45))*700+rOut*-200,1-rOut*0.05);
+ const rows=[['r1',S[1]+0.05,S[1]+1.5*K,330],['r2',S[2]+0.05,S[2]+1.5*K,260],['r3',S[3]+0.05,S[3]+1.5*K,180]];
+ let tot=0;
+ for(const [id,ta,tm,v] of rows){const d=t-ta;const el=$(id);el.style.opacity=d<0?0:cl(d/0.15);el.style.transform=`translateX(${(1-eb(d/0.4))*300}px)`;
+  const am=el.querySelector('.am');const dm=t-tm;am.style.transform=`scale(${dm>=0?1+0.25*(1-eo(dm/0.3)):1})`;am.style.opacity=dm<0?0.15:1;
+  if(dm>=0)tot+=Math.round(v*eo(dm/0.5));}
+ $('tv').textContent=tot+' €';
+ // mega (scene 4, slow-mo moment)
+ const g0=t-S[4], gOut=eo((t-(S[5]-0.1))/0.2);
+ show($('mega'),g0<0?0:cl(g0/0.15)*(1-gOut),gOut*800,(1-eo(g0/0.4))*60,1);
+ const mn=$('mega').querySelector('.n');
+ const ms=md<0?0.9+0.04*cl(g0/1):1+0.10*Math.pow(1-cl(md/1.3),2.5);
+ mn.style.transform=`scale(${ms})`; mn.style.opacity=md<0?0.2:1;
+ if(md>=0&&md<0.12)$('flash').style.opacity=0.35*(1-md/0.12);else $('flash').style.opacity=0;
+ // CTA
+ const cd=t-S[5];
+ show($('cta'),cd<0?0:cl(cd/0.15),0,(1-eb(cd/0.4))*600,1);
+ show($('cond'),cd<0?0:cl((cd-0.2)/0.3),0,0,1);
+ // loop
+ const lp=t-(END-0.5);
+ if(lp>0){show($('cta'),1-eo(lp/0.2),0,0,1);show($('cond'),1-eo(lp/0.2),0,0,1);show($('hook'),eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));big.style.transform='scale(1)';}
+ show($('brand'),1,0,0,1);
+ // subtitles
+ let txt='',st=-1;
+ for(const [li,off,s] of W){const ts=S[li]+off;if(t>=ts&&t<S[li]+LEN[li]+0.2){txt=s;st=ts}}
+ const sub=$('sub');sub.innerHTML=txt;
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
