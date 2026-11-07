@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Fortuneo v4</title>
+<style>
+:root{--bg:#0f1a33;--ink:#f6efe0;--acc:#f2c14e;--mute:#9aa6bf;--card:#18264a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:520px 880px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(180deg,#12203d 0%,#0c1529 100%)}
+.abs{position:absolute}
+#brand{left:96px;top:236px;font:700 34px Inter;color:var(--bg);background:var(--acc);padding:12px 24px;border-radius:14px;white-space:nowrap}
+#hook{left:96px;width:830px;top:420px}
+#hook .l1{font:800 80px Inter;letter-spacing:-2px;line-height:1.05}
+#hook .big{font:900 290px Inter;letter-spacing:-14px;line-height:.95;color:var(--acc);white-space:nowrap;margin-top:10px}
+#hook .l2{display:inline-block;font:800 50px Inter;color:var(--bg);background:var(--ink);padding:12px 24px;border-radius:16px;margin-top:22px;white-space:nowrap}
+/* gold card */
+.cc{width:520px;height:320px;border-radius:30px;padding:34px 38px;position:absolute;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+#gold{left:96px;top:390px;background:linear-gradient(135deg,#f7d77a 0%,#d9a531 55%,#f1cc6a 100%);color:#3a2a07}
+#fosfo{left:96px;top:420px;background:linear-gradient(135deg,#e9edf5 0%,#b9c3d6 100%);color:#16223f}
+.cc .nm{font:900 44px Inter;letter-spacing:4px}
+.cc .chip{width:84px;height:62px;border-radius:12px;background:rgba(0,0,0,.18);margin-top:40px}
+.cc .no{font:700 34px 'Courier New',monospace;letter-spacing:4px;margin-top:34px;white-space:nowrap}
+/* receipt */
+#rc{left:96px;width:800px;top:750px}
+.ln{display:flex;align-items:baseline;gap:22px;padding:14px 0;border-bottom:3px dashed rgba(246,239,224,.22)}
+.ln .v{font:900 64px Inter;color:var(--acc);width:230px;flex:none;letter-spacing:-1px;white-space:nowrap}
+.ln .l{font:700 36px Inter;white-space:nowrap}
+#tot{display:flex;align-items:baseline;justify-content:space-between;padding-top:18px}
+#tot .l{font:800 44px Inter}
+#tot .v{font:900 86px Inter;color:var(--acc);letter-spacing:-3px;white-space:nowrap}
+/* fosfo scene */
+#alt{left:96px;width:830px;top:800px}
+#alt .q{font:800 56px Inter;color:var(--mute)}
+#alt .n{font:900 150px Inter;letter-spacing:-6px;color:var(--ink);line-height:1;margin-top:8px;white-space:nowrap}
+#alt .n small{font-size:64px;letter-spacing:-1px;color:var(--mute)}
+#alt .s{display:inline-block;margin-top:18px;font:700 36px Inter;border:3px solid var(--ink);padding:8px 18px;border-radius:14px;white-space:nowrap}
+/* cta */
+#cta{left:96px;width:830px;top:400px}
+#cta .a{font:800 80px Inter;letter-spacing:-1.5px}
+#cta .k{display:inline-block;margin-top:22px;background:var(--acc);color:var(--bg);font:900 84px Inter;padding:14px 30px;border-radius:22px;white-space:nowrap}
+#cta .p{font:800 80px Inter;margin-top:22px}
+#cta .d{display:inline-block;margin-top:34px;font:800 42px Inter;color:var(--acc);border:4px solid var(--acc);padding:10px 22px;border-radius:16px;white-space:nowrap}
+#cond{left:96px;width:830px;top:1420px;font:600 29px Inter;color:var(--mute);line-height:1.35}
+#sub{left:60px;width:870px;top:1290px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px;word-spacing:14px}
+#sub .hl{color:var(--acc)}
+#grain{position:absolute;inset:-200px;opacity:.14;mix-blend-mode:overlay;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.35) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="brand" class="abs">Fortuneo · offre de bienvenue</div>
+  <div id="hook" class="abs"><div class="l1">Ta carte bancaire<br>peut te rapporter</div><div class="big">260 €</div><div class="l2">Regarde le calcul 👇</div></div>
+  <div id="gold" class="cc"><div class="nm">GOLD</div><div class="chip"></div><div class="no">•••• •••• •••• 2026</div></div>
+  <div id="rc" class="abs">
+   <div class="ln" id="l1"><div class="v">+160 €</div><div class="l">ouverture + 5 paiements</div></div>
+   <div class="ln" id="l2"><div class="v">+80 €</div><div class="l">transfert de banque</div></div>
+   <div class="ln" id="l3"><div class="v">+20 €</div><div class="l">Livret +</div></div>
+   <div id="tot"><div class="l">Total</div><div class="v" id="tv">0 €</div></div>
+  </div>
+  <div id="fosfo" class="cc"><div class="nm">FOSFO</div><div class="chip"></div><div class="no">•••• •••• •••• 1150</div></div>
+  <div id="alt" class="abs"><div class="q">Pas de carte Gold ?</div><div class="n">150 € <small>max</small></div><div class="s">carte Fosfo · sans condition de revenus</div></div>
+  <div id="cta" class="abs"><div class="a">Envoie-moi</div><div class="k">« FORTUNEO »</div><div class="p">en privé</div><br><div class="d">⏳ jusqu'au 20/12</div></div>
+  <div id="cond" class="abs">Offre soumise aux conditions en vigueur.<br>Carte Gold : revenus ≥ 2 200 €/mois. Offre de bienvenue.</div>
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const S=[0.0,2.55,5.4,7.95,9.85,13.15], END=16.55;
+const W=[
+ [0,0.05,"Ta carte bancaire"],[0,0.8,"peut te rapporter"],[0,1.5,"<span class=hl>260 €.</span>"],
+ [1,0.0,"<span class=hl>160 €</span>"],[1,0.82,"avec la carte Gold,"],[1,1.85,"après 5 paiements."],
+ [2,0.05,"<span class=hl>80 €</span> de plus"],[2,1.32,"si tu transfères"],[2,2.0,"ta banque."],
+ [3,0.05,"Et <span class=hl>20 €</span>"],[3,0.75,"avec le Livret +."],
+ [4,0.05,"Pas de carte Gold ?"],[4,1.35,"Jusqu'à <span class=hl>150 €</span>"],[4,2.33,"avec la Fosfo."],
+ [5,0.05,"Envoie-moi"],[5,0.42,"<span class=hl>FORTUNEO</span>"],[5,0.9,"en privé,"],[5,1.64,"jusqu'au 20 décembre."]
+];
+const LEN=[2.35,2.65,2.35,1.75,3.05,2.7];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=53;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=s%255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function show(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+function renderAt(t){
+ const hx=Math.sin(t*1.15)*8+Math.sin(t*3.0+1.5)*3, hy=Math.cos(t*1.0)*7+Math.sin(t*2.9)*3, hr=Math.sin(t*0.85)*0.5;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07)}
+ const mT=S[3]+0.35, md=t-mT; let mz=0; if(md>0&&md<1.5) mz=0.05*Math.sin(cl(md/1.5)*Math.PI);
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz})`;
+ const hOut=eo((t-(S[1]-0.12))/0.2);
+ show($('hook'),1-hOut,-hOut*140,0,1);
+ const big=$('hook').querySelector('.big');big.style.transform=`scale(${t>=1.5&&t<1.9?1+0.1*(1-eo((t-1.5)/0.35)):1})`;
+ // gold card + receipt (scenes 1-3)
+ const g0=t-S[1], gOut=eo((t-(S[4]-0.1))/0.2);
+ show($('gold'),g0<0?0:cl(g0/0.12)*(1-gOut),(1-eb(g0/0.45))*800-gOut*200,0,1,-4+2*Math.sin(t*1.3));
+ show($('rc'),g0<0?0:cl(g0/0.12)*(1-gOut),0,gOut*80,1);
+ const li=[S[1],S[2],S[3]];
+ ['l1','l2','l3'].forEach((id,i)=>{const d=t-li[i];const el=$(id);el.style.opacity=d<0?0:cl(d/0.12);el.style.transform=`translateX(${d<0?0:(1-eb(d/0.35))*-500}px)`});
+ const steps=[[S[1]+0.05,160],[S[2]+0.05,240],[S[3]+0.05,260]];
+ let v=0,pv=0;for(const [ts,val] of steps){if(t>=ts+0.3){v=val;pv=val}else if(t>=ts){v=Math.round(pv+(val-pv)*eo((t-ts)/0.3));break}else break}
+ $('tv').textContent=v+' €';
+ const tv=$('tv');tv.style.display='inline-block';tv.style.transform=`scale(${md<0?1:1+0.25*Math.pow(1-cl(md/1.3),2.5)})`;tv.style.transformOrigin='70% 60%';
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.22*(1-md/0.12):0;
+ // fosfo
+ const f0=t-S[4], fOut=eo((t-(S[5]-0.1))/0.2);
+ show($('fosfo'),f0<0?0:cl(f0/0.12)*(1-fOut),(1-eb(f0/0.45))*800,0,1,3);
+ const a0=t-(S[4]+1.35);
+ show($('alt'),f0<0?0:cl(f0/0.12)*(1-fOut),0,0,1);
+ const an=$('alt').querySelector('.n');an.style.opacity=a0<0?0.15:1;an.style.transform=`scale(${a0<0?0.95:1+0.08*(1-eo(a0/0.3))})`;an.style.transformOrigin='0 50%';
+ // CTA
+ const cd=t-S[5];
+ show($('cta'),cd<0?0:cl(cd/0.15),(1-eb(cd/0.4))*700,0,1);
+ show($('cond'),cd<0?0:cl((cd-0.2)/0.3),0,0,1);
+ const dd=$('cta').querySelector('.d');dd.style.transform=`scale(${t>=S[5]+1.64?1+0.12*Math.max(0,1-(t-S[5]-1.64)/0.25):1}) rotate(-1.5deg)`;
+ const lp=t-(END-0.5);
+ if(lp>0){show($('cta'),1-eo(lp/0.2),0,0,1);show($('cond'),1-eo(lp/0.2),0,0,1);show($('hook'),eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));big.style.transform='scale(1)';}
+ show($('brand'),1,0,0,1);
+ let txt='',st=-1;
+ for(const [li2,off,s] of W){const ts=S[li2]+off;if(t>=ts&&t<S[li2]+LEN[li2]+0.2){txt=s;st=ts}}
+ const sub=$('sub');sub.innerHTML=txt;
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
