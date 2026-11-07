@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Revolut v5</title>
+<style>
+:root{--bg:#e8ecf1;--ink:#0e1116;--acc:#00a88f;--mute:#5d6673;--card:#ffffff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:520px 880px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(180deg,#eef1f5 0%,#dfe4ea 100%)}
+.abs{position:absolute}
+#brand{left:96px;top:236px;font:700 34px Inter;color:var(--ink);background:#fff;border:3px solid var(--ink);padding:11px 22px;border-radius:40px;white-space:nowrap}
+/* hook */
+#hook{left:96px;width:830px;top:410px}
+#hook .l1{font:900 112px Inter;letter-spacing:-4px;line-height:1}
+#hook .l1 i{font-style:normal;color:var(--acc)}
+#hook .l2{display:inline-block;font:800 60px Inter;color:#fff;background:var(--ink);padding:12px 26px;border-radius:18px;margin-top:30px;white-space:nowrap}
+/* step 1 */
+#st1{left:96px;width:830px;top:420px}
+.num{font:900 200px Inter;letter-spacing:-10px;color:var(--acc);line-height:.9}
+.stt{font:800 72px Inter;letter-spacing:-2px;line-height:1.05;margin-top:16px}
+#chip{display:inline-block;margin-top:34px;font:800 46px Inter;background:#fff;border:4px solid var(--ink);border-radius:22px;padding:16px 26px;white-space:nowrap;box-shadow:0 10px 0 var(--ink)}
+/* step 2: menu panel */
+#st2{left:96px;width:830px;top:400px}
+#menu{margin-top:26px;background:var(--card);border-radius:30px;border:4px solid var(--ink);overflow:hidden}
+.mi{display:flex;align-items:center;gap:24px;padding:28px 32px;border-top:3px solid #e3e7ec;font:700 44px Inter;white-space:nowrap;position:relative}
+.mi:first-child{border-top:none}
+.mi .ic{width:70px;height:70px;border-radius:50%;background:#e8ecf1;display:flex;align-items:center;justify-content:center;font:800 36px Inter;flex:none}
+#mInv{background:#d9f5ef}
+#mInv .ic{background:var(--acc);color:#fff}
+#tap{position:absolute;width:110px;height:110px;border-radius:50%;border:8px solid var(--ink);left:560px;top:-8px;opacity:0}
+/* step 3: notif + mega */
+#notif{left:96px;width:830px;top:400px;background:rgba(255,255,255,.96);border-radius:30px;padding:26px 30px;box-shadow:0 16px 40px rgba(14,17,22,.18)}
+#notif .hd{display:flex;align-items:center;gap:14px;font:600 28px Inter;color:var(--mute)}
+#notif .ap{width:46px;height:46px;border-radius:12px;background:var(--ink);color:#fff;font:900 26px Inter;display:flex;align-items:center;justify-content:center}
+#notif .t{font:800 42px Inter;margin-top:14px;white-space:nowrap}
+#notif .s{font:500 32px Inter;color:var(--mute);margin-top:6px;white-space:nowrap}
+#mega{left:40px;width:900px;top:720px;text-align:center}
+#mega .n{font:900 230px Inter;letter-spacing:-10px;line-height:1;color:var(--acc);white-space:nowrap}
+#mega .f{font:700 36px Inter;color:var(--mute);margin-top:14px;line-height:1.35}
+/* cta */
+#cta{left:96px;width:830px;top:400px}
+#cta .a{font:800 80px Inter;letter-spacing:-1.5px}
+#cta .k{display:inline-block;margin-top:22px;background:var(--ink);color:#fff;font:900 84px Inter;padding:14px 30px;border-radius:22px;white-space:nowrap;box-shadow:0 10px 0 var(--acc)}
+#cta .p{font:800 80px Inter;margin-top:22px}
+#cta .d{font:700 44px Inter;color:var(--acc);margin-top:30px;white-space:nowrap}
+#cond{left:96px;width:830px;top:1420px;font:600 29px Inter;color:var(--mute);line-height:1.35}
+#sub{left:60px;width:870px;top:1290px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px;word-spacing:14px}
+#sub .hl{color:#5cf2d6}
+#grain{position:absolute;inset:-200px;opacity:.10;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 55%,rgba(14,17,22,.20) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="brand" class="abs">Parrainage Revolut</div>
+  <div id="hook" class="abs"><div class="l1">Revolut récompense ceux qui <i>invitent</i> leurs potes.</div><div class="l2">Voilà comment 👇</div></div>
+  <div id="st1" class="abs"><div class="num">01</div><div class="stt">Ouvre ton compte<br>avec mon lien</div><div id="chip">🔗 lien de parrainage</div></div>
+  <div id="st2" class="abs"><div class="num">02</div>
+   <div id="menu"><div class="mi"><div class="ic">€</div>Comptes</div><div class="mi"><div class="ic">▭</div>Cartes</div>
+    <div class="mi" id="mInv"><div class="ic">+</div>Inviter des amis<div id="tap"></div></div><div class="mi"><div class="ic">⚙</div>Paramètres</div></div></div>
+  <div id="notif" class="abs"><div class="hd"><div class="ap">R</div><span>Revolut · maintenant</span></div>
+   <div class="t">Ton ami s'est inscrit</div><div class="s">Récompense selon l'offre en cours</div></div>
+  <div id="mega" class="abs"><div class="n">1 prime</div><div class="f">pour toi, le parrain, selon l'offre du moment<br>pas de prime en argent pour le filleul</div></div>
+  <div id="cta" class="abs"><div class="a">Envoie-moi</div><div class="k">« REVOLUT »</div><div class="p">en privé</div><div class="d">→ je t'envoie le lien</div></div>
+  <div id="cond" class="abs">Offre soumise aux conditions en vigueur.<br>Récompense parrain variable selon l'offre en cours.</div>
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const S=[0.0,2.6,5.3,7.6,11.6], END=15.4;
+const W=[
+ [0,0.05,"Revolut récompense"],[0,1.04,"ceux qui <span class=hl>invitent</span>"],[0,1.9,"leurs potes."],
+ [1,0.05,"D'abord,"],[1,0.82,"tu ouvres ton compte"],[1,1.65,"avec <span class=hl>mon lien.</span>"],
+ [2,0.05,"Ensuite,"],[2,0.8,"va dans"],[2,1.08,"<span class=hl>« Inviter des amis »</span>"],
+ [3,0.05,"Quand un ami s'inscrit,"],[3,1.3,"tu peux toucher"],[3,1.83,"<span class=hl>une prime,</span>"],[3,2.56,"selon l'offre du moment."],
+ [4,0.05,"Envoie-moi"],[4,0.42,"<span class=hl>REVOLUT</span>"],[4,0.85,"en privé,"],[4,1.7,"je t'envoie le lien."]
+];
+const LEN=[2.3,2.4,2.0,3.5,2.5];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=29;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=s%255;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function show(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+function seg(t,a,b){const d=t-a;return {d,o:d<0?0:cl(d/0.12)*(1-eo((t-(b-0.1))/0.2))}}
+function renderAt(t){
+ const hx=Math.sin(t*1.25)*8+Math.sin(t*2.8+1)*3, hy=Math.cos(t*0.9)*7+Math.sin(t*3.1)*3, hr=Math.sin(t*0.75)*0.5;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07)}
+ const mT=S[3]+1.83, md=t-mT; let mz=0; if(md>0&&md<1.5) mz=0.05*Math.sin(cl(md/1.5)*Math.PI);
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz})`;
+ const hOut=eo((t-(S[1]-0.12))/0.2);
+ show($('hook'),1-hOut,-hOut*140,0,1);
+ const inv=$('hook').querySelector('i');inv.style.display='inline-block';inv.style.transform=`scale(${t>=1.04&&t<1.4?1+0.12*(1-eo((t-1.04)/0.3)):1})`;
+ // step 1
+ let a=seg(t,S[1],S[2]); show($('st1'),a.o,(1-eb(a.d/0.42))*900,0,1);
+ const ch=t-(S[1]+1.65); $('chip').style.transform=`scale(${ch<0?1:1+0.12*(1-eo(ch/0.3))}) rotate(-2deg)`;
+ // step 2
+ a=seg(t,S[2],S[3]); show($('st2'),a.o,(1-eb(a.d/0.42))*900,0,1);
+ const tp=t-(S[2]+1.08); const tap=$('tap');
+ tap.style.opacity=tp<0?0:Math.max(0,1-tp/0.6); tap.style.transform=`scale(${tp<0?0.4:0.4+0.9*eo(tp/0.5)})`;
+ $('mInv').style.background=tp<0?'#fff':'#d9f5ef';
+ // step 3
+ const n0=t-S[3], nOut=eo((t-(S[4]-0.1))/0.2);
+ show($('notif'),n0<0?0:cl(n0/0.12)*(1-nOut),0,(1-eb(n0/0.45))*-500,1);
+ const pre=t-(S[3]+0.4);
+ show($('mega'),pre<0?0:cl(pre/0.15)*(1-nOut),0,(1-eo(pre/0.4))*60,1);
+ const mn=$('mega').querySelector('.n');
+ mn.style.transform=`scale(${md<0?0.92:1+0.10*Math.pow(1-cl(md/1.4),2.5)})`;mn.style.color=md<0?'#b8c0ca':'var(--acc)';
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.25*(1-md/0.12):0;
+ // CTA
+ const cd=t-S[4];
+ show($('cta'),cd<0?0:cl(cd/0.15),(1-eb(cd/0.4))*700,0,1);
+ show($('cond'),cd<0?0:cl((cd-0.2)/0.3),0,0,1);
+ const lp=t-(END-0.5);
+ if(lp>0){show($('cta'),1-eo(lp/0.2),0,0,1);show($('cond'),1-eo(lp/0.2),0,0,1);show($('hook'),eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));}
+ show($('brand'),1,0,0,1);
+ let txt='',st=-1;
+ for(const [li,off,s] of W){const ts=S[li]+off;if(t>=ts&&t<S[li]+LEN[li]+0.2){txt=s;st=ts}}
+ const sub=$('sub');sub.innerHTML=txt;
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
