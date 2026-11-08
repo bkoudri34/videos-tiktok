@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>BoursoBank v6</title>
+<style>
+:root{--bg:#f6c945;--bgg:linear-gradient(180deg,#f8d25c 0%,#f0bf33 100%);--ink:#1a1a1a;--acc:#e8336f;--hl:#ff5a92;--flash:#ffffff;--mute:#5b4a12}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:520px 840px}
+#bgtex{position:absolute;inset:0;background:var(--bgg)}
+.abs{position:absolute}
+.scene{position:absolute;left:96px;width:830px}
+#brand{left:96px;top:236px;font:700 34px Inter;padding:10px 24px;border-radius:40px;white-space:nowrap}
+#sub{left:60px;width:870px;top:1180px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px;word-spacing:16px}
+#sub .hl{color:var(--hl)}
+#grain{position:absolute;inset:-200px;opacity:.06;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(0,0,0,.16) 100%)}
+#flash{position:absolute;inset:0;background:var(--flash);opacity:0}
+.cond{position:absolute;left:0;top:960px;width:830px;font:600 29px Inter;line-height:1.35;white-space:nowrap}
+
+
+#brand{color:var(--bg);background:var(--ink)}
+#s0{top:470px}
+#s0 .big{display:inline-block;font:900 250px 'Inter Display',Inter;letter-spacing:-9px;line-height:1;color:var(--bg);background:var(--ink);padding:10px 34px 26px;border-radius:30px;white-space:nowrap;transform:rotate(-2deg)}
+#s0 .l1{font:800 96px Inter;letter-spacing:-2px;line-height:1.05;margin-top:34px}
+#s0 .l1 u{text-decoration:none;color:var(--acc)}
+#s1{top:450px;background:#fffdf5;border:5px solid var(--ink);border-radius:36px;padding:30px 36px 18px}
+#s1 .h{display:flex;justify-content:space-between;align-items:center;font:800 36px Inter;letter-spacing:1px;color:var(--mute);margin-bottom:12px}
+#s1 .bar{display:flex;gap:10px}
+#s1 .bar span{display:block;width:70px;height:20px;border-radius:10px;background:var(--acc)}
+#s1 .bar{position:relative}
+#s1 .track{position:absolute;inset:0;display:flex;gap:10px}
+#s1 .track i{display:block;width:70px;height:20px;border-radius:10px;background:#e8e2cc}
+.it{display:flex;align-items:center;gap:30px;padding:24px 0;border-top:3px solid #ece5cf;font:800 50px Inter;line-height:1.1;white-space:nowrap}
+.bx{flex:none;width:76px;height:76px;border:5px solid var(--ink);border-radius:18px;position:relative;background:#fff}
+.ck{position:absolute;inset:-5px;border-radius:18px;background:var(--acc);color:#fff;font:900 56px Inter;display:flex;align-items:center;justify-content:center}
+.it small{display:block;font:600 32px Inter;color:#6b6352;margin-top:6px}
+#s5{top:520px}
+#s5 .j{font:800 96px Inter;letter-spacing:-2px}
+#s5 .n{font:900 280px 'Inter Display',Inter;letter-spacing:-11px;line-height:1;color:var(--acc);white-space:nowrap;transform-origin:10% 70%;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill}
+#s5 .t{display:inline-block;margin-top:20px;font:700 40px Inter;background:var(--ink);color:var(--bg);padding:12px 24px;border-radius:16px;white-space:nowrap}
+#s6{top:450px}
+#s6 .a{font:800 96px Inter;letter-spacing:-1.5px}
+#s6 .k{display:inline-block;margin-top:22px;background:var(--ink);color:var(--bg);font:900 96px Inter;padding:12px 30px 20px;border-radius:24px;white-space:nowrap;transform:rotate(-2deg)}
+#s6 .p{font:800 96px Inter;margin-top:18px}
+#s6 .d{font:700 40px Inter;color:var(--mute);margin-top:30px;line-height:1.3}
+#s6 .cond{color:#3d320c;top:930px}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="brand" class="abs">BoursoBank · offre de bienvenue</div>
+  <div id="s0" class="scene" data-s="0"><div class="big">180 €</div><div class="l1">pour <u>4 cases</u><br>à cocher. ✅</div></div>
+  <div id="s1" class="scene" data-s="1-4" data-in="up"><div class="h">TA CHECKLIST <div class="bar"><div class="track"><i></i><i></i><i></i><i></i></div><span data-g="1.0" data-fx="pop"></span><span data-g="2.0" data-fx="pop"></span><span data-g="3.0" data-fx="pop"></span><span data-g="4.0" data-fx="pop"></span></div></div>
+   <div class="it"><div class="bx"><div class="ck" data-g="1.1" data-fx="tick">✓</div></div><div>Ouvrir ton compte<small>nouveau client BoursoBank</small></div></div>
+   <div class="it"><div class="bx"><div class="ck" data-g="2.2" data-fx="tick">✓</div></div><div>1er versement<small>dans les délais de l'offre</small></div></div>
+   <div class="it"><div class="bx"><div class="ck" data-g="3.2" data-fx="tick">✓</div></div><div>Utiliser ta carte<small>chaque mois, pendant 3 mois</small></div></div>
+   <div class="it"><div class="bx"><div class="ck" data-g="4.3" data-fx="tick">✓</div></div><div>Transfert EasyMove<small>mobilité bancaire</small></div></div></div>
+  <div id="s5" class="scene" data-s="5" data-in="pop"><div class="j">Jusqu'à</div><div class="n" data-g="5.2" data-fx="stamp" data-slow="5.2" data-count="180"><span class="v">0 €</span></div><div class="t">offre de bienvenue · nouveaux clients</div></div>
+  <div id="s6" class="scene" data-s="6"><div class="a">Envoie-moi</div><div class="k" data-g="6.1" data-fx="stamp">« BOURSO »</div><div class="p">en privé</div><div class="d" data-g="6.3" data-fx="up">Envoie-la à quelqu'un qui paie<br>trop de frais bancaires 👀</div>
+   <div class="cond">Offre soumise aux conditions en vigueur<br>Offre de bienvenue BoursoBank, nouveaux clients<br>Montant maximum, sous conditions</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.33, 4.24, 6.14, 8.35, 10.84, 12.95], END=15.84;
+const G=[[[0.04, 0.855, "<span class=hl>180 €,</span>"], [0.855, 1.618, "pour quatre cases"], [1.618, 2.28, "à cocher."]], [[2.37, 2.554, "Un,"], [2.554, 3.462, "t'ouvres ton compte"], [3.462, 4.19, "BoursoBank."]], [[4.28, 4.503, "Deux,"], [4.503, 5.122, "tu fais"], [5.122, 6.09, "un premier versement."]], [[6.18, 6.452, "Trois,"], [6.452, 7.334, "tu utilises ta carte"], [7.334, 8.3, "pendant <span class=hl>trois mois.</span>"]], [[8.39, 8.917, "Quatre,"], [8.917, 9.445, "tu transfères"], [9.445, 9.842, "ta banque"], [9.842, 10.79, "avec <span class=hl>EasyMove.</span>"]], [[10.88, 11.349, "Tout est coché ?"], [11.349, 11.933, "Jusqu'à"], [11.933, 12.9, "<span class=hl>180 €.</span>"]], [[12.99, 13.315, "Envoie-moi"], [13.315, 13.54, "<span class=hl>« BOURSO »</span>"], [13.54, 13.84, "en privé,"], [13.84, 14.54, "je te montre."]]];
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3, hy=Math.cos(t*0.85)*7+Math.sin(t*2.7)*3, hr=Math.sin(t*0.6+1)*0.6;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz})`;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
