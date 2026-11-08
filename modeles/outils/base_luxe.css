@@ -1,0 +1,77 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07060a}
+body{font-family:'Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#07060a}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 40%,#1b1610 0%,#0b0907 60%,#050404 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#sub{display:none}
+#grain{position:absolute;inset:-200px;opacity:.07;mix-blend-mode:screen;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(110% 80% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.7) 100%)}
+#flash{position:absolute;inset:0;background:#ffd88a;opacity:0;mix-blend-mode:screen}
+/* HUD camera */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:5}
+#hud .c{position:absolute;width:56px;height:56px;border-color:rgba(255,255,255,.55);border-style:solid;border-width:0}
+#hud .tl{left:40px;top:40px;border-left-width:3px;border-top-width:3px}#hud .tr{right:40px;top:40px;border-right-width:3px;border-top-width:3px}
+#hud .bl{left:40px;bottom:40px;border-left-width:3px;border-bottom-width:3px}#hud .br{right:40px;bottom:40px;border-right-width:3px;border-bottom-width:3px}
+#hud .l{position:absolute;left:78px;top:76px;font:700 25px 'DejaVu Sans Mono',monospace;letter-spacing:2px;color:#e9e4da}
+#hud .l small{display:block;font:400 18px 'DejaVu Sans Mono',monospace;color:#8f877a;margin-top:6px;letter-spacing:3px}
+#rec{display:inline-block;width:18px;height:18px;border-radius:50%;background:#e5322d;margin-right:12px;vertical-align:-1px}
+#hud .r{position:absolute;right:78px;top:76px;text-align:right;font:700 30px 'DejaVu Sans Mono',monospace;color:#e6b85c;letter-spacing:1px}
+#hud .r small{display:block;font:400 18px 'DejaVu Sans Mono',monospace;color:#8f877a;margin-top:6px;letter-spacing:3px}
+/* headings */
+.hd{position:absolute;left:60px;width:960px;text-align:center}
+.h1{font:900 76px Inter;letter-spacing:1px;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(255,236,200,.55),0 0 40px rgba(255,200,120,.25);white-space:nowrap}
+.gold{background:linear-gradient(180deg,#fff1c4 0%,#f3c766 35%,#c8892c 70%,#f6d27a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(240,180,80,.55))}
+.big{font:900 200px 'DejaVu Serif',serif;letter-spacing:-4px;line-height:1.05;white-space:nowrap}
+.it{font:700 italic 78px 'Liberation Serif',serif;letter-spacing:1px;line-height:1.15;white-space:nowrap}
+.ch{display:inline-block}
+/* character + counter */
+.counter{position:absolute;left:0;top:1230px;width:1080px;height:700px;background:repeating-linear-gradient(90deg,#120f0b 0 150px,#1b1712 150px 154px);border-top:14px solid #f2ede4;box-shadow:0 -6px 30px rgba(255,220,160,.35)}
+.wall{position:absolute;left:0;top:0;width:1080px;height:1240px;background:repeating-linear-gradient(90deg,rgba(255,215,140,0) 0 178px,rgba(255,215,140,.10) 178px 181px)}
+.sign{position:absolute;left:90px;top:640px;font:700 italic 64px 'Liberation Serif',serif}
+.sign small{display:block;font:500 22px Inter;letter-spacing:6px;color:#9d927f;font-style:normal;margin-top:4px}
+.lamp{position:absolute;width:22px;height:46px;border-radius:6px;background:#f5c66a;box-shadow:0 0 30px 10px rgba(245,190,90,.45)}
+.bubble{position:absolute;background:#fff;color:#1a1a1a;border-radius:34px;padding:24px 30px;font:600 36px Inter;text-align:center;line-height:1.25;white-space:nowrap}
+.bubble:after{content:'';position:absolute;bottom:-22px;right:120px;border:14px solid transparent;border-top:14px solid #fff;border-left:14px solid #fff}
+.reg{position:absolute;left:640px;top:1050px;width:250px;height:180px}
+.reg .scr{position:absolute;left:55px;top:0;width:140px;height:70px;background:#100d09;border:3px solid #d8a650;border-radius:8px;font:700 32px 'DejaVu Sans Mono',monospace;color:#f3c766;display:flex;align-items:center;justify-content:center}
+.reg .body{position:absolute;left:0;top:80px;width:250px;height:100px;background:#2a241c;border-top:4px solid #d8a650;border-radius:10px 10px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 16px}
+.reg .body i{background:#4a4234;border-radius:6px}
+.strip{position:absolute;left:705px;top:1244px;width:150px;height:680px;background:#f7f4ee;transform-origin:50% 0;color:#222;font:500 17px 'DejaVu Sans Mono',monospace;padding:16px 12px;line-height:1.7;overflow:hidden;white-space:pre}
+/* receipt */
+.rcpt{position:absolute;left:250px;top:620px;width:580px;background:#f8f6f1;color:#1f1d1a;padding:44px 44px 70px;font:500 30px 'DejaVu Sans Mono',monospace;line-height:1.55;transform:rotate(-4deg);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(255,220,160,.12)}
+.rcpt .t{font:700 34px 'DejaVu Serif',serif;text-align:center}
+.rcpt .s{font:400 22px 'DejaVu Sans Mono';text-align:center;color:#666}
+.rcpt .row{display:flex;justify-content:space-between;white-space:nowrap}
+.rcpt hr{border:0;border-top:3px dashed #999;margin:16px 0}
+.rcpt .tot{font-weight:700;font-size:36px;position:relative}
+.rcpt:after{content:'';position:absolute;left:0;right:0;bottom:-18px;height:20px;background:linear-gradient(-45deg,transparent 10px,#f8f6f1 10px) 0 0/20px 20px repeat-x,linear-gradient(45deg,transparent 10px,#f8f6f1 10px) 0 0/20px 20px repeat-x}
+/* phone */
+.orb{position:absolute;border:2px solid rgba(230,184,92,.35);border-radius:50%}
+.phone{position:absolute;left:330px;top:640px;width:420px;height:860px;background:#0d0c0b;border:10px solid #2c2925;border-radius:64px;box-shadow:0 0 0 2px #514a40,0 30px 90px rgba(0,0,0,.7);overflow:hidden;color:#fff;text-align:center}
+.phone .notch{width:140px;height:34px;background:#000;border-radius:0 0 20px 20px;margin:0 auto}
+/* emblem + grid */
+.floor{position:absolute;left:-540px;top:1250px;width:2160px;height:900px;transform:perspective(600px) rotateX(62deg);transform-origin:50% 0;background:linear-gradient(rgba(230,180,90,.45) 2px,transparent 2px) 0 0/100% 70px,linear-gradient(90deg,rgba(230,180,90,.45) 2px,transparent 2px) 0 0/90px 100%;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,0) 85%)}
+.rays{position:absolute;left:290px;top:250px;width:500px;height:500px;border-radius:50%;background:repeating-conic-gradient(rgba(255,210,130,.16) 0 4deg,transparent 4deg 14deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 70%)}
+.emb{position:absolute;left:390px;top:350px;width:300px;height:300px;border-radius:50%;border:6px solid #e0ac55;box-shadow:0 0 50px rgba(240,180,80,.5),inset 0 0 40px rgba(240,180,80,.35);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#20180d,#0b0906)}
+.emb:before{content:'';position:absolute;inset:16px;border-radius:50%;border:2px solid rgba(224,172,85,.6)}
+/* dial */
+.dial{position:absolute;left:240px;top:640px;width:600px;height:600px;border-radius:50%;border:4px solid #d9a24c;box-shadow:0 0 50px rgba(240,180,80,.35),inset 0 0 60px rgba(240,180,80,.15);background:radial-gradient(circle,rgba(60,45,20,.6),rgba(10,8,5,.2) 70%)}
+.dial .tk{position:absolute;left:298px;top:10px;width:4px;height:26px;background:#d9a24c;transform-origin:2px 290px}
+.dial .nd{position:absolute;left:298px;top:40px;width:4px;height:260px;background:linear-gradient(#fff3d0,#d9a24c);transform-origin:2px 260px;border-radius:2px}
+/* end card */
+.pill{position:absolute;left:150px;width:780px;height:104px;border:3px solid rgba(217,162,76,.7);border-radius:52px;background:rgba(30,24,15,.6);display:flex;align-items:center;gap:22px;padding:0 26px;white-space:nowrap}
+.pill .pin{flex:none;width:58px;height:58px;border-radius:50%;background:#e0ac55;color:#1a1408;font:900 30px Inter;display:flex;align-items:center;justify-content:center}
+.pill b{display:block;font:800 34px Inter;color:#f3c766;letter-spacing:1px}
+.pill span{font:600 28px Inter;color:#e9e4da}
+.search{position:absolute;left:180px;width:720px;height:96px;border-radius:48px;background:#fff;color:#111;display:flex;align-items:center;gap:20px;padding:0 34px;font:600 40px Inter;white-space:nowrap}
+.cond{position:absolute;left:120px;width:840px;text-align:center;font:500 26px Inter;color:#9a917f;line-height:1.4}
+svg *{transform-box:fill-box;transform-origin:center}
+.h1.s{font-size:66px}
+.coin{position:absolute;width:320px;height:96px;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,#fff0c0,#e9b456 45%,#a8701f 100%);box-shadow:0 14px 0 #7a5016,0 0 40px rgba(240,180,80,.45)}
+.lbl{position:absolute;left:560px;font:800 38px Inter;color:#f1ead9;white-space:nowrap;letter-spacing:1px}
+.lbl b{color:#f3c766}
+.ldr{position:absolute;height:3px;background:#d9a24c;transform-origin:0 50%}
+.spark{position:absolute;color:#ffe3a0;font:400 40px 'DejaVu Sans'}

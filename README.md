@@ -4,16 +4,21 @@ Vidéos TikTok de @htm.invest et modèles utilisés pour les fabriquer.
 
 - `videos/` : vidéos parrainage (@htm.invest, publiées automatiquement via Metricool)
 - `videos-hacoo/` : vidéos Hacoo (compte affiliation, 2 par jour envoyées à Badr, publiées à la main)
-- `STYLE.md` : règles de style v2 (accroche, rythme, sous-titres, zones de sécurité) à appliquer à toutes les vidéos
+- `STYLE.md` : règles de style ; à partir du 09/11/2026 c'est le style v3 « nuit & or » avec la voix clonée « voix-htm-luxe » qui s'applique à toutes les vidéos (parrainage et Hacoo)
 - Format des vidéos finales (MP4 9:16, 60 i/s), nommées `AAAA-MM-JJ_sujet.mp4`. Metricool les récupère par leur lien `raw.githubusercontent.com`.
 - `modeles/` : modèles motion design (pages HTML animées image par image), script de rendu et scripts de bruitages.
 
-## Fabrication d'une vidéo
+## Fabrication d'une vidéo (style v3, voir STYLE.md)
+
+Avec `modeles/outils/` : écrire une config dans `modeles/outils/cfg/<nom>.py` (scènes, répliques, SPLITS/GSTART), déposer la voix dans `$WORK/<nom>/full.wav`, puis `python3 build.py cfg/<nom>.py split`, `html`, `stills` (planche `$WORK/<nom>/sheet.png`), `mix`, `render` (MP4 final `$WORK/<nom>/final.mp4`). Le modèle `modeles/<nom>.html` et `modeles/sfx_<nom>.py` sont générés.
+
+Ancienne méthode (v2) :
+
 
 1. Copier un modèle de `modeles/` et adapter textes, montants et timings (`renderAt(t)`).
 2. Vérifier en images fixes : `HTMLFILE=modele.html python3 render.py stills <dossier> 1.0 5.0 ...`
 3. Rendu en 2 morceaux en parallèle : `HTMLFILE=modele.html python3 render.py video 60 <durée> part0.mp4 0 <n/2>` puis `... part1.mp4 <n/2> <n>`, assemblage avec ffmpeg concat + grain (`noise=c0s=6:c0f=t+u`).
-4. Voix off : Speko `audio.synthesize` (fr-FR), une réplique par scène, posée au début de chaque scène, bruitages à 45 %.
+4. Voix off : Speko `audio.synthesize` avec la voix clonée « voix-htm-luxe » (voir STYLE.md v3), une réplique par scène, posée au début de chaque scène, bruitages + musique à 45 %.
 5. Déposer le MP4 dans `videos/`, pousser, puis programmer le post dans Metricool (TikTok, contenu commercial activé).
 
 ## Règles

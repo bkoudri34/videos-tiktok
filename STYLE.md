@@ -44,3 +44,28 @@ Objectif : un rendu moins « IA / pub », plus natif TikTok et plus viral. S'app
 
 ## Contrôle avant rendu
 - Vérifie les images fixes : aucun texte ne déborde, ne se chevauche ni ne sort des zones de sécurité, et les sous-titres sont synchronisés avec la voix.
+
+# Style v3 « nuit & or » (règle de Badr du 08/11/2026, s'applique à partir du 09/11/2026)
+
+Badr a validé la voix et l'univers visuel de sa vidéo de référence (pâtisserie, fond noir et or). **On copie le style, pas la vidéo** : ni son script, ni son enchaînement de scènes, ni ses formules (« Marre de payer… / Le seul truc qui… / Et si on te disait… / sans te ruiner ») ne doivent être repris tels quels. Chaque vidéo a son propre scénario, ses propres scènes et sa propre accroche.
+
+## Voix off (obligatoire)
+- Voix clonée Speko « voix-htm-luxe » : `voice: "Y5OEiyuzo8xoTlHF9G5k"`, `constraints: {allowedProviders: {tts: ["elevenlabs"]}}`, `speed: 1.05`, intent `{language:"fr", region:"FR", optimizeFor:"accuracy"}`.
+- Tout le script en un seul appel, une réplique par paragraphe (ligne vide entre les répliques). Écrire « Hacou » pour que « Hacoo » soit bien prononcé, « H Z K link » pour le code.
+- Vérifier chaque rendu avec `audio.transcribe` (url signée du résultat, `language: "fr"`, `word_timestamps: true`) : si un mot est mal prononcé ou manquant, refaire la réplique seule. Les temps des mots servent à caler les titres (`SPLITS` et `GSTART` dans la config).
+
+## Univers visuel (à garder)
+- Fond noir mat, lumière et accents dorés (dégradé or, halo léger), grain ; sol quadrillé doré en perspective et rayons dorés pour les moments forts.
+- Habillage caméra : coins de cadre, « ● REC · CAM 01 » + lieu/thème à gauche, compteur qui défile à droite.
+- Titres : capitales blanches très grasses avec léger halo, tapées lettre par lettre au rythme de la voix ; 2e ligne en italique serif dorée ; gros montants en serif doré.
+- Objets illustrés en aplat (personnages, comptoir, ticket, téléphone, cartes, cadrans, pièces, étiquettes reliées par des traits, barre de recherche qui se tape, pastilles d'infos) : des éléments concrets, pas de logos de marques.
+- Musique de fond douce (nappe + pulsation) sous la voix, bruitages discrets (cloches, clics, impact sur le moment fort), un seul ralenti.
+
+## À varier d'une vidéo à l'autre
+- Le scénario et l'accroche (6 à 9 mots), l'ordre et le type de scènes : par ex. personnage devant son relevé, file d'attente au guichet, appli ouverte sur le téléphone, coffre-fort, balance avant/après, chronomètre de fin d'offre, comparatif en colonnes, carte de fidélité, colis qui arrive, essayage, etc. Le personnage peut changer (tenue, coiffure, femme/homme, âge).
+- Couleur d'accent secondaire possible (rouge, bleu nuit, vert émeraude) mais le noir et or reste dominant.
+- Durée 18 à 26 s.
+- Garder : fin qui boucle sur l'accroche, mentions légales visibles à la fin, zones de sécurité (texte important hors des 380 px du bas, 150 px de droite, 200 px du haut ; l'habillage caméra peut y rester).
+
+## Outils
+`modeles/outils/` : `build.py` (découpe de la voix, timeline, génération du modèle HTML + sfx, images fixes, mixage, rendu 60 i/s en 2 morceaux + grain), `engine.js`, `base_luxe.css`, `sfx_luxe_template.py`, et `cfg/luxe.py` (briques : habillage caméra, titres tapés, personnage, comptoir). Exemples : `cfg/luxe_fortuneo.py`, `cfg/luxe_hacoo.py` (tests du 08/11, à ne pas recopier tels quels).

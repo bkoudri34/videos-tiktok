@@ -1,0 +1,16 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:520px 840px}
+#bgtex{position:absolute;inset:0;background:var(--bgg)}
+.abs{position:absolute}
+.scene{position:absolute;left:96px;width:830px}
+#brand{left:96px;top:236px;font:700 34px Inter;padding:10px 24px;border-radius:40px;white-space:nowrap}
+#sub{left:60px;width:870px;top:1180px;text-align:center;font:900 70px Inter;line-height:1.12;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;letter-spacing:-.5px;word-spacing:16px}
+#sub .hl{color:var(--hl)}
+#grain{position:absolute;inset:-200px;opacity:.06;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(0,0,0,.16) 100%)}
+#flash{position:absolute;inset:0;background:var(--flash);opacity:0}
+.cond{position:absolute;left:0;top:960px;width:830px;font:600 29px Inter;line-height:1.35;white-space:nowrap}
