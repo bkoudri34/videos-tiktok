@@ -69,3 +69,11 @@ Badr a validé la voix et l'univers visuel de sa vidéo de référence (pâtisse
 
 ## Outils
 `modeles/outils/` : `build.py` (découpe de la voix, timeline, génération du modèle HTML + sfx, images fixes, mixage, rendu 60 i/s en 2 morceaux + grain), `engine.js`, `base_luxe.css`, `sfx_luxe_template.py`, et `cfg/luxe.py` (briques : habillage caméra, titres tapés, personnage, comptoir). Exemples : `cfg/luxe_fortuneo.py`, `cfg/luxe_hacoo.py` (tests du 08/11, à ne pas recopier tels quels).
+
+# Hacoo : dire clairement que c'est un code Hacoo (règle de Badr du 10/11/2026)
+
+Dans chaque vidéo Hacoo, le spectateur doit comprendre sans hésiter que `hzklink` est un **code promo à utiliser sur l'appli Hacoo** :
+- Voix off : toujours « code promo Hacou H Z K link » (ou « le code Hacou H Z K link »), jamais « le code » tout seul. Le mot « Hacou » est dit au moins 2 fois dans la vidéo, dont une fois dans les 3 premières secondes.
+- À l'écran : écrire « CODE PROMO HACOO » à côté de `hzklink` partout où le code apparaît (champ de saisie titré « Code promo Hacoo », pastille « CODE HACOO : hzklink »), et le mot « Hacoo » visible dès l'accroche.
+- Écran de fin : grande ligne « CODE PROMO HACOO » + `hzklink` + « -14 % sur l'appli Hacoo ».
+- Description du post : une ligne explicite « Code promo Hacoo : hzklink (-14 %) » et le hashtag #codepromohacoo.

@@ -27,6 +27,6 @@ Ancienne méthode (v2) :
 
 - Hacoo, cadence (règle de Badr du 07/11/2026) : 2 vidéos Hacoo par jour, nettement différentes entre elles (palette, accroche, articles, prix d'exemple, type d'écrans), enregistrées dans `videos-hacoo/AAAA-MM-JJ_hacoo.mp4` et `videos-hacoo/AAAA-MM-JJ_hacoo-2.mp4`.
 - Hacoo (règle de Badr du 03/11/2026) : ne JAMAIS publier ni programmer de vidéo Hacoo sur @htm.invest (ni Metricool, ni `videos/`). Dans la rotation de la tâche quotidienne, le sujet « hacoo » est sauté : après « 3-banques » on revient à « boursorama ». Les vidéos Hacoo vont dans `videos-hacoo/` et sont seulement envoyées à Badr (SendUserFile) ; il les publie lui-même.
-- Code Hacoo : toujours `hzklink`, en minuscules, sans espace.
+- Code Hacoo : toujours `hzklink`, en minuscules, sans espace, et toujours présenté explicitement comme « code promo Hacoo » à l'oral, à l'écran et dans la description (règle de Badr du 10/11/2026, voir STYLE.md).
 - Montants des offres bancaires : vérifiés en ligne avant chaque vidéo ; pas de logos de marques ; mention « Offre(s) soumise(s) aux conditions en vigueur ».
 - Pas de vidéos pour des produits contrefaits.
