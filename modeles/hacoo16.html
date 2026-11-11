@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo jauge glacier</title>
+<style>
+:root{--bg:#07060a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07060a}
+body{font-family:'Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#07060a}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 40%,#1b1610 0%,#0b0907 60%,#050404 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#sub{display:none}
+#grain{position:absolute;inset:-200px;opacity:.07;mix-blend-mode:screen;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(110% 80% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.7) 100%)}
+#flash{position:absolute;inset:0;background:#ffd88a;opacity:0;mix-blend-mode:screen}
+/* HUD camera */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:5}
+#hud .c{position:absolute;width:56px;height:56px;border-color:rgba(255,255,255,.55);border-style:solid;border-width:0}
+#hud .tl{left:40px;top:40px;border-left-width:3px;border-top-width:3px}#hud .tr{right:40px;top:40px;border-right-width:3px;border-top-width:3px}
+#hud .bl{left:40px;bottom:40px;border-left-width:3px;border-bottom-width:3px}#hud .br{right:40px;bottom:40px;border-right-width:3px;border-bottom-width:3px}
+#hud .l{position:absolute;left:78px;top:76px;font:700 25px 'DejaVu Sans Mono',monospace;letter-spacing:2px;color:#e9e4da}
+#hud .l small{display:block;font:400 18px 'DejaVu Sans Mono',monospace;color:#8f877a;margin-top:6px;letter-spacing:3px}
+#rec{display:inline-block;width:18px;height:18px;border-radius:50%;background:#e5322d;margin-right:12px;vertical-align:-1px}
+#hud .r{position:absolute;right:78px;top:76px;text-align:right;font:700 30px 'DejaVu Sans Mono',monospace;color:#e6b85c;letter-spacing:1px}
+#hud .r small{display:block;font:400 18px 'DejaVu Sans Mono',monospace;color:#8f877a;margin-top:6px;letter-spacing:3px}
+/* headings */
+.hd{position:absolute;left:60px;width:960px;text-align:center}
+.h1{font:900 76px Inter;letter-spacing:1px;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(255,236,200,.55),0 0 40px rgba(255,200,120,.25);white-space:nowrap}
+.gold{background:linear-gradient(180deg,#fff1c4 0%,#f3c766 35%,#c8892c 70%,#f6d27a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(240,180,80,.55))}
+.big{font:900 200px 'DejaVu Serif',serif;letter-spacing:-4px;line-height:1.05;white-space:nowrap}
+.it{font:700 italic 78px 'Liberation Serif',serif;letter-spacing:1px;line-height:1.15;white-space:nowrap}
+.ch{display:inline-block}
+/* character + counter */
+.counter{position:absolute;left:0;top:1230px;width:1080px;height:700px;background:repeating-linear-gradient(90deg,#120f0b 0 150px,#1b1712 150px 154px);border-top:14px solid #f2ede4;box-shadow:0 -6px 30px rgba(255,220,160,.35)}
+.wall{position:absolute;left:0;top:0;width:1080px;height:1240px;background:repeating-linear-gradient(90deg,rgba(255,215,140,0) 0 178px,rgba(255,215,140,.10) 178px 181px)}
+.sign{position:absolute;left:90px;top:640px;font:700 italic 64px 'Liberation Serif',serif}
+.sign small{display:block;font:500 22px Inter;letter-spacing:6px;color:#9d927f;font-style:normal;margin-top:4px}
+.lamp{position:absolute;width:22px;height:46px;border-radius:6px;background:#f5c66a;box-shadow:0 0 30px 10px rgba(245,190,90,.45)}
+.bubble{position:absolute;background:#fff;color:#1a1a1a;border-radius:34px;padding:24px 30px;font:600 36px Inter;text-align:center;line-height:1.25;white-space:nowrap}
+.bubble:after{content:'';position:absolute;bottom:-22px;right:120px;border:14px solid transparent;border-top:14px solid #fff;border-left:14px solid #fff}
+.reg{position:absolute;left:640px;top:1050px;width:250px;height:180px}
+.reg .scr{position:absolute;left:55px;top:0;width:140px;height:70px;background:#100d09;border:3px solid #d8a650;border-radius:8px;font:700 32px 'DejaVu Sans Mono',monospace;color:#f3c766;display:flex;align-items:center;justify-content:center}
+.reg .body{position:absolute;left:0;top:80px;width:250px;height:100px;background:#2a241c;border-top:4px solid #d8a650;border-radius:10px 10px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 16px}
+.reg .body i{background:#4a4234;border-radius:6px}
+.strip{position:absolute;left:705px;top:1244px;width:150px;height:680px;background:#f7f4ee;transform-origin:50% 0;color:#222;font:500 17px 'DejaVu Sans Mono',monospace;padding:16px 12px;line-height:1.7;overflow:hidden;white-space:pre}
+/* receipt */
+.rcpt{position:absolute;left:250px;top:620px;width:580px;background:#f8f6f1;color:#1f1d1a;padding:44px 44px 70px;font:500 30px 'DejaVu Sans Mono',monospace;line-height:1.55;transform:rotate(-4deg);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(255,220,160,.12)}
+.rcpt .t{font:700 34px 'DejaVu Serif',serif;text-align:center}
+.rcpt .s{font:400 22px 'DejaVu Sans Mono';text-align:center;color:#666}
+.rcpt .row{display:flex;justify-content:space-between;white-space:nowrap}
+.rcpt hr{border:0;border-top:3px dashed #999;margin:16px 0}
+.rcpt .tot{font-weight:700;font-size:36px;position:relative}
+.rcpt:after{content:'';position:absolute;left:0;right:0;bottom:-18px;height:20px;background:linear-gradient(-45deg,transparent 10px,#f8f6f1 10px) 0 0/20px 20px repeat-x,linear-gradient(45deg,transparent 10px,#f8f6f1 10px) 0 0/20px 20px repeat-x}
+/* phone */
+.orb{position:absolute;border:2px solid rgba(230,184,92,.35);border-radius:50%}
+.phone{position:absolute;left:330px;top:640px;width:420px;height:860px;background:#0d0c0b;border:10px solid #2c2925;border-radius:64px;box-shadow:0 0 0 2px #514a40,0 30px 90px rgba(0,0,0,.7);overflow:hidden;color:#fff;text-align:center}
+.phone .notch{width:140px;height:34px;background:#000;border-radius:0 0 20px 20px;margin:0 auto}
+/* emblem + grid */
+.floor{position:absolute;left:-540px;top:1250px;width:2160px;height:900px;transform:perspective(600px) rotateX(62deg);transform-origin:50% 0;background:linear-gradient(rgba(230,180,90,.45) 2px,transparent 2px) 0 0/100% 70px,linear-gradient(90deg,rgba(230,180,90,.45) 2px,transparent 2px) 0 0/90px 100%;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,0) 85%)}
+.rays{position:absolute;left:290px;top:250px;width:500px;height:500px;border-radius:50%;background:repeating-conic-gradient(rgba(255,210,130,.16) 0 4deg,transparent 4deg 14deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 70%)}
+.emb{position:absolute;left:390px;top:350px;width:300px;height:300px;border-radius:50%;border:6px solid #e0ac55;box-shadow:0 0 50px rgba(240,180,80,.5),inset 0 0 40px rgba(240,180,80,.35);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#20180d,#0b0906)}
+.emb:before{content:'';position:absolute;inset:16px;border-radius:50%;border:2px solid rgba(224,172,85,.6)}
+/* dial */
+.dial{position:absolute;left:240px;top:640px;width:600px;height:600px;border-radius:50%;border:4px solid #d9a24c;box-shadow:0 0 50px rgba(240,180,80,.35),inset 0 0 60px rgba(240,180,80,.15);background:radial-gradient(circle,rgba(60,45,20,.6),rgba(10,8,5,.2) 70%)}
+.dial .tk{position:absolute;left:298px;top:10px;width:4px;height:26px;background:#d9a24c;transform-origin:2px 290px}
+.dial .nd{position:absolute;left:298px;top:40px;width:4px;height:260px;background:linear-gradient(#fff3d0,#d9a24c);transform-origin:2px 260px;border-radius:2px}
+/* end card */
+.pill{position:absolute;left:150px;width:780px;height:104px;border:3px solid rgba(217,162,76,.7);border-radius:52px;background:rgba(30,24,15,.6);display:flex;align-items:center;gap:22px;padding:0 26px;white-space:nowrap}
+.pill .pin{flex:none;width:58px;height:58px;border-radius:50%;background:#e0ac55;color:#1a1408;font:900 30px Inter;display:flex;align-items:center;justify-content:center}
+.pill b{display:block;font:800 34px Inter;color:#f3c766;letter-spacing:1px}
+.pill span{font:600 28px Inter;color:#e9e4da}
+.search{position:absolute;left:180px;width:720px;height:96px;border-radius:48px;background:#fff;color:#111;display:flex;align-items:center;gap:20px;padding:0 34px;font:600 40px Inter;white-space:nowrap}
+.cond{position:absolute;left:120px;width:840px;text-align:center;font:500 26px Inter;color:#9a917f;line-height:1.4}
+svg *{transform-box:fill-box;transform-origin:center}
+.h1.s{font-size:66px}
+.coin{position:absolute;width:320px;height:96px;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,#fff0c0,#e9b456 45%,#a8701f 100%);box-shadow:0 14px 0 #7a5016,0 0 40px rgba(240,180,80,.45)}
+.lbl{position:absolute;left:560px;font:800 38px Inter;color:#f1ead9;white-space:nowrap;letter-spacing:1px}
+.lbl b{color:#f3c766}
+.ldr{position:absolute;height:3px;background:#d9a24c;transform-origin:0 50%}
+.spark{position:absolute;color:#ffe3a0;font:400 40px 'DejaVu Sans'}
+
+
+.gl{color:#7fd8ff;text-shadow:0 0 18px rgba(127,216,255,.45)}
+.gauge{position:absolute;left:400px;top:700px;width:150px;height:620px;border-radius:75px;border:6px solid #d9a24c;background:#0d0c0b;overflow:hidden;box-shadow:0 0 50px rgba(240,180,80,.25)}
+.gauge .f{position:absolute;left:0;bottom:0;width:100%;transform-origin:50% 100%;background:linear-gradient(180deg,#d6f4ff,#7fd8ff 40%,#2b7fae)}
+.gauge .gh{position:absolute;left:0;bottom:0;width:100%;height:100%;background:repeating-linear-gradient(180deg,rgba(127,216,255,.18) 0 10px,transparent 10px 20px)}
+.gm{position:absolute;left:580px;font:800 34px 'DejaVu Sans Mono',monospace;color:#e9e4da;white-space:nowrap}
+.gm:before{content:'';display:inline-block;width:40px;height:4px;background:#d9a24c;vertical-align:middle;margin-right:14px}
+.tile{position:absolute;width:230px;height:310px;border-radius:30px;background:#10161a;border:3px solid #7fd8ff;text-align:center;box-shadow:0 30px 70px rgba(0,0,0,.6)}
+.tile .n{font:800 28px Inter;color:#f1ead9;margin-top:6px}
+.tile .p{font:900 44px 'DejaVu Serif',serif;color:#7fd8ff}
+.field{position:absolute;left:150px;width:780px;border-radius:26px;background:#f4efe4;color:#1c1712;padding:26px 36px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.field .l{font:800 26px Inter;letter-spacing:4px;color:#7a6f60}
+.field .v{font:900 72px 'DejaVu Sans Mono',monospace;margin-top:8px;white-space:nowrap}
+.field .ok{position:absolute;right:30px;top:58px;padding:14px 26px;border-radius:20px;background:#2b7fae;color:#fff;font:900 34px Inter}
+.tk{position:absolute;left:190px;top:660px;width:700px;background:#f4efe4;color:#1c1712;border-radius:18px;padding:36px 44px 40px;box-shadow:0 40px 90px rgba(0,0,0,.7);transform:rotate(-2deg)}
+.tk .row{display:flex;justify-content:space-between;font:600 32px 'DejaVu Sans Mono',monospace;line-height:1.8;white-space:nowrap}
+.tk hr{border:0;border-top:3px dashed #b9ae9c;margin:14px 0}
+.tk .x{font:600 22px Inter;letter-spacing:3px;color:#7a6f60;text-align:center;margin-top:8px}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="hud"><div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+   <div class="l"><span id="rec"></span>REC · CAM 01<small>FRANCE · PANIER</small></div><div class="r"><span id="tm">00:00.00</span><small>BUDGET</small></div></div>
+  <div class="scene" data-s="0"><div class="floor"></div><div class="hd" style="top:220px"><div class="big gold" style="font-size:170px">30 €</div><div class="h1">SUR HACOO ?</div><div class="it gold" style="font-size:70px" data-g="0.1" data-fx="tw">regarde ça.</div></div>
+   <div class="gauge" style="top:780px;height:560px"><div class="f" style="height:100%"></div></div>
+   <div class="gm" style="top:770px">PLEIN · 30 €</div></div>
+  <div class="scene" data-s="1" data-in="pop"><div class="rays" style="top:560px"></div><div class="hd" style="top:230px"><div class="h1 s" data-g="1.0" data-fx="tw">UNE BOUGIE, UN MUG</div><div class="it gold" style="font-size:66px" data-g="1.1" data-fx="tw">et des chaussettes :</div></div>
+   <div class="tile" style="left:110px;top:620px" data-g="1.0" data-fx="up"><svg width="180" height="180" viewBox="0 0 200 200"><path d="M100 22 Q114 42 100 58 Q86 42 100 22 Z" fill="#ffcf5a"/><line x1="100" y1="58" x2="100" y2="70" stroke="#333" stroke-width="4"/><rect x="58" y="70" width="84" height="100" rx="12" fill="#f4efe4"/><rect x="58" y="110" width="84" height="34" fill="#c9a6ff" opacity=".8"/></svg><div class="n">Bougie</div><div class="p">7,90 €</div></div>
+   <div class="tile" style="left:425px;top:600px" data-g="1.0" data-fx="up"><svg width="180" height="180" viewBox="0 0 200 200"><rect x="50" y="50" width="86" height="115" rx="14" fill="#3fbf8f"/><rect x="50" y="50" width="86" height="22" rx="8" fill="#e9f7f0"/><path d="M136 80 Q170 80 170 108 Q170 136 136 136" fill="none" stroke="#3fbf8f" stroke-width="14"/><rect x="62" y="96" width="62" height="10" rx="5" fill="#e9f7f0" opacity=".6"/></svg><div class="n">Mug</div><div class="p">9,50 €</div></div>
+   <div class="tile" style="left:700px;top:620px" data-g="1.1" data-fx="up"><svg width="180" height="180" viewBox="0 0 200 200"><path d="M55 30 H95 V120 Q95 150 70 160 Q40 168 35 145 Q32 128 55 118 Z" fill="#f2d7a8"/><path d="M105 40 H145 V130 Q145 160 120 170 Q90 178 85 155 Q82 138 105 128 Z" fill="#e8b778"/><path d="M55 48 H95 M55 62 H95 M105 58 H145 M105 72 H145" stroke="#c0392b" stroke-width="6"/></svg><div class="n">Chaussettes</div><div class="p">12,60 €</div></div>
+   <div class="abs gold" style="left:0;top:1060px;width:1080px;text-align:center;font:900 110px 'DejaVu Serif',serif" data-g="1.2" data-fx="stamp">= 30,00 €</div>
+   <div class="abs" style="left:240px;top:1230px;width:600px;text-align:center;font:700 24px Inter;letter-spacing:4px;color:#bba98a">PRIX D'EXEMPLE</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="hd" style="top:230px"><div class="h1" data-g="2.0" data-fx="tw">AU PAIEMENT,</div><div class="it gold" style="font-size:58px" data-g="2.1" data-fx="tw">tu tapes le code promo Hacoo</div></div>
+   <div class="field" style="top:640px" data-g="2.0" data-fx="up"><div class="l">CODE PROMO HACOO</div><div class="v"><span data-g="2.2" data-fx="type">hzklink</span></div><div class="ok" data-g="2.2" data-fx="pop">OK</div></div>
+   <div class="pill" style="top:900px;border-color:rgba(127,216,255,.85)" data-g="2.2" data-fx="up"><div class="pin" style="background:#7fd8ff">%</div><div><b class="gl">CODE HACOO : hzklink</b><span>-14 % sur ton panier</span></div></div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="hd" style="top:230px"><div class="h1" style="font-size:66px" data-g="3.0" data-fx="tw">LA JAUGE REDESCEND :</div></div>
+   <div class="gauge" style="left:170px"><div class="f" style="height:100%"></div><div class="abs" style="left:0;top:0;width:100%;height:14%;background:#0d0c0b;transform-origin:50% 0" data-g="3.0" data-fx="growY"><div class="gh"></div></div></div><div class="gm" style="left:350px;top:695px">30 €</div><div class="gm" style="left:350px;top:1000px">15 €</div><div class="gm" style="left:350px;top:1300px">0 €</div>
+   <div class="abs gold" style="left:520px;top:780px;font:900 96px 'DejaVu Serif',serif;white-space:nowrap" data-g="3.1" data-fx="stamp" data-slow="3.1">25,80 €</div>
+   <div class="abs" style="left:540px;top:910px;font:700 32px Inter;color:#8f877a;text-decoration:line-through;white-space:nowrap" data-g="3.1" data-fx="fade">avant : 30,00 €</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="hd" style="top:230px"><div class="h1" data-g="4.0" data-fx="tw">4,20 € DE GAGNÉS,</div><div class="it gold" style="font-size:70px" data-g="4.1" data-fx="tw">juste avec le code.</div></div>
+   <div class="tk" data-g="4.0" data-fx="up"><div class="row"><span>Panier</span><span>30,00 €</span></div><div class="row" style="color:#2b7fae"><span>Code hzklink</span><span>-4,20 €</span></div><hr>
+    <div class="row" style="font-weight:700;font-size:40px" data-g="4.1" data-fx="stamp"><span>À PAYER</span><span>25,80 €</span></div><div class="x">PRIX D'EXEMPLE · CODE PROMO HACOO</div></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="hd" style="top:230px"><div class="h1" data-g="5.0" data-fx="tw">CODE PROMO HACOO</div><div class="big gold" style="font-size:150px" data-g="5.0" data-fx="tw">hzklink</div><div class="it gold" style="font-size:60px" data-g="5.1" data-fx="tw">-14 % sur l'appli Hacoo</div></div>
+   <div class="pill" style="top:730px" data-g="5.2" data-fx="up"><div class="pin">★</div><div><b>ARTICLES TENDANCE</b><span>tous les liens sont dans ma bio</span></div></div>
+   <div class="cond" style="top:880px">Prix d'exemple · -14 % avec le code promo Hacoo hzklink<br>selon conditions sur l'appli Hacoo</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.81, 6.238, 10.295, 13.105, 15.915], END=20.385;
+const G=[[[0.15, 1.53, "30 € sur Hacoo ?"], [1.53, 2.29, "Regarde ça."]], [[2.868, 4.278, "Une bougie, un mug"], [4.278, 5.128, "et des chaussettes :"], [5.128, 6.078, "30 € pile."]], [[6.289, 6.749, "Au paiement,"], [6.749, 8.199, "tu tapes le code promo Hacoo"], [8.199, 10.135, "hzklink."]], [[10.352, 11.532, "La jauge redescend :"], [11.532, 12.93, "25,80 €."]], [[13.163, 14.263, "4,20 € de gagnés,"], [14.263, 15.505, "juste avec le code."]], [[15.972, 17.072, "-14 %,"], [17.072, 17.662, "et les liens"], [17.662, 18.585, "sont dans ma bio."]]];
+const CAM=0.45, PUSH=0.012;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
