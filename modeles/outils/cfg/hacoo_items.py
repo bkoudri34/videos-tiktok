@@ -13,6 +13,10 @@ ICONS = {
  'Gourde': '<rect x="84" y="20" width="32" height="26" rx="6" fill="#2a2a2a"/><rect x="68" y="44" width="64" height="134" rx="24" fill="#ff4f9a"/><rect x="68" y="90" width="64" height="30" fill="#ffd1e4"/>',
  'Chaussons': '<path d="M30 140 Q30 100 70 98 L95 98 Q110 98 112 120 L112 160 L40 160 Q30 160 30 140 Z" fill="#f4e1ec"/><path d="M90 130 Q90 90 130 88 L155 88 Q170 88 172 110 L172 150 L100 150 Q90 150 90 130 Z" fill="#ffd1e4"/><path d="M30 150 H112 M90 140 H172" stroke="#c76b98" stroke-width="8"/>',
  'Guirlande': '<path d="M20 60 Q100 130 180 60" fill="none" stroke="#3a5a3a" stroke-width="5"/><g fill="#ffd36a"><circle cx="45" cy="88" r="13"/><circle cx="100" cy="108" r="13" fill="#ff8fb1"/><circle cx="155" cy="88" r="13" fill="#7fd8ff"/><circle cx="72" cy="101" r="10" fill="#b8f28a"/><circle cx="128" cy="101" r="10"/></g>',
+ 'Lampe': '<path d="M60 40 H140 L160 100 H40 Z" fill="#f3c766"/><rect x="94" y="100" width="12" height="55" fill="#8f877a"/><rect x="60" y="155" width="80" height="18" rx="8" fill="#5a524a"/><ellipse cx="100" cy="108" rx="36" ry="8" fill="#fff3cf" opacity=".8"/>',
+ 'Pyjama': '<path d="M55 40 L82 30 Q100 46 118 30 L145 40 L165 95 L145 102 L142 120 L58 120 L55 102 L35 95 Z" fill="#c9b8ff"/><path d="M62 118 H138 L142 175 H108 L100 135 L92 175 H58 Z" fill="#a993f0"/><circle cx="100" cy="62" r="5" fill="#fff"/><circle cx="100" cy="82" r="5" fill="#fff"/><circle cx="100" cy="102" r="5" fill="#fff"/><path d="M70 60 l6 6 M120 70 l6 6 M80 140 l6 6" stroke="#fff" stroke-width="4"/>',
+ 'Trousse': '<path d="M35 80 Q35 60 55 60 H145 Q165 60 165 80 L160 150 Q158 165 142 165 H58 Q42 165 40 150 Z" fill="#ff9fc0"/><rect x="40" y="70" width="120" height="10" fill="#d9a24c"/><circle cx="150" cy="75" r="9" fill="#d9a24c"/><path d="M60 110 Q100 135 140 110" stroke="#fff" stroke-width="5" fill="none" opacity=".7"/>',
+ 'Tote': '<path d="M70 70 Q70 30 100 30 Q130 30 130 70" stroke="#d9a24c" stroke-width="9" fill="none"/><path d="M45 65 H155 L165 175 H35 Z" fill="#f2e6d0"/><path d="M75 110 l12 12 l25 -30" stroke="#ff4d6d" stroke-width="8" fill="none" stroke-linecap="round"/>',
 }
 
 
