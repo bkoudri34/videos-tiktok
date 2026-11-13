@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo panier qui fond menthe</title>
+<style>
+:root{--bg:#07060a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07060a}
+body{font-family:'Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#07060a}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 40%,#1b1610 0%,#0b0907 60%,#050404 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#sub{display:none}
+#grain{position:absolute;inset:-200px;opacity:.07;mix-blend-mode:screen;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(110% 80% at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.7) 100%)}
+#flash{position:absolute;inset:0;background:#ffd88a;opacity:0;mix-blend-mode:screen}
+/* HUD camera */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:5}
+#hud .c{position:absolute;width:56px;height:56px;border-color:rgba(255,255,255,.55);border-style:solid;border-width:0}
+#hud .tl{left:40px;top:40px;border-left-width:3px;border-top-width:3px}#hud .tr{right:40px;top:40px;border-right-width:3px;border-top-width:3px}
+#hud .bl{left:40px;bottom:40px;border-left-width:3px;border-bottom-width:3px}#hud .br{right:40px;bottom:40px;border-right-width:3px;border-bottom-width:3px}
+#hud .l{position:absolute;left:78px;top:76px;font:700 25px 'DejaVu Sans Mono',monospace;letter-spacing:2px;color:#e9e4da}
+#hud .l small{display:block;font:400 18px 'DejaVu Sans Mono',monospace;color:#8f877a;margin-top:6px;letter-spacing:3px}
+#rec{display:inline-block;width:18px;height:18px;border-radius:50%;background:#e5322d;margin-right:12px;vertical-align:-1px}
+#hud .r{position:absolute;right:78px;top:76px;text-align:right;font:700 30px 'DejaVu Sans Mono',monospace;color:#e6b85c;letter-spacing:1px}
+#hud .r small{display:block;font:400 18px 'DejaVu Sans Mono',monospace;color:#8f877a;margin-top:6px;letter-spacing:3px}
+/* headings */
+.hd{position:absolute;left:60px;width:960px;text-align:center}
+.h1{font:900 76px Inter;letter-spacing:1px;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(255,236,200,.55),0 0 40px rgba(255,200,120,.25);white-space:nowrap}
+.gold{background:linear-gradient(180deg,#fff1c4 0%,#f3c766 35%,#c8892c 70%,#f6d27a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(240,180,80,.55))}
+.big{font:900 200px 'DejaVu Serif',serif;letter-spacing:-4px;line-height:1.05;white-space:nowrap}
+.it{font:700 italic 78px 'Liberation Serif',serif;letter-spacing:1px;line-height:1.15;white-space:nowrap}
+.ch{display:inline-block}
+/* character + counter */
+.counter{position:absolute;left:0;top:1230px;width:1080px;height:700px;background:repeating-linear-gradient(90deg,#120f0b 0 150px,#1b1712 150px 154px);border-top:14px solid #f2ede4;box-shadow:0 -6px 30px rgba(255,220,160,.35)}
+.wall{position:absolute;left:0;top:0;width:1080px;height:1240px;background:repeating-linear-gradient(90deg,rgba(255,215,140,0) 0 178px,rgba(255,215,140,.10) 178px 181px)}
+.sign{position:absolute;left:90px;top:640px;font:700 italic 64px 'Liberation Serif',serif}
+.sign small{display:block;font:500 22px Inter;letter-spacing:6px;color:#9d927f;font-style:normal;margin-top:4px}
+.lamp{position:absolute;width:22px;height:46px;border-radius:6px;background:#f5c66a;box-shadow:0 0 30px 10px rgba(245,190,90,.45)}
+.bubble{position:absolute;background:#fff;color:#1a1a1a;border-radius:34px;padding:24px 30px;font:600 36px Inter;text-align:center;line-height:1.25;white-space:nowrap}
+.bubble:after{content:'';position:absolute;bottom:-22px;right:120px;border:14px solid transparent;border-top:14px solid #fff;border-left:14px solid #fff}
+.reg{position:absolute;left:640px;top:1050px;width:250px;height:180px}
+.reg .scr{position:absolute;left:55px;top:0;width:140px;height:70px;background:#100d09;border:3px solid #d8a650;border-radius:8px;font:700 32px 'DejaVu Sans Mono',monospace;color:#f3c766;display:flex;align-items:center;justify-content:center}
+.reg .body{position:absolute;left:0;top:80px;width:250px;height:100px;background:#2a241c;border-top:4px solid #d8a650;border-radius:10px 10px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 16px}
+.reg .body i{background:#4a4234;border-radius:6px}
+.strip{position:absolute;left:705px;top:1244px;width:150px;height:680px;background:#f7f4ee;transform-origin:50% 0;color:#222;font:500 17px 'DejaVu Sans Mono',monospace;padding:16px 12px;line-height:1.7;overflow:hidden;white-space:pre}
+/* receipt */
+.rcpt{position:absolute;left:250px;top:620px;width:580px;background:#f8f6f1;color:#1f1d1a;padding:44px 44px 70px;font:500 30px 'DejaVu Sans Mono',monospace;line-height:1.55;transform:rotate(-4deg);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(255,220,160,.12)}
+.rcpt .t{font:700 34px 'DejaVu Serif',serif;text-align:center}
+.rcpt .s{font:400 22px 'DejaVu Sans Mono';text-align:center;color:#666}
+.rcpt .row{display:flex;justify-content:space-between;white-space:nowrap}
+.rcpt hr{border:0;border-top:3px dashed #999;margin:16px 0}
+.rcpt .tot{font-weight:700;font-size:36px;position:relative}
+.rcpt:after{content:'';position:absolute;left:0;right:0;bottom:-18px;height:20px;background:linear-gradient(-45deg,transparent 10px,#f8f6f1 10px) 0 0/20px 20px repeat-x,linear-gradient(45deg,transparent 10px,#f8f6f1 10px) 0 0/20px 20px repeat-x}
+/* phone */
+.orb{position:absolute;border:2px solid rgba(230,184,92,.35);border-radius:50%}
+.phone{position:absolute;left:330px;top:640px;width:420px;height:860px;background:#0d0c0b;border:10px solid #2c2925;border-radius:64px;box-shadow:0 0 0 2px #514a40,0 30px 90px rgba(0,0,0,.7);overflow:hidden;color:#fff;text-align:center}
+.phone .notch{width:140px;height:34px;background:#000;border-radius:0 0 20px 20px;margin:0 auto}
+/* emblem + grid */
+.floor{position:absolute;left:-540px;top:1250px;width:2160px;height:900px;transform:perspective(600px) rotateX(62deg);transform-origin:50% 0;background:linear-gradient(rgba(230,180,90,.45) 2px,transparent 2px) 0 0/100% 70px,linear-gradient(90deg,rgba(230,180,90,.45) 2px,transparent 2px) 0 0/90px 100%;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,0) 85%)}
+.rays{position:absolute;left:290px;top:250px;width:500px;height:500px;border-radius:50%;background:repeating-conic-gradient(rgba(255,210,130,.16) 0 4deg,transparent 4deg 14deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 70%)}
+.emb{position:absolute;left:390px;top:350px;width:300px;height:300px;border-radius:50%;border:6px solid #e0ac55;box-shadow:0 0 50px rgba(240,180,80,.5),inset 0 0 40px rgba(240,180,80,.35);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#20180d,#0b0906)}
+.emb:before{content:'';position:absolute;inset:16px;border-radius:50%;border:2px solid rgba(224,172,85,.6)}
+/* dial */
+.dial{position:absolute;left:240px;top:640px;width:600px;height:600px;border-radius:50%;border:4px solid #d9a24c;box-shadow:0 0 50px rgba(240,180,80,.35),inset 0 0 60px rgba(240,180,80,.15);background:radial-gradient(circle,rgba(60,45,20,.6),rgba(10,8,5,.2) 70%)}
+.dial .tk{position:absolute;left:298px;top:10px;width:4px;height:26px;background:#d9a24c;transform-origin:2px 290px}
+.dial .nd{position:absolute;left:298px;top:40px;width:4px;height:260px;background:linear-gradient(#fff3d0,#d9a24c);transform-origin:2px 260px;border-radius:2px}
+/* end card */
+.pill{position:absolute;left:150px;width:780px;height:104px;border:3px solid rgba(217,162,76,.7);border-radius:52px;background:rgba(30,24,15,.6);display:flex;align-items:center;gap:22px;padding:0 26px;white-space:nowrap}
+.pill .pin{flex:none;width:58px;height:58px;border-radius:50%;background:#e0ac55;color:#1a1408;font:900 30px Inter;display:flex;align-items:center;justify-content:center}
+.pill b{display:block;font:800 34px Inter;color:#f3c766;letter-spacing:1px}
+.pill span{font:600 28px Inter;color:#e9e4da}
+.search{position:absolute;left:180px;width:720px;height:96px;border-radius:48px;background:#fff;color:#111;display:flex;align-items:center;gap:20px;padding:0 34px;font:600 40px Inter;white-space:nowrap}
+.cond{position:absolute;left:120px;width:840px;text-align:center;font:500 26px Inter;color:#9a917f;line-height:1.4}
+svg *{transform-box:fill-box;transform-origin:center}
+.h1.s{font-size:66px}
+.coin{position:absolute;width:320px;height:96px;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,#fff0c0,#e9b456 45%,#a8701f 100%);box-shadow:0 14px 0 #7a5016,0 0 40px rgba(240,180,80,.45)}
+.lbl{position:absolute;left:560px;font:800 38px Inter;color:#f1ead9;white-space:nowrap;letter-spacing:1px}
+.lbl b{color:#f3c766}
+.ldr{position:absolute;height:3px;background:#d9a24c;transform-origin:0 50%}
+.spark{position:absolute;color:#ffe3a0;font:400 40px 'DejaVu Sans'}
+
+
+.mt{color:#5fe0a8;text-shadow:0 0 18px rgba(95,224,168,.5)}
+.cart{position:absolute;left:250px;top:780px}
+.drip{position:absolute;width:26px;border-radius:0 0 13px 13px;background:#5fe0a8}
+.ic{position:absolute;left:130px;width:200px;height:200px;border-radius:30px;background:#0f1d18;border:3px solid #5fe0a8;display:flex;align-items:center;justify-content:center}
+.et{position:absolute;left:520px;padding:12px 26px;border-radius:14px;background:#f2f6f3;color:#10201a;font:800 34px Inter;white-space:nowrap}
+.et b{display:block;font:900 44px 'DejaVu Serif',serif;color:#1f8a5e}
+.bill{position:absolute;left:190px;top:720px;width:700px;border-radius:30px;background:#f2f6f3;color:#10201a;padding:36px 50px 40px;box-shadow:0 40px 90px rgba(0,0,0,.7)}
+.bill .k{font:800 26px 'DejaVu Sans Mono',monospace;letter-spacing:6px;color:#1f8a5e;text-align:center}
+.bill .r{display:flex;justify-content:space-between;font:700 34px Inter;padding:14px 0;border-bottom:2px dashed rgba(16,32,26,.25);white-space:nowrap}
+.bill .t{display:flex;justify-content:space-between;align-items:center;margin-top:18px;font:900 40px Inter;white-space:nowrap}
+.bill .t b{font:900 76px 'DejaVu Serif',serif;color:#10201a}
+.bill .x{font:700 22px Inter;letter-spacing:4px;color:#6d7b75;text-align:center;margin-top:14px}
+.inl{position:absolute;left:190px;top:700px;font:800 28px Inter;letter-spacing:5px;color:#5fe0a8}
+.inp{position:absolute;left:150px;top:750px;width:780px;height:120px;border-radius:60px;background:#fff;color:#111;display:flex;align-items:center;padding:0 40px;font:900 64px 'DejaVu Sans Mono',monospace;white-space:nowrap;border:5px solid #5fe0a8}
+.mini{position:absolute;left:290px;top:960px;width:500px;height:300px;border-radius:30px;border:4px solid #5fe0a8;background:rgba(14,40,30,.7);text-align:center;padding-top:40px}
+.mini .k{font:800 28px Inter;letter-spacing:6px;color:#e9e4da}
+.mini .o{font:900 100px 'DejaVu Serif',serif;position:relative;display:inline-block;margin-top:10px}
+.mini .ln{position:absolute;left:-10px;right:-10px;top:50%;height:8px;background:#e74c3c;transform-origin:0 50%}
+.big2{position:absolute;left:0;top:1000px;width:1080px;text-align:center}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <div id="hud"><div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+   <div class="l"><span id="rec"></span>REC · CAM 01<small>FRANCE · PANIER HACOO</small></div><div class="r"><span id="tm">00:00.00</span><small>HACOO</small></div></div>
+  <div class="scene" data-s="0"><div class="floor"></div><div class="hd" style="top:220px"><div class="h1">TON PANIER HACOO</div><div class="it gold" style="font-size:96px">va fondre.</div><div class="h1 mt s">REGARDE.</div></div><svg class="cart" width="580" height="460" viewBox="0 0 580 460"><path d="M20 40 L110 40 L170 320 L500 320 L550 120 L140 120" fill="none" stroke="#e0ac55" stroke-width="18" stroke-linejoin="round" stroke-linecap="round"/>
+ <circle cx="200" cy="400" r="34" fill="#e0ac55"/><circle cx="460" cy="400" r="34" fill="#e0ac55"/><rect x="170" y="150" width="340" height="140" rx="20" fill="#5fe0a8" opacity=".85"/></svg>
+   <div class="drip" style="left:470px;top:1070px;height:70px"></div><div class="drip" style="left:560px;top:1070px;height:110px"></div><div class="drip" style="left:660px;top:1070px;height:50px"></div>
+   <div class="abs" style="left:0;top:1300px;width:1080px;text-align:center;font:900 72px 'DejaVu Serif',serif;color:#f3c766">40,00 € → ?</div></div>
+  <div class="scene" data-s="1" data-in="right"><div class="hd" style="top:230px"><div class="h1" data-g="1.0" data-fx="tw">UN BONNET,</div><div class="it gold" style="font-size:58px" data-g="1.1" data-fx="tw">des gants et un plaid tout doux.</div></div><div class="ic" style="top:560px" data-g="1.0" data-fx="up"><svg width="170" height="170" viewBox="0 0 200 200"><circle cx="100" cy="38" r="20" fill="#fff4f0"/><path d="M45 135 Q45 58 100 58 Q155 58 155 135 Z" fill="#e04848"/><path d="M70 70 L70 132 M100 60 L100 132 M130 70 L130 132" stroke="#b83232" stroke-width="6"/><rect x="38" y="128" width="124" height="34" rx="10" fill="#fff4f0"/></svg></div><div class="ldr" style="left:340px;top:660px;width:170px" data-g="1.0" data-fx="grow"></div><div class="et" style="top:610px" data-g="1.0" data-fx="left">Bonnet<b>8,90 €</b></div><div class="ic" style="top:810px" data-g="1.1" data-fx="up"><svg width="170" height="170" viewBox="0 0 200 200"><path d="M60 170 L60 95 Q60 80 72 80 L72 45 Q72 35 82 35 Q92 35 92 45 L92 75 L92 38 Q92 28 102 28 Q112 28 112 38 L112 75 L112 42 Q112 32 122 32 Q132 32 132 42 L132 85 L140 70 Q148 58 158 66 Q164 72 158 84 L138 130 L138 170 Z" fill="#ffe4dc"/><rect x="58" y="150" width="82" height="22" rx="6" fill="#e04848"/><circle cx="82" cy="42" r="6" fill="#e04848"/></svg></div><div class="ldr" style="left:340px;top:910px;width:170px" data-g="1.1" data-fx="grow"></div><div class="et" style="top:860px" data-g="1.1" data-fx="left">Gants<b>6,10 €</b></div><div class="ic" style="top:1060px" data-g="1.2" data-fx="up"><svg width="170" height="170" viewBox="0 0 200 200"><rect x="35" y="55" width="130" height="100" rx="18" fill="#f3e2cf"/><path d="M35 85 H165 M35 115 H165 M75 55 V155 M125 55 V155" stroke="#d9a24c" stroke-width="6" opacity=".7"/><path d="M35 145 Q100 175 165 145 L165 155 Q100 185 35 155 Z" fill="#e2c9ab"/></svg></div><div class="ldr" style="left:340px;top:1160px;width:170px" data-g="1.2" data-fx="grow"></div><div class="et" style="top:1110px" data-g="1.2" data-fx="left">Plaid<b>25,00 €</b></div></div>
+  <div class="scene" data-s="2" data-in="pop"><div class="hd" style="top:230px"><div class="h1" data-g="2.0" data-fx="tw">40 € PILE,</div><div class="it gold" data-g="2.1" data-fx="tw">en prix d'exemple.</div></div>
+   <div class="bill" data-g="2.0" data-fx="up"><div class="k">MON PANIER HACOO</div><div class="r"><span>Bonnet</span><span>8,90 €</span></div><div class="r"><span>Gants</span><span>6,10 €</span></div><div class="r"><span>Plaid</span><span>25,00 €</span></div>
+    <div class="t"><span>TOTAL</span><b>40,00 €</b></div><div class="x" data-g="2.1" data-fx="fade">PRIX D'EXEMPLE</div></div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="hd" style="top:230px"><div class="h1 s" style="font-size:50px" data-g="3.0" data-fx="tw">TU TAPES LE CODE PROMO HACOO :</div><div class="big gold" style="font-size:140px" data-g="3.1" data-fx="tw">hzklink</div></div>
+   <div class="inl" data-g="3.0" data-fx="fade">CODE PROMO HACOO</div>
+   <div class="inp" data-g="3.0" data-fx="up"><span data-g="3.1" data-fx="type">hzklink</span></div>
+   <div class="mini" data-g="3.0" data-fx="up"><div class="k">TOTAL DU PANIER</div><div class="o gold">40,00 €</div></div></div>
+  <div class="scene" data-s="4" data-in="pop"><div class="rays" style="top:640px"></div><div class="hd" style="top:230px"><div class="h1 mt" data-g="4.0" data-fx="tw">ET HOP,</div><div class="big gold" style="font-size:150px" data-g="4.1" data-fx="tw">34,40 €</div></div>
+   <div class="mini" style="top:720px"><div class="k">AVANT LE CODE</div><div class="o" style="color:#8f877a">40,00 €<div class="ln" data-g="4.0" data-fx="strike"></div></div></div>
+   <div class="big2" style="top:1080px" data-g="4.1" data-fx="stamp" data-slow="4.1"><div style="font:900 64px Inter;color:#5fe0a8">- 5,60 € · -14 %</div><div style="font:700 26px Inter;letter-spacing:4px;color:#bba98a;margin-top:14px">AVEC LE CODE PROMO HACOO hzklink<br>PRIX D'EXEMPLE</div></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="hd" style="top:230px"><div class="h1" data-g="5.0" data-fx="tw">CODE PROMO HACOO</div><div class="big gold" style="font-size:150px" data-g="5.0" data-fx="tw">hzklink</div><div class="it gold" style="font-size:60px" data-g="5.1" data-fx="tw">-14 % sur l'appli Hacoo</div></div>
+   <div class="pill" style="top:730px;border-color:rgba(95,224,168,.85)" data-g="5.1" data-fx="up"><div class="pin" style="background:#5fe0a8">★</div><div><b>LIENS DES ARTICLES TENDANCE</b><span>tout est dans ma bio</span></div></div>
+   <div class="cond" style="top:880px">Prix d'exemple · -14 % avec le code promo Hacoo hzklink<br>selon conditions sur l'appli Hacoo</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.59, 5.18, 7.77, 10.36, 12.95], END=17.65;
+const G=[[[0.1, 0.75, "Ton panier Hacoo"], [0.75, 1.55, "va fondre."], [1.55, 2.16, "Regarde."]], [[2.64, 3.18, "Un bonnet,"], [3.18, 3.58, "des gants"], [3.58, 4.52, "et un plaid tout doux."]], [[5.23, 5.99, "40 € pile,"], [5.99, 6.85, "en prix d'exemple."]], [[7.82, 9.13, "Tu tapes le code promo Hacoo :"], [9.13, 10.15, "hzklink."]], [[10.41, 10.65, "Et hop,"], [10.65, 12.03, "34,40 €."]], [[13.0, 14.66, "Code promo Hacoo hzklink,"], [14.66, 15.65, "les liens sont dans ma bio."]]];
+const CAM=0.45, PUSH=0.012;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
