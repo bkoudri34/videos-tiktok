@@ -77,3 +77,37 @@ Dans chaque vidéo Hacoo, le spectateur doit comprendre sans hésiter que `hzkli
 - À l'écran : écrire « CODE PROMO HACOO » à côté de `hzklink` partout où le code apparaît (champ de saisie titré « Code promo Hacoo », pastille « CODE HACOO : hzklink »), et le mot « Hacoo » visible dès l'accroche.
 - Écran de fin : grande ligne « CODE PROMO HACOO » + `hzklink` + « -14 % sur l'appli Hacoo ».
 - Description du post : une ligne explicite « Code promo Hacoo : hzklink (-14 %) » et le hashtag #codepromohacoo.
+
+# Hacoo : rotation des styles + agent veille (règle de Badr du 17/11/2026)
+
+Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'agent veille (tâche séparée, avant la tâche vidéo) écrit `veille/briefs/AAAA-MM-JJ.md` : il choisit le style de chaque vidéo Hacoo du jour et explique quoi faire (format, accroche type, rythme, scènes, voix). La tâche vidéo applique ce brief. S'il n'y a pas de brief du jour, elle applique elle-même les règles ci-dessous.
+
+## Styles disponibles (`veille/styles.md` tient le catalogue à jour)
+- **V3 « nuit & or »** (voir plus haut) : motion design noir et or, une voix.
+- **D « Duo 3D »** (`cfg/duo.py`, `outils/duo3d.js`, `outils/base_duo.css`, exemple `cfg/hacoo30.py`) : deux mannequins 3D façon pâte à modeler (Three.js) sur un sol quadrillé sombre, « le malin » (sportif, à droite) et « le pigeon » (costaud, à gauche), qui dialoguent. Inspiré du format « le connaisseur vs l'ignorant » repéré chez @pileinfo.tv : on reprend le format et le rythme, jamais son contenu.
+
+## Règles de variation
+- Les 2 vidéos Hacoo du jour sont dans 2 styles différents dès qu'il en existe au moins 2.
+- Un même créneau (vidéo 1 ou vidéo 2) ne garde pas le même style 2 jours de suite.
+- Le reste varie toujours aussi : accroche, articles, prix d'exemple, couleur, ordre des écrans.
+
+## Articles
+- Sport et streetwear autorisés et encouragés (baskets de running, survêt, sacoche, casquette, doudoune…), dessinés de façon générique dans `cfg/hacoo_items.py`.
+- Jamais de nom de marque, de logo, de bande ou virgule reconnaissable, ni les mots « ref », « réplique », « dupe » ou « copie ». Pas de vidéo pour des contrefaçons, même si un compte d'inspiration en fait.
+
+## Style D « Duo 3D » : fabrication
+- 25 à 32 s, 8 à 10 répliques courtes qui alternent entre les 2 personnages, ton oral et vanneur, une mini-histoire (le pigeon paie plein pot, le malin lui sort le code promo Hacoo).
+- Voix : une synthèse Speko par réplique, `speed: 1.1`, intent `{language:"fr", region:"FR", optimizeFor:"accuracy"}`.
+  - Le malin : `voice: "cosmo"`, `constraints: {allowedProviders: {tts: ["xai"]}}`.
+  - Le pigeon : `voice: "Mathieu"`, `constraints: {allowedProviders: {tts: ["inworld"]}}`.
+  - Écrire « l'appli Hacou » plutôt que « sur Hacou » seul (sinon c'est compris « Rakuten »).
+  - Couper les silences de début et de fin de chaque réplique (ffmpeg silenceremove), les recoller dans `full.wav` avec 0,2 s au début et 0,45 s entre les répliques : les bornes donnent directement `SPLITS`.
+  - Config : `MINLEN = 0.9`, `GAP = 0.12`, `TAIL = 2.6`.
+- `DUO_LINES` : une entrée par réplique `{'who': 'M'|'P', 'M': pose, 'P': pose, 'shot': 'wide'|'M'|'P'}` et `'lbl': False` pour cacher les étiquettes quand une carte fixe occupe le haut. Poses : idle, talk, point, shrug, hip, shock, head, cool, think. Alterner plan large et plan serré sur celui qui parle (coupe franche + zoom « punch » à chaque réplique).
+- Écran :
+  - accroche fixe en haut dès la 1re image, avec « Hacoo » dedans ;
+  - sous-titres énormes au centre, 2 à 3 mots par groupe, un mot clé en `<em>` (surligné rouge), le code en `<i>hzklink</i>` (jaune, jamais en majuscules) ;
+  - cartes qui surgissent au-dessus de la tête de celui qui parle (`anc('M'|'P', ...)`) : article + prix d'exemple, ticket, téléphone avec le champ « CODE PROMO HACOO », bulle « ?! », gros total recalculé (un seul ralenti) ;
+  - carte de fin blanche : « CODE PROMO HACOO », `hzklink`, « -14 % sur l'appli Hacoo », « liens des articles tendance en bio » et les conditions.
+- Rendu : `render.py` lance Chromium avec `--enable-unsafe-swiftshader --use-angle=swiftshader` pour la 3D ; Three.js est chargé depuis jsDelivr (`three@0.149.0`), il faut donc un accès réseau pendant le rendu.
+- Les règles Hacoo du 10/11 s'appliquent : « Hacou » dit au moins 2 fois, dont une dans les 3 premières secondes, et « code promo Hacou H Z K link ».

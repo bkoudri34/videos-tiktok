@@ -98,6 +98,7 @@ def mkhtml():
     doc = f'''<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
 <title>{C.TITLE}</title>
+{getattr(C, 'HEAD', '')}
 <style>
 {C.ROOT}
 {base}

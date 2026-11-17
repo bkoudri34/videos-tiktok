@@ -1,0 +1,52 @@
+/* Style « Duo 3D » : deux mannequins 3D (Three.js) qui dialoguent, sol quadrillé sombre,
+   gros sous-titres mot par mot au centre, cartes et réactions qui surgissent au-dessus des têtes. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07080b}
+body{font-family:'Inter','Arial Black','Helvetica Neue',Arial,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#07080b}
+#cam{position:absolute;inset:0;transform-origin:540px 1000px}
+#bgtex{position:absolute;inset:0;background:#07080b}
+#three{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#three canvas{display:block;width:1080px;height:1920px}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#grain{position:absolute;inset:-200px;opacity:.06;mix-blend-mode:screen;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 48%,rgba(0,0,0,0) 55%,rgba(0,0,0,.65) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;mix-blend-mode:screen}
+
+/* Sous-titres TikTok : énormes, blancs, contour noir, un mot clé surligné */
+#sub{position:absolute;left:40px;top:1120px;width:1000px;text-align:center;font:900 92px/1.08 'Inter','Arial Black',sans-serif;text-transform:uppercase;letter-spacing:-1px;color:#fff;
+ -webkit-text-stroke:14px #000;paint-order:stroke fill;text-shadow:0 8px 0 rgba(0,0,0,.55);transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;color:#fff;background:#e5322d;-webkit-text-stroke:0;padding:0 14px;border-radius:12px;box-shadow:0 8px 0 rgba(0,0,0,.45);display:inline-block}
+#sub i{font-style:normal;color:#ffd23f}
+
+/* Étiquettes des personnages, accrochées au-dessus des têtes (positionnées par duo3d.js) */
+.lbl{position:absolute;left:0;top:0;transform:translate(-50%,-100%);font:800 30px 'Inter',sans-serif;letter-spacing:1px;color:#fff;white-space:nowrap;
+ padding:6px 18px;border-radius:30px;background:rgba(10,12,18,.72);border:3px solid rgba(255,255,255,.18);z-index:4}
+.lbl b{color:#ffd23f}
+.anc{position:absolute;left:0;top:0;width:0;height:0;z-index:5}
+
+/* Accroche visible dès la 1re image */
+.hook{position:absolute;left:60px;top:230px;width:960px;text-align:center;font:900 84px/1.05 'Inter','Arial Black',sans-serif;text-transform:uppercase;color:#fff;-webkit-text-stroke:12px #000;paint-order:stroke fill}
+.hook em{font-style:normal;background:#e5322d;-webkit-text-stroke:0;padding:0 12px;border-radius:12px}
+
+/* Cartes qui surgissent */
+.card{position:absolute;transform-origin:50% 100%;background:#fff;color:#111;border-radius:28px;box-shadow:0 18px 0 rgba(0,0,0,.35),0 30px 80px rgba(0,0,0,.55);text-align:center;white-space:nowrap}
+.card .t{font:800 26px 'Inter',sans-serif;letter-spacing:3px;color:#6b7280;text-transform:uppercase}
+.card .p{font:900 76px 'Inter','Arial Black',sans-serif;letter-spacing:-2px}
+.card .x{font:700 22px 'Inter',sans-serif;letter-spacing:2px;color:#9ca3af;text-transform:uppercase}
+.tag{position:absolute;padding:8px 22px;border-radius:16px;background:#ffd23f;color:#111;font:900 54px 'Inter','Arial Black',sans-serif;white-space:nowrap;box-shadow:0 8px 0 rgba(0,0,0,.35)}
+.tag.red{background:#e5322d;color:#fff}
+.tag s{color:#6b7280;font-size:36px;text-decoration-color:#e5322d;text-decoration-thickness:5px;margin-right:10px}
+.bub{position:absolute;width:190px;height:190px;border-radius:50%;background:#fff;color:#111;display:flex;align-items:center;justify-content:center;font:900 110px 'Inter','Arial Black',sans-serif;box-shadow:0 14px 0 rgba(0,0,0,.35)}
+.bub:after{content:'';position:absolute;left:70px;bottom:-34px;border:26px solid transparent;border-top:40px solid #fff}
+.phone{position:absolute;width:520px;height:330px;border-radius:36px;background:#111827;border:8px solid #2b3446;box-shadow:0 20px 70px rgba(0,0,0,.6);padding:34px 30px;text-align:left;white-space:nowrap}
+.phone .t{font:800 24px 'Inter',sans-serif;letter-spacing:3px;color:#9ca3af}
+.phone .f{margin-top:16px;height:110px;border-radius:20px;background:#fff;color:#111;display:flex;align-items:center;padding:0 26px;font:900 70px 'DejaVu Sans Mono','Menlo',monospace}
+.phone .ok{margin-top:18px;font:900 40px 'Inter',sans-serif;color:#34d399}
+.endc{position:absolute;left:110px;top:210px;width:860px;padding:34px 30px 30px;border-radius:40px;background:#fff;color:#111;text-align:center;box-shadow:0 22px 0 rgba(0,0,0,.35),0 40px 100px rgba(0,0,0,.6)}
+.endc .k{font:900 46px 'Inter',sans-serif;letter-spacing:2px}
+.endc .c{font:900 128px 'DejaVu Sans Mono','Menlo',monospace;letter-spacing:-2px;line-height:1.1;color:#e5322d}
+.endc .d{font:800 40px 'Inter',sans-serif}
+.endc .b{margin-top:14px;display:inline-block;padding:10px 26px;border-radius:30px;background:#111;color:#fff;font:800 30px 'Inter',sans-serif}
+.endc .x{margin-top:14px;font:600 22px 'Inter',sans-serif;color:#6b7280}

@@ -6,7 +6,7 @@ HTML = pathlib.Path(__file__).with_name(os.environ.get("HTMLFILE","video.html"))
 mode = sys.argv[1]  # "stills" or "video"
 
 with sync_playwright() as p:
-    b = p.chromium.launch(args=["--force-color-profile=srgb", "--disable-lcd-text"])
+    b = p.chromium.launch(args=["--force-color-profile=srgb", "--disable-lcd-text", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist", "--use-angle=swiftshader"])
     pg = b.new_page(viewport={"width": 1080, "height": 1920}, device_scale_factor=1)
     pg.goto(HTML)
     pg.wait_for_function("window.READY === true")
