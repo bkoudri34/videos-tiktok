@@ -1,0 +1,40 @@
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
