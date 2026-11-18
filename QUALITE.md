@@ -7,3 +7,4 @@ Règles complètes : voir STYLE.md, sections « Contrôle qualité AVANT program
 | Date | Compte | Sujet | Format | Note /100 | Points bloquants | Corrections |
 |---|---|---|---|---|---|---|
 | 18/11/2026 | @htm.invest | 3-banques (16:00) | F8 | 91 | aucun | 8 → 7 hashtags |
+| 18/11/2026 | @htm.invest | boursorama (18:00) | F1 | 90 | aucun | titre « peut te coûter », « jusqu'à 40 € » carte |
