@@ -19,7 +19,7 @@ Ancienne méthode (v2) :
 2. Vérifier en images fixes : `HTMLFILE=modele.html python3 render.py stills <dossier> 1.0 5.0 ...`
 3. Rendu en 2 morceaux en parallèle : `HTMLFILE=modele.html python3 render.py video 60 <durée> part0.mp4 0 <n/2>` puis `... part1.mp4 <n/2> <n>`, assemblage avec ffmpeg concat + grain (`noise=c0s=6:c0f=t+u`).
 4. Voix off : Speko `audio.synthesize` avec la voix clonée « voix-htm-luxe » (voir STYLE.md v3), une réplique par scène, posée au début de chaque scène, bruitages + musique à 45 %.
-5. Déposer le MP4 dans `videos/`, pousser, puis programmer le post dans Metricool (TikTok, contenu commercial activé).
+5. Faire le contrôle qualité (STYLE.md, « Contrôle qualité AVANT programmation et envoi »), puis déposer le MP4 dans `videos/`, pousser, programmer le post dans Metricool (TikTok, contenu commercial activé).
 
 ## Règles
 

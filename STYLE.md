@@ -111,3 +111,61 @@ Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'age
   - carte de fin blanche : « CODE PROMO HACOO », `hzklink`, « -14 % sur l'appli Hacoo », « liens des articles tendance en bio » et les conditions.
 - Rendu : `render.py` lance Chromium avec `--enable-unsafe-swiftshader --use-angle=swiftshader` pour la 3D ; Three.js est chargé depuis jsDelivr (`three@0.149.0`), il faut donc un accès réseau pendant le rendu.
 - Les règles Hacoo du 10/11 s'appliquent : « Hacou » dit au moins 2 fois, dont une dans les 3 premières secondes, et « code promo Hacou H Z K link ».
+
+# Contrôle qualité AVANT programmation et envoi (règle de Badr du 18/11/2026)
+
+**Obligatoire pour chaque vidéo** (les 3 parrainage et les 2 Hacoo), juste après le rendu final et **avant** : le commit/push, la programmation dans Metricool et l'envoi à Badr (SendUserFile). Une vidéo qui n'a pas passé ce contrôle n'est ni programmée ni envoyée comme « prête ».
+
+## Qui contrôle
+Un sous-agent lancé avec l'outil Task, qui n'a pas fabriqué la vidéo (regard neuf). Donne-lui : le chemin du MP4, le sujet, le titre TikTok et la description prévus, le format choisi (voir « Formats parrainage » plus bas) et le fichier `QUALITE.md`.
+
+## Ce qu'il vérifie
+1. `ffprobe` : 1080x1920, 9:16, durée (parrainage v3 : 18 à 26 s ; Hacoo Duo : 25 à 32 s).
+2. Images fixes à 0,0 s, 0,5 s, 1 s, 2 s, 3 s puis toutes les 2 s, assemblées en planche de contact, **regardées** une par une.
+3. Voix : `audio.transcribe` (Speko, `language: "fr"`, `word_timestamps: true`) ; crête audio (`ffmpeg volumedetect`, ≤ -1 dB).
+4. **Mot-clé de recherche** (la Recherche TikTok fait ≈ +65 % de vues sur @htm.invest) :
+   - parrainage : « parrainage <banque> » (ex. « parrainage Hello bank ») ; Hacoo : « code promo Hacoo » ;
+   - il doit être : lisible à l'écran au plus tard à **0,5 s** (accroche fixe ou bandeau, pas seulement tapé lettre par lettre) ; **dit à l'oral dans les 2 premières secondes** ; dans le **titre TikTok** ; dans la **1re ligne de la description** ; en hashtags (#parrainage + #<banque>, ou #hacoo + #codepromohacoo).
+
+## Note sur 100
+- Accroche 0-1,5 s (25) : lisible dès les premières images, 6 à 9 mots, déclencheur fort (STOP, perte d'argent, question, résultat montré).
+- Mot-clé de recherche (20) : 5 écran + 5 oral + 4 titre + 4 1re ligne + 2 hashtags.
+- Rythme / rétention (20) : un changement visuel toutes les 1,5 à 3 s, sous-titres calés sur la voix, un seul ralenti, fin qui boucle.
+- Clarté de l'offre + appel à l'action (15).
+- Variété (10) : format différent des 2 autres vidéos du jour et de la vidéo précédente du même sujet (voir journal de `QUALITE.md`).
+- Technique (10) : rien ne déborde ni ne se chevauche, zones de sécurité respectées, son propre, pas de logo.
+
+**Points bloquants** (vidéo refusée quelle que soit la note) : montant non vérifié ou différent de la source officielle du jour, mention « Offre(s) soumise(s) aux conditions en vigueur » absente, texte illisible ou qui déborde, son absent ou saturé, logo de marque, Revolut « illimité » ou prime en argent pour le filleul, contrefaçon / « ref » / réplique, code promo d'un autre créateur.
+
+## Décision
+- **≥ 70/100 et aucun point bloquant** : OK.
+- **Sinon** : corrige. Titre et description : corrige directement. Écran, voix ou rythme : corrige le modèle et refais le rendu (une seule fois), puis refais le contrôle.
+- **Toujours bloquant après correction** : ne programme pas la vidéo dans Metricool. Envoie-la quand même à Badr avec « ⚠️ NON PROGRAMMÉE » en tête de légende et la raison.
+
+## Après le contrôle
+- Ajoute à la fin de chaque description parrainage : « Lien de parrainage : je touche une prime. » (loi influenceurs du 9 juin 2023).
+- Dans la légende SendUserFile envoyée à Badr, ajoute une ligne : « Contrôle qualité : <note>/100 · format <Fx> · ✅ <point fort> · ⚠️ <point à améliorer> ».
+- Ajoute une ligne par vidéo au journal de `QUALITE.md` (date, compte, sujet, format, note, points bloquants, corrections) et pousse-le avec les vidéos. Dans le message final, donne la note de chaque vidéo.
+
+# Formats parrainage : faire varier les vidéos (règle de Badr du 18/11/2026)
+
+L'univers visuel v3 « nuit & or » reste. Ce qui change chaque jour, c'est **le format** (le scénario). Inspiré des formats qui marchent chez @hacooultra14 et @pileinfo.tv (voir `veille/comptes.md`) : on reprend la mécanique, jamais le texte, les visuels ni les codes.
+
+| Code | Format | Exemple d'accroche (à reformuler) |
+|---|---|---|
+| F1 | STOP / erreur à éviter | « STOP avant d'ouvrir ton compte Fortuneo » |
+| F2 | Démystification | « Comment marche VRAIMENT le parrainage Hello bank » |
+| F3 | Anti-arnaque / confiance | « 500 € de prime ? Le vrai maximum, c'est… » |
+| F4 | Argent laissé sur la table | « Tu laisses 150 € à Hello bank sans le savoir » |
+| F5 | Défi chrono | « Compte ouvert en moins de 5 minutes, chrono » |
+| F6 | Le chemin de ta prime | de l'ouverture au virement, étape par étape, avec les délais |
+| F7 | Tuto écran 1-2-3 | téléphone illustré, étapes numérotées, sans logo |
+| F8 | Résultat d'abord | notification « Virement reçu +80 € » ou solde avant/après en plein écran dès la 1re image |
+| F9 | Duel / comparatif | « Gold ou Fosfo ? », « BoursoBank ou Fortuneo ? » |
+| F10 | Le connaisseur vs l'ignorant | 2 personnages qui dialoguent (peut réutiliser le style Duo 3D) |
+
+Règles :
+- Les 3 vidéos parrainage du jour ont **3 formats différents**, et au moins 1 sur 3 est un F8 (résultat d'abord).
+- Un sujet ne reprend pas le format de sa vidéo précédente (regarde le journal de `QUALITE.md`).
+- Le mot-clé « parrainage <banque> » est dans l'accroche quel que soit le format.
+- Hacoo : la rotation des styles de l'agent veille (`veille/briefs/`) s'applique toujours ; les formats F1 à F10 peuvent servir de scénario à l'intérieur de ces styles.
