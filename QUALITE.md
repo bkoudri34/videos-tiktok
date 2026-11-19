@@ -13,3 +13,4 @@ Règles complètes : voir STYLE.md, sections « Contrôle qualité AVANT program
 | 18/11/2026 | affiliation Hacoo | hacoo-2 | T tuto illustré (nouveau) | 86 | aucun | mention des conditions complétée |
 | 19/11/2026 | @htm.invest | revolut (16:00) | F2 | 88 | aucun | tampon « FAUX » → « NON » déplacé sous la carte ; description complétée (récompense du parrain) |
 | 19/11/2026 | @htm.invest | fortuneo (18:00) | F8 | 89 | aucun | tuiles et pastille date élargies (débordement) ; description : revenus ≥ 2 200 €/mois ajoutés |
+| 19/11/2026 | @htm.invest | 3-banques (21:00) | F4 | 90 | aucun | montants des enveloppes réduits (débordement), pastilles recentrées ; BoursoBank passé à 260 € (page officielle du 19/11) |
