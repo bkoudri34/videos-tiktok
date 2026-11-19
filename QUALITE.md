@@ -16,3 +16,4 @@ Règles complètes : voir STYLE.md, sections « Contrôle qualité AVANT program
 | 19/11/2026 | @htm.invest | 3-banques (21:00) | F4 | 90 | aucun | montants des enveloppes réduits (débordement), pastilles recentrées ; BoursoBank passé à 260 € (page officielle du 19/11) |
 | 19/11/2026 | affiliation Hacoo | hacoo (1) | T tuto illustré · F2 calcul (ardoise) | 86 | aucun | « six euros trente de moins » (compris « trente-deux ») → « en moins », voix refaite ; ardoise et soulignement recalés |
 | 19/11/2026 | affiliation Hacoo | hacoo-2 | E écran d'appli (nouveau) · F8 | 81 → corrigée | aucun | badge AVANT, pastille CODE PROMO HACOO et mention des conditions déplacés (chevauchements), durée 20,7 → 21,9 s, un seul nouveau rendu |
+| 19/11/2026 | affiliation Hacoo | hacoo-3 | V3 nuit & or lilas · F5 défi chrono | 86 | aucun | anneau de la case et chronos recalés sur les images fixes ; voix Manon (cartesia), 1re réplique et « H, Z, K, link » refaites (transcription) |
