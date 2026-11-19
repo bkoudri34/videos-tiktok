@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo tuto ardoise calcul</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.cart{left:140px;top:560px;width:800px;padding:30px 40px 34px}
+.cart .h{font:900 46px Inter;margin-bottom:10px}
+.cart .row{height:104px}
+.cart .tot{display:flex;justify-content:space-between;margin-top:14px;padding-top:16px;border-top:4px dashed #111;font:900 56px Inter;white-space:nowrap}
+.ex{position:absolute;left:0;width:1080px;text-align:center;font:700 30px 'Comic Relief',cursive;color:#555}
+.slate{position:absolute;left:110px;top:560px;width:860px;height:600px;border-radius:26px;background:#25352b;border:18px solid #8a6a43;box-shadow:10px 12px 0 #111;padding:50px 50px;color:#f4f1e8}
+.slate .l{font:700 74px 'Comic Relief',cursive;white-space:nowrap;line-height:1.5}
+.slate .l b{color:#ffe14d}
+.slate .r{position:absolute;left:50px;bottom:40px;font:700 70px 'Comic Relief',cursive;white-space:nowrap}
+.slate .r span{background:#ffe14d;color:#111;padding:0 18px;border-radius:10px}
+.big2{position:absolute;left:0;top:640px;width:1080px;text-align:center}
+.big2 .o{display:inline-block;position:relative;font:900 100px Inter;color:#777}
+.big2 .n{font:900 200px Inter;line-height:1.1;margin-top:20px}
+.big2 .n span{background:#ffe14d;padding:0 24px}
+.chk{position:absolute;left:120px;top:560px;width:840px}
+.chk .r{height:180px;display:flex;align-items:center;gap:34px;font:900 50px Inter;white-space:nowrap;border-bottom:5px dashed #111}
+.chk .bx{flex:none;width:100px;height:100px;border:7px solid #111;border-radius:16px;background:#fff;position:relative}
+.chk .bx svg{position:absolute;left:-6px;top:-22px}
+.chk .r .hl{font-family:'DejaVu Sans Mono',monospace}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:220px"><mark>Code promo Hacoo</mark> :<br>-14 %, ça fait<br><em>combien vraiment ?</em></div><svg class="abs ink" style="left:150px;top:660px;overflow:visible" width="260" height="470" viewBox="0 0 260 470"><g class="ink"><circle cx="120" cy="80" r="56"/><path d="M98 72 l0 6 M142 72 l0 6"/><path d="M100 108 Q120 120 140 108"/>
+ <path d="M120 136 L120 330"/><path d="M120 330 L70 460 M120 330 L170 460"/><path d="M120 190 L40 270"/><path d="M120 190 L230 170"/></g></svg>
+   <div class="note" style="left:470px;top:700px;font-size:110px;transform:rotate(-8deg)">-14 % ??</div>
+   <div class="note" style="left:520px;top:900px;transform:rotate(4deg)" data-g="0.2" data-fx="pop">sur 45 € ?</div>
+   <div class="ex" style="top:1200px">prix d'exemple</div></div>
+  <div class="scene" data-s="1" data-in="up"><div class="ttl" style="top:220px;font-size:90px">Le panier</div><div class="paper cart"><div class="h">Mon panier Hacoo</div><div class="row"><span class="ico"><svg width="88" height="88" viewBox="0 0 200 200"><path d="M58 34 L84 26 Q100 40 116 26 L142 34 L168 108 L146 114 L144 172 L56 172 L54 114 L32 108 Z" fill="#1f2937"/><path d="M100 30 V172" stroke="#e5e7eb" stroke-width="5"/><path d="M58 34 L34 106 M142 34 L166 106" stroke="#5b8cff" stroke-width="7"/><rect x="56" y="160" width="88" height="12" fill="#111827"/><path d="M84 26 Q100 44 116 26" stroke="#5b8cff" stroke-width="6" fill="none"/></svg></span>Survêt<span class="p">29,00 €</span></div><div class="row"><span class="ico"><svg width="88" height="88" viewBox="0 0 200 200"><circle cx="100" cy="38" r="20" fill="#fff4f0"/><path d="M45 135 Q45 58 100 58 Q155 58 155 135 Z" fill="#e04848"/><path d="M70 70 L70 132 M100 60 L100 132 M130 70 L130 132" stroke="#b83232" stroke-width="6"/><rect x="38" y="128" width="124" height="34" rx="10" fill="#fff4f0"/></svg></span>Bonnet<span class="p">8,00 €</span></div><div class="row"><span class="ico"><svg width="88" height="88" viewBox="0 0 200 200"><path d="M50 50 Q100 80 150 50 L150 75 Q100 105 50 75 Z" fill="#d9a24c"/><rect x="110" y="70" width="32" height="95" rx="6" fill="#d9a24c"/><path d="M114 165 v12 M122 165 v12 M130 165 v12 M138 165 v12" stroke="#d9a24c" stroke-width="4"/><path d="M60 62 H140" stroke="#7a5016" stroke-width="5" opacity=".5"/></svg></span>Écharpe<span class="p">8,00 €</span></div><div class="tot"><span>Total</span><span>45,00 €</span></div></div><svg class="abs red" style="left:560px;top:1000px;overflow:visible" width="400" height="150" viewBox="0 0 400 150"><path class="dr" pathLength="1" d="M32.0 82.5 C20.0 15.0,340.0 -7.5,388.0 67.5 C408.0 135.0,80.0 157.5,24.0 93.0 L48.0 60.0" data-g="1.2" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="ex" style="top:400px">prix d'exemple</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="ttl" style="top:220px;font-size:90px">Le calcul</div>
+   <div class="slate"><div class="l" data-g="2.0" data-fx="fade">10 % de 45 = <b>4,50</b></div><div class="l" data-g="2.2" data-fx="fade">+ 4 % = <b>1,80</b></div>
+    <div class="r" data-g="2.3" data-fx="fade">= ?</div></div><svg class="abs red" style="left:650px;top:728px;overflow:visible" width="210" height="40" viewBox="0 0 210 40"><path class="dr" pathLength="1" d="M0 8 Q105.0 0 210 10" data-g="2.1" data-fx="draw"/><path class="dr" pathLength="1" d="M10 30 Q105.0 22 204 32" data-g="2.1" data-fx="draw"/></svg></div>
+  <div class="scene" data-s="3" data-in="pop"><div class="ttl" style="top:220px;font-size:90px">Le calcul</div>
+   <div class="slate"><div class="l">10 % de 45 = <b>4,50</b></div><div class="l">+ 4 % = <b>1,80</b></div>
+    <div class="r" data-g="3.1" data-fx="stamp">= <span>6,30 €</span> en moins</div></div></div>
+  <div class="scene" data-s="4" data-in="pop"><div class="ttl" style="top:220px;font-size:86px">Ce que tu paies</div>
+   <div class="big2"><div class="o">45,00 €<svg class="abs red" style="left:-20px;top:40px;overflow:visible" width="500" height="40" viewBox="0 0 500 40"><path class="dr" pathLength="1" d="M0 30 L480 6" data-g="4.0" data-fx="draw"/></svg></div>
+    <div class="n" data-g="4.1" data-fx="stamp" data-slow="4.1"><span>38,70 €</span></div></div>
+   <div class="note" style="left:620px;top:1080px;transform:rotate(-4deg)" data-g="4.2" data-fx="pop">← ça, tu paies</div>
+   <div class="ex" style="top:1220px" data-g="4.3" data-fx="fade">prix d'exemple · code promo Hacoo hzklink</div></div>
+  <div class="scene" data-s="5" data-in="right"><div class="ttl" style="top:220px;font-size:86px">Avant de payer</div>
+   <div class="chk"><div class="r"><div class="bx"><svg class="abs red" style="left:-6px;top:-22px;overflow:visible" width="140" height="120" viewBox="0 0 140 120"><path class="dr" data-g="5.1" data-fx="draw" pathLength="1" d="M10 70 L50 110 L130 10"/></svg></div>case code promo Hacoo</div><div class="r"><div class="bx"><svg class="abs red" style="left:-6px;top:-22px;overflow:visible" width="140" height="120" viewBox="0 0 140 120"><path class="dr" data-g="5.2" data-fx="draw" pathLength="1" d="M10 70 L50 110 L130 10"/></svg></div>tape <span class="hl">hzklink</span></div><div class="r"><div class="bx"><svg class="abs red" style="left:-6px;top:-22px;overflow:visible" width="140" height="120" viewBox="0 0 140 120"><path class="dr" data-g="5.3" data-fx="draw" pathLength="1" d="M10 70 L50 110 L130 10"/></svg></div>vérifie le <em style="font-style:normal;color:#e63946">TOTAL</em></div></div></div>
+  <div class="scene" data-s="6" data-in="pop">
+   <div class="endw" data-g="6.0" data-fx="up"><div class="k">CODE PROMO HACOO</div><div class="c">hzklink</div><div class="d">-14 % sur l'appli Hacoo</div>
+    <div class="b">liens des articles tendance en bio</div><div class="x">Prix d'exemple · -14 % avec le code promo Hacoo hzklink · Offre soumise aux conditions en vigueur sur l'appli Hacoo</div></div>
+   <div class="note" style="left:200px;top:960px;transform:rotate(-3deg)" data-g="6.0" data-fx="pop">envoie-la à ton pote<br>qui ne compte jamais</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 3.16, 5.66, 9.36, 11.51, 14.98, 19.04], END=24.99;
+const G=[[[0.05, 1.05, "<em>Code promo Hacoo</em> :"], [1.05, 2.15, "<i>-14 %</i>,"], [2.15, 2.65, "ça fait combien,"], [2.65, 3.06, "vraiment ?"]], [[3.21, 3.81, "Prends ce panier"], [3.81, 4.61, "sur l'appli <em>Hacoo</em> :"], [4.61, 5.56, "<i>45 €</i>."]], [[5.71, 6.41, "10 %,"], [6.41, 7.51, "<em>4,50 €</em>."], [7.51, 8.31, "Plus 4 %,"], [8.31, 9.26, "<em>1,80 €</em>."]], [[9.41, 9.7, "Ça fait"], [9.7, 10.78, "<em>6,30 €</em> en moins."]], [[11.56, 11.75, "Tu paies"], [11.75, 13.05, "<em>38,70 €</em>"], [13.05, 14.15, "au lieu de 45."], [14.15, 14.88, "Prix d'exemple."]], [[15.03, 15.93, "Avant de payer :"], [15.93, 16.83, "la case <em>code promo</em>,"], [16.83, 17.73, "<em>hzklink</em>,"], [17.73, 18.94, "et tu vérifies <i>le total</i>."]], [[19.09, 19.85, "Envoie ça à ton pote"], [19.85, 21.05, "qui ne compte jamais."], [21.05, 22.05, "<em>Code promo Hacoo</em>"], [22.05, 22.99, "<em>hzklink</em>."]]];
+const CAM=0.6, PUSH=0.010;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
