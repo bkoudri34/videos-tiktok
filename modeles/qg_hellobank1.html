@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>QG Hello bank fin le 30 novembre</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.bub{position:absolute;background:#fff;border:6px solid #111;border-radius:34px;padding:22px 28px;font-weight:900;font-family:Inter;text-align:center;line-height:1.1;box-shadow:8px 9px 0 #111}
+.bub .tl{position:absolute;bottom:-34px;width:40px;height:40px;background:#fff;border-right:6px solid #111;border-bottom:6px solid #111;transform:rotate(45deg) skew(10deg,10deg)}
+.bub em{font-style:normal;background:#ffe14d;padding:0 8px}
+.bub b{color:#e63946}
+.phone{position:absolute;width:440px;height:800px;border:9px solid #111;border-radius:64px;background:#fff;box-shadow:12px 14px 0 #111;overflow:hidden}
+.phone:before{content:'';position:absolute;left:150px;top:18px;width:120px;height:26px;border-radius:13px;background:#111}
+.phone .scr{position:absolute;left:34px;right:34px;top:80px;font-family:Inter}
+.phone .tt{font:900 40px Inter;margin-bottom:22px}
+.phone .ln{height:26px;border-radius:13px;background:#e9e5dc;margin:14px 0}
+.phone .bt{height:96px;border-radius:48px;background:#111;color:#fff;font:900 34px Inter;display:flex;align-items:center;justify-content:center;margin-top:26px;white-space:nowrap}
+.phone .fl{height:90px;border:5px solid #111;border-radius:18px;display:flex;align-items:center;padding:0 18px;font:800 30px Inter;white-space:nowrap;margin-top:14px}
+.tag{position:absolute;font:900 38px Inter;letter-spacing:1px;padding:8px 22px;border:5px solid #111;border-radius:16px;background:#fff;white-space:nowrap}
+.cond{position:absolute;left:110px;width:820px;font:600 25px/1.35 Inter;color:#444;text-align:center}
+.endc{position:absolute;left:110px;top:240px;width:820px;padding:40px 30px 36px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endc .k{font:900 46px Inter}
+.endc .c{display:inline-block;margin:14px 0;font:900 100px Inter;background:#ffe14d;padding:0 22px;line-height:1.15}
+.endc .d{font:800 40px Inter}
+.endc .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+
+#sub{left:60px;width:850px}
+.calp{position:absolute;width:420px;height:440px;background:#fff;border:7px solid #111;border-radius:30px;box-shadow:12px 14px 0 #111;text-align:center;overflow:hidden}
+.calp .top{height:110px;background:#e63946;border-bottom:7px solid #111;color:#fff;font:900 60px Inter;display:flex;align-items:center;justify-content:center;letter-spacing:4px}
+.calp .d{font:900 200px/1.1 Inter}
+.calp .h{font:900 56px Inter;color:#e63946}
+.bigN{position:absolute;font:900 230px/1 Inter;letter-spacing:-6px;white-space:nowrap}
+.lst{position:absolute;left:70px;width:800px;padding:24px 34px}
+.lst .r{display:flex;align-items:center;gap:22px;font:800 46px Inter;white-space:nowrap;height:110px}
+.lst .r .p{margin-left:auto;font:900 54px Inter;padding-right:6px}
+.vch{position:absolute;width:560px;height:280px;background:#ffe14d;border:7px dashed #111;border-radius:26px;text-align:center;padding-top:34px;box-shadow:12px 14px 0 #111}
+.vch .k{font:900 44px Inter;letter-spacing:3px}
+.vch .v{font:900 130px/1.1 Inter}
+.hs{position:absolute;width:250px;height:200px;border:7px solid #111;border-radius:22px;background:#fff;font:900 34px Inter;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;box-shadow:8px 9px 0 #111}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:210px;font-size:72px">Parrainage<br><mark>Hello bank</mark><br><em>fin le 30/11 à 15 h</em></div><svg class="abs ink" style="left:90px;top:640px;overflow:visible" width="228" height="446" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M70 52 L80 22 L96 44 L110 14 L124 40 L140 12 L150 42 L166 24 L170 56"/><path d="M98 72 l0 8 M142 72 l0 8"/><ellipse cx="120" cy="112" rx="14" ry="16"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 90"/></g><g class="armR"><path d="M120 190 L190 90"/></g></g></svg>
+   <div class="calp" style="left:480px;top:560px"><div class="top">NOVEMBRE</div><div class="d">30</div><div class="h">à 15 h 00</div></div><svg class="abs red" style="left:450px;top:640px;overflow:visible" width="480" height="380" viewBox="0 0 480 380"><path class="dr" pathLength="1" d="M38.4 209.00000000000003 C24.0 38.0,408.0 -19.0,465.59999999999997 171.0 C489.6 342.0,96.0 399.0,28.799999999999997 235.6 L57.599999999999994 152.0" data-g="0.2" data-fx="draw" style="transform:rotate(4deg)"/></svg>
+   <div class="note" style="left:470px;top:1060px;font-size:58px;transform:rotate(-4deg)" data-g="0.1" data-fx="stamp">ATTENTION !</div></div>
+  <div class="scene" data-s="1" data-in="up"><div class="ttl" style="top:220px;font-size:84px">Jusque-là</div>
+   <div class="bigN" style="left:190px;top:470px" data-g="1.1" data-fx="stamp">330 €</div><svg class="abs red" style="left:200px;top:720px;overflow:visible" width="660" height="40" viewBox="0 0 660 40"><path class="dr" pathLength="1" d="M0 8 Q330.0 0 660 10" data-g="1.1" data-fx="draw"/><path class="dr" pathLength="1" d="M10 30 Q330.0 22 654 32" data-g="1.1" data-fx="draw"/></svg><svg class="abs ink" style="left:110px;top:830px;overflow:visible" width="228" height="446" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M66 60 q8 -22 22 -10 q6 -24 26 -12 q12 -20 28 -4 q18 -14 26 12 q14 4 6 24"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 290"/></g><g class="armR"><path d="M120 190 L240 160"/></g></g></svg>
+   <div class="note" style="left:470px;top:900px;font-size:56px;transform:rotate(-3deg)" data-g="1.2" data-fx="pop">pour toi</div>
+   <div class="note" style="left:470px;top:1000px;font-size:40px;color:#111;transform:rotate(-3deg)" data-g="1.2" data-fx="pop">(au maximum)</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="ttl" style="top:220px;font-size:84px">Avec <mark>Hello Prime</mark></div>
+   <div class="note" style="left:0;width:930px;text-align:center;top:330px;font-size:40px;color:#111" data-g="2.1" data-fx="pop">(dès 1 500 € nets / mois)</div>
+   <div class="paper lst" style="top:430px"><div class="r" data-g="2.0" data-fx="left"><span class="num" style="position:static;width:86px;height:86px;font-size:50px">1</span>à l'ouverture<span class="p">80 €</span></div>
+    <div class="r" data-g="2.2" data-fx="left"><span class="num" style="position:static;width:86px;height:86px;font-size:50px">2</span>au 13e mois<span class="p">+ 50 €</span></div></div><svg class="abs red" style="left:630px;top:560px;overflow:visible" width="250" height="115" viewBox="0 0 250 115"><path class="dr" pathLength="1" d="M20.0 63.25000000000001 C12.5 11.5,212.5 -5.75,242.5 51.75 C255.0 103.5,50.0 120.75,15.0 71.3 L30.0 46.0" data-g="2.2" data-fx="draw" style="transform:rotate(-3deg)"/></svg>
+   <div class="note" style="left:90px;top:740px;font-size:40px;line-height:1.15;white-space:normal;width:760px;text-align:center;transform:rotate(-2deg)" data-g="2.3" data-fx="pop">si 5 paiements ou retraits par mois<br>pendant 12 mois</div><svg class="abs ink" style="left:410px;top:880px;overflow:visible" width="192" height="376" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M70 52 L80 22 L96 44 L110 14 L124 40 L140 12 L150 42 L166 24 L170 56"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L70 240 L110 290"/></g><g class="armR"><path d="M120 190 L170 240 L130 290"/></g></g></svg></div>
+  <div class="scene" data-s="3" data-in="right"><div class="ttl" style="top:220px;font-size:84px">+ un bon d’achat</div>
+   <div class="vch" style="left:250px;top:420px;transform:rotate(-3deg)" data-g="3.1" data-fx="stamp"><div class="k">BON D'ACHAT</div><div class="v">200 €</div></div>
+   <div class="hs" style="left:100px;top:830px" data-g="3.2" data-fx="up">ton ancienne<br>banque</div>
+   <div class="hs" style="left:640px;top:830px" data-g="3.2" data-fx="up">Hello bank</div><svg class="abs red" style="left:360px;top:880px;overflow:visible" width="280" height="100" viewBox="0 0 280 100"><path class="dr" pathLength="1" d="M10 50 Q140 0 270 50 M240 22 L270 50 L236 74" data-g="3.2" data-fx="draw"/></svg>
+   <div class="note" style="left:270px;top:1080px;font-size:46px;transform:rotate(-3deg)" data-g="3.3" data-fx="pop">mobilité Hello Start+</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="ttl" style="top:220px;font-size:84px">La condition</div>
+   <div class="phone" style="left:470px;top:430px"><div class="scr"><div class="tt">Invitation reçue</div><div class="ln"></div><div class="ln" style="width:70%"></div>
+    <div class="fl" data-g="4.1" data-fx="left">lien d'invitation ✓</div><div class="bt">Ouvrir mon compte</div><div class="ln" style="margin-top:40px"></div><div class="ln" style="width:55%"></div></div></div><svg class="abs red" style="left:480px;top:640px;overflow:visible" width="420" height="150" viewBox="0 0 420 150"><path class="dr" pathLength="1" d="M33.6 82.5 C21.0 15.0,357.0 -7.5,407.4 67.5 C428.40000000000003 135.0,84.0 157.5,25.2 93.0 L50.4 60.0" data-g="4.1" data-fx="draw" style="transform:rotate(-4deg)"/></svg><svg class="abs ink" style="left:90px;top:640px;overflow:visible" width="228" height="446" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M66 60 q8 -22 22 -10 q6 -24 26 -12 q12 -20 28 -4 q18 -14 26 12 q14 4 6 24"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 290"/></g><g class="armR"><path d="M120 190 L240 160"/></g></g></svg>
+   <div class="note" style="left:60px;top:1262px;font-size:46px;transform:rotate(-3deg)" data-g="4.2" data-fx="pop">avant le 30/11 à 15 h</div></div>
+  <div class="scene" data-s="5" data-in="pop">
+   <div class="endc" data-g="5.0" data-fx="up"><div class="k">ENVOIE-MOI EN PRIVÉ</div><div class="c">« HELLO »</div><div class="d">je t'envoie le lien</div><div class="b">@htm.invest</div></div>
+   <div class="note" style="left:300px;top:770px;transform:rotate(-3deg)" data-g="5.1" data-fx="pop">parrainage Hello bank</div><svg class="abs ink" style="left:90px;top:850px;overflow:visible" width="132" height="258" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M70 52 L80 22 L96 44 L110 14 L124 40 L140 12 L150 42 L166 24 L170 56"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 90"/></g><g class="armR"><path d="M120 190 L190 90"/></g></g></svg>
+   <div class="cond" style="top:860px;left:270px;width:660px">Offre soumise aux conditions en vigueur.<br>Parrainage Hello bank : ouverture via le lien d'invitation avant le 30/11/2026 à 15 h (date susceptible d'évoluer). Hello Prime (dès 1 500 € nets/mois) : 80 € + 50 € au 13<sup>e</sup> mois (5 paiements ou retraits par mois pendant 12 mois). Hello One : 80 €. Bon d'achat de 200 € avec la mobilité Hello Start+.<br>Lien de parrainage : je touche une prime.</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 5.11, 8.27, 14.01, 18.73, 22.64], END=26.74;
+const G=[[[0.05, 1.35, "<em>Parrainage Hello bank</em> :"], [1.35, 2.25, "<i>attention</i>,"], [2.25, 4.15, "l'offre s'arrête le <em>30 novembre</em>,"], [4.15, 5.01, "à <i>15 h</i>."]], [[5.17, 6.02, "Jusque-là,"], [6.02, 7.42, "c'est jusqu'à <em>330 €</em>"], [7.42, 8.17, "pour toi."]], [[8.33, 9.46, "<em>80 €</em> à l'ouverture"], [9.46, 10.66, "avec Hello Prime,"], [10.66, 12.46, "et <em>50 €</em> au 13e mois"], [12.46, 13.91, "si tu utilises ta carte."]], [[14.07, 14.87, "Plus un <em>bon d'achat</em>"], [14.87, 15.97, "de <em>200 €</em>"], [15.97, 17.07, "si tu transfères ton compte"], [17.07, 18.63, "avec Hello Start+."]], [[18.79, 19.37, "La condition :"], [19.37, 21.17, "ouvrir depuis un <em>lien d'invitation</em>,"], [21.17, 22.54, "avant la <i>date limite</i>."]], [[22.7, 23.39, "Envoie-moi <em>HELLO</em>"], [23.39, 24.09, "en privé,"], [24.09, 25.24, "je t'envoie le lien."]]];
+const CAM=0.6, PUSH=0.010;
+const LIVE=[...document.querySelectorAll('.live')];
+function extra(t){LIVE.forEach((g,i)=>{const p=i*1.7;
+ const al=g.querySelector('.armL'),ar=g.querySelector('.armR');
+ g.parentNode.style.translate=`0 ${Math.sin(t*5.2+p)*7}px`;
+ if(al){al.style.transformOrigin='100% 0%';al.style.transformBox='fill-box';al.style.transform=`rotate(${Math.sin(t*4.1+p)*7}deg)`}
+ if(ar){ar.style.transformOrigin='0% 0%';ar.style.transformBox='fill-box';ar.style.transform=`rotate(${Math.sin(t*3.6+p+1)*9}deg)`}
+});}
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>

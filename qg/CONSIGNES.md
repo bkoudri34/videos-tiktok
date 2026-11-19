@@ -2,8 +2,8 @@
 
 Ces vidéos sont fabriquées par la routine « Vidéos QG », à part de la routine Claude chat (qui continue seule avec `videos/`). Elles ne sont ni programmées ni publiées : elles sont livrées à Badr.
 
-## Look
-Personnages blancs animés : style T « tuto illustré » par défaut, style D « Duo 3D » pour les duos si Three.js se charge. Jamais le style v3 « nuit & or » (réservé à la routine Claude chat).
+## Styles et voix
+Varier : 2 styles et 2 voix différents chaque jour, choisis dans qg/STYLES.md et qg/VOIX.md (au moins 1 vidéo sur 2 en « personnages blancs », V3 « nuit & or » au plus 1 jour sur 3).
 
 ## Rangement
 - Vidéos : `videos-qg/AAAA-MM-JJ/<n>_<sujet>_<format>.mp4` ; légendes : `videos-qg/AAAA-MM-JJ/LEGENDES.md` ; journal : `qg/QUALITE.md`.

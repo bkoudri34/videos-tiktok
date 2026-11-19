@@ -1,0 +1,61 @@
+/* Style E « Écran d'appli en gros plan » (vidéos QG) : bureau clair bleu-gris, gros téléphone dessiné (sans logo),
+   doigt qui tape (ondulation), zoom « punch » sur la case importante, barre de recherche « parrainage <banque> » en haut,
+   étapes 1-2-3-4 en pastilles, sous-titres blancs cerclés de noir. Hors des zones TikTok : 200 px du haut, 150 px de droite, 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#e6edf5}
+body{font-family:'Inter',sans-serif;color:#0f172a;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#e6edf5}
+#cam{position:absolute;inset:0;transform-origin:470px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(circle at 1px 1px,rgba(15,23,42,.10) 2px,transparent 2.5px) 0 0/44px 44px,linear-gradient(160deg,#f3f7fb 0%,#dfe8f2 60%,#d3dfec 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.035;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 45% 45%,rgba(0,0,0,0) 62%,rgba(20,40,80,.16) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#sub{position:absolute;left:40px;top:1395px;width:880px;text-align:center;font:900 66px/1.1 'Inter',sans-serif;color:#fff;-webkit-text-stroke:10px #0f172a;letter-spacing:1px;paint-order:stroke fill;transform-origin:50% 50%;z-index:9}
+#sub em{font-style:normal;color:#ffd43b}
+#sub i{font-style:normal;color:#ff6b6b}
+/* barre de recherche (mot-clé visible dès 0 s) */
+.search{position:absolute;left:70px;top:212px;width:800px;height:96px;border-radius:48px;background:#fff;border:4px solid #0f172a;display:flex;align-items:center;padding:0 30px;gap:20px;font:800 44px Inter;box-shadow:0 10px 0 rgba(15,23,42,.15);z-index:8;white-space:nowrap}
+.search svg{flex:none}
+.search .q{color:#0f172a}
+.search .cur{width:4px;height:52px;background:#2563eb}
+/* téléphone en gros plan */
+.ph{position:absolute;left:110px;top:400px;width:720px;height:1500px;border-radius:96px;background:#0f172a;padding:22px;box-shadow:30px 40px 60px rgba(15,23,42,.28)}
+.ph .sc{position:absolute;inset:22px;border-radius:76px;background:#fff;overflow:hidden}
+.ph .isl{position:absolute;left:290px;top:40px;width:140px;height:40px;border-radius:20px;background:#0f172a;z-index:3}
+.ph .bar{position:absolute;left:0;right:0;top:0;height:120px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 64px 14px;font:800 28px Inter;color:#0f172a}
+.ap{position:absolute;left:52px;right:52px;top:140px}
+.ap .hd{display:flex;align-items:center;gap:18px;font:900 44px Inter;margin-bottom:30px}
+.ap .bk{width:60px;height:60px;border-radius:30px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font:900 34px Inter;color:#64748b}
+.ap .lb{font:700 30px Inter;color:#64748b;margin:20px 0 10px}
+.ap .fd{height:104px;border-radius:24px;border:4px solid #cbd5e1;display:flex;align-items:center;padding:0 26px;font:800 40px Inter;white-space:nowrap;background:#f8fafc}
+.ap .fd.on{border-color:#2563eb;background:#eff6ff}
+.ap .ok{margin-left:auto;color:#16a34a;font:900 40px Inter}
+.ap .btn{height:112px;border-radius:56px;background:#2563eb;color:#fff;font:900 40px Inter;display:flex;align-items:center;justify-content:center;margin-top:34px;white-space:nowrap}
+.ap .gl{height:24px;border-radius:12px;background:#e2e8f0;margin:16px 0}
+.ap .big{font:900 150px/1 Inter;letter-spacing:-4px;margin:10px 0}
+.ap .row{display:flex;align-items:center;gap:22px;height:104px;border-bottom:3px solid #eef2f7;font:800 38px Inter;white-space:nowrap}
+.ap .row .n{width:64px;height:64px;border-radius:32px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font:900 34px Inter;flex:none}
+.ap .row .v{margin-left:auto;font:900 40px Inter;color:#16a34a}
+.ap .tg{width:120px;height:68px;border-radius:34px;background:#cbd5e1;position:relative;margin-left:auto;flex:none}
+.ap .tg i{position:absolute;left:6px;top:6px;width:56px;height:56px;border-radius:28px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ap .tg.on{background:#16a34a}.ap .tg.on i{left:58px}
+/* pastille d'étape, gain, autocollant */
+.step{position:absolute;left:70px;top:326px;height:64px;padding:0 26px;border-radius:32px;background:#0f172a;color:#fff;font:900 34px Inter;display:flex;align-items:center;gap:12px;letter-spacing:1px;z-index:8;white-space:nowrap}
+.step b{color:#ffd43b}
+.gain{position:absolute;padding:14px 30px;border-radius:30px;background:#16a34a;color:#fff;font:900 70px Inter;box-shadow:0 12px 0 #0f5f2c;white-space:nowrap;z-index:7}
+.stk{position:absolute;padding:12px 28px;border-radius:18px;background:#ffd43b;border:5px solid #0f172a;font:900 58px Inter;color:#0f172a;box-shadow:8px 8px 0 #0f172a;white-space:nowrap;z-index:7}
+.cal{display:flex;gap:18px;margin-top:20px}
+.cal .m{flex:1;height:200px;border-radius:24px;border:4px solid #cbd5e1;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 32px Inter;color:#64748b;gap:8px}
+.cal .m b{font:900 44px Inter;color:#16a34a}
+.endc{position:absolute;left:80px;top:420px;width:780px;padding:36px 30px 34px;border-radius:44px;background:#0f172a;color:#fff;text-align:center;box-shadow:0 24px 50px rgba(15,23,42,.35);z-index:8}
+.endc .k{font:900 42px Inter;letter-spacing:1px}
+.endc .c{display:inline-block;white-space:nowrap;margin:16px 0;font:900 74px Inter;background:#ffd43b;color:#0f172a;padding:2px 24px;border-radius:16px}
+.endc .d{font:800 38px Inter}
+.endc .b{margin-top:16px;font:800 30px Inter;color:#93c5fd}
+.cond{position:absolute;left:80px;width:780px;font:600 25px/1.35 Inter;color:#334155;text-align:center;background:rgba(255,255,255,.92);border-radius:24px;padding:18px 22px;z-index:8}
+/* doigt + ondulation */
+.hand{position:absolute;width:150px;height:190px;z-index:10;pointer-events:none}
+.rip{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:6px solid #2563eb;opacity:0;z-index:9}
+.zm{position:absolute;inset:0}
