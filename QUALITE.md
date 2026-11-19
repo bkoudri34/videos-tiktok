@@ -11,3 +11,4 @@ Règles complètes : voir STYLE.md, sections « Contrôle qualité AVANT program
 | 18/11/2026 | @htm.invest | hello-bank (21:00) | F4 | 89 | aucun | — (accroche figée 3,5 s à améliorer) |
 | 18/11/2026 | affiliation Hacoo | hacoo (1) | V3 (repli du style D, Three.js injoignable) · 3 signes | 75 | 1er encodage tronqué (refait) | mention « Offre soumise aux conditions en vigueur » ajoutée, 1re ligne de description avec « code promo Hacoo » |
 | 18/11/2026 | affiliation Hacoo | hacoo-2 | T tuto illustré (nouveau) | 86 | aucun | mention des conditions complétée |
+| 19/11/2026 | @htm.invest | revolut (16:00) | F2 | 88 | aucun | tampon « FAUX » → « NON » déplacé sous la carte ; description complétée (récompense du parrain) |
