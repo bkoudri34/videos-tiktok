@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo ou est la case sarcelle</title>
+
+<style>
+:root{--bg:#e3f1ee}
+/* Style E « Écran d'appli en gros plan » (vidéos QG) : bureau clair bleu-gris, gros téléphone dessiné (sans logo),
+   doigt qui tape (ondulation), zoom « punch » sur la case importante, barre de recherche « parrainage <banque> » en haut,
+   étapes 1-2-3-4 en pastilles, sous-titres blancs cerclés de noir. Hors des zones TikTok : 200 px du haut, 150 px de droite, 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#e6edf5}
+body{font-family:'Inter',sans-serif;color:#0f172a;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#e6edf5}
+#cam{position:absolute;inset:0;transform-origin:470px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(circle at 1px 1px,rgba(15,23,42,.10) 2px,transparent 2.5px) 0 0/44px 44px,linear-gradient(160deg,#f3f7fb 0%,#dfe8f2 60%,#d3dfec 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.035;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 45% 45%,rgba(0,0,0,0) 62%,rgba(20,40,80,.16) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#sub{position:absolute;left:40px;top:1395px;width:880px;text-align:center;font:900 66px/1.1 'Inter',sans-serif;color:#fff;-webkit-text-stroke:10px #0f172a;letter-spacing:1px;paint-order:stroke fill;transform-origin:50% 50%;z-index:9}
+#sub em{font-style:normal;color:#ffd43b}
+#sub i{font-style:normal;color:#ff6b6b}
+/* barre de recherche (mot-clé visible dès 0 s) */
+.search{position:absolute;left:70px;top:212px;width:800px;height:96px;border-radius:48px;background:#fff;border:4px solid #0f172a;display:flex;align-items:center;padding:0 30px;gap:20px;font:800 44px Inter;box-shadow:0 10px 0 rgba(15,23,42,.15);z-index:8;white-space:nowrap}
+.search svg{flex:none}
+.search .q{color:#0f172a}
+.search .cur{width:4px;height:52px;background:#2563eb}
+/* téléphone en gros plan */
+.ph{position:absolute;left:110px;top:400px;width:720px;height:1500px;border-radius:96px;background:#0f172a;padding:22px;box-shadow:30px 40px 60px rgba(15,23,42,.28)}
+.ph .sc{position:absolute;inset:22px;border-radius:76px;background:#fff;overflow:hidden}
+.ph .isl{position:absolute;left:290px;top:40px;width:140px;height:40px;border-radius:20px;background:#0f172a;z-index:3}
+.ph .bar{position:absolute;left:0;right:0;top:0;height:120px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 64px 14px;font:800 28px Inter;color:#0f172a}
+.ap{position:absolute;left:52px;right:52px;top:140px}
+.ap .hd{display:flex;align-items:center;gap:18px;font:900 44px Inter;margin-bottom:30px}
+.ap .bk{width:60px;height:60px;border-radius:30px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font:900 34px Inter;color:#64748b}
+.ap .lb{font:700 30px Inter;color:#64748b;margin:20px 0 10px}
+.ap .fd{height:104px;border-radius:24px;border:4px solid #cbd5e1;display:flex;align-items:center;padding:0 26px;font:800 40px Inter;white-space:nowrap;background:#f8fafc}
+.ap .fd.on{border-color:#2563eb;background:#eff6ff}
+.ap .ok{margin-left:auto;color:#16a34a;font:900 40px Inter}
+.ap .btn{height:112px;border-radius:56px;background:#2563eb;color:#fff;font:900 40px Inter;display:flex;align-items:center;justify-content:center;margin-top:34px;white-space:nowrap}
+.ap .gl{height:24px;border-radius:12px;background:#e2e8f0;margin:16px 0}
+.ap .big{font:900 150px/1 Inter;letter-spacing:-4px;margin:10px 0}
+.ap .row{display:flex;align-items:center;gap:22px;height:104px;border-bottom:3px solid #eef2f7;font:800 38px Inter;white-space:nowrap}
+.ap .row .n{width:64px;height:64px;border-radius:32px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font:900 34px Inter;flex:none}
+.ap .row .v{margin-left:auto;font:900 40px Inter;color:#16a34a}
+.ap .tg{width:120px;height:68px;border-radius:34px;background:#cbd5e1;position:relative;margin-left:auto;flex:none}
+.ap .tg i{position:absolute;left:6px;top:6px;width:56px;height:56px;border-radius:28px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ap .tg.on{background:#16a34a}.ap .tg.on i{left:58px}
+/* pastille d'étape, gain, autocollant */
+.step{position:absolute;left:70px;top:326px;height:64px;padding:0 26px;border-radius:32px;background:#0f172a;color:#fff;font:900 34px Inter;display:flex;align-items:center;gap:12px;letter-spacing:1px;z-index:8;white-space:nowrap}
+.step b{color:#ffd43b}
+.gain{position:absolute;padding:14px 30px;border-radius:30px;background:#16a34a;color:#fff;font:900 70px Inter;box-shadow:0 12px 0 #0f5f2c;white-space:nowrap;z-index:7}
+.stk{position:absolute;padding:12px 28px;border-radius:18px;background:#ffd43b;border:5px solid #0f172a;font:900 58px Inter;color:#0f172a;box-shadow:8px 8px 0 #0f172a;white-space:nowrap;z-index:7}
+.cal{display:flex;gap:18px;margin-top:20px}
+.cal .m{flex:1;height:200px;border-radius:24px;border:4px solid #cbd5e1;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 32px Inter;color:#64748b;gap:8px}
+.cal .m b{font:900 44px Inter;color:#16a34a}
+.endc{position:absolute;left:80px;top:420px;width:780px;padding:36px 30px 34px;border-radius:44px;background:#0f172a;color:#fff;text-align:center;box-shadow:0 24px 50px rgba(15,23,42,.35);z-index:8}
+.endc .k{font:900 42px Inter;letter-spacing:1px}
+.endc .c{display:inline-block;white-space:nowrap;margin:16px 0;font:900 74px Inter;background:#ffd43b;color:#0f172a;padding:2px 24px;border-radius:16px}
+.endc .d{font:800 38px Inter}
+.endc .b{margin-top:16px;font:800 30px Inter;color:#93c5fd}
+.cond{position:absolute;left:80px;width:780px;font:600 25px/1.35 Inter;color:#334155;text-align:center;background:rgba(255,255,255,.92);border-radius:24px;padding:18px 22px;z-index:8}
+/* doigt + ondulation */
+.hand{position:absolute;width:150px;height:190px;z-index:10;pointer-events:none}
+.rip{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:6px solid #2563eb;opacity:0;z-index:9}
+.zm{position:absolute;inset:0}
+
+
+body,#stage{background:#e3f1ee}
+#bgtex{background:radial-gradient(circle at 1px 1px,rgba(10,60,55,.10) 2px,transparent 2.5px) 0 0/44px 44px,linear-gradient(160deg,#f3faf8 0%,#dcefea 60%,#cfe6e0 100%)}
+.search .cur{background:#0d9488}
+.rip{border-color:#0d9488}
+.step b{color:#5eead4}
+.ap .row{height:116px}
+.ap .row .p{margin-left:auto;font:900 40px Inter;color:#0f172a}
+.ap .row .ic{width:96px;height:96px;border-radius:20px;background:#f4f4f6;display:flex;align-items:center;justify-content:center;flex:none}
+.ap .rc{font:900 34px Inter;color:#0f172a;margin:30px 0 16px}
+.ap .tiles{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ap .tiles div{height:250px;border-radius:26px;background:#eef2f6;position:relative}
+.ap .tiles div:after{content:'';position:absolute;left:22px;right:60px;bottom:24px;height:22px;border-radius:11px;background:#dbe2ea}
+.ap .tiles.cut div{height:150px;border-radius:0 0 26px 26px}
+.ap .fr2{display:flex;gap:16px;align-items:center}
+.ap .fr2 .fd{flex:1}
+.ap .ap2{height:104px;padding:0 26px;border-radius:24px;background:#0d9488;color:#fff;font:900 34px Inter;display:flex;align-items:center;white-space:nowrap}
+.ap .fd.on{border-color:#0d9488;background:#effcf9}
+.ap .fd .cd{font:900 46px 'DejaVu Sans Mono',monospace;color:#0f172a}
+.ap .disc{height:96px;display:flex;align-items:center;font:900 28px Inter;color:#0f766e;border-bottom:3px solid #eef2f7;white-space:nowrap}
+.ap .disc .p{margin-left:auto;font:900 40px Inter;color:#0f766e}
+.ap .tot{display:flex;align-items:baseline;justify-content:space-between;margin-top:22px;font:900 44px Inter;white-space:nowrap}
+.ap .tot b{font:900 76px Inter;letter-spacing:-2px}
+.ap .tot s{font:800 38px Inter;color:#94a3b8;text-decoration-color:#0d9488;text-decoration-thickness:5px;margin-right:14px}
+.ap .ex{font:700 26px Inter;color:#94a3b8;margin-top:6px}
+.kb{position:absolute;left:0;right:0;bottom:0;height:470px;background:#d6d9df;padding:24px 14px;display:grid;grid-template-columns:repeat(10,1fr);gap:12px;align-content:start}
+.kb i{height:86px;border-radius:12px;background:#fff;font:600 38px Inter;font-style:normal;display:flex;align-items:center;justify-content:center;color:#0f172a;box-shadow:0 3px 0 #9aa0aa}
+.kb i.h{background:#0d9488;color:#fff}
+.gain{background:#0d9488;box-shadow:0 12px 0 #075e56}
+.endc .c{background:#5eead4;color:#0f172a}
+.endc .b{color:#99f6e4}
+.hook{position:absolute;left:70px;top:330px;padding:14px 28px;border-radius:22px;background:#fff;border:5px solid #0f172a;box-shadow:8px 8px 0 #0f172a;font:900 54px/1.12 Inter;color:#0f172a;z-index:8;white-space:nowrap}
+.hook b{color:#0d9488}
+.scr{position:absolute;left:840px;top:760px;width:110px;height:360px;z-index:8}
+.down{position:absolute;padding:12px 26px;border-radius:18px;background:#0d9488;color:#fff;font:900 50px Inter;box-shadow:8px 8px 0 #0f172a;white-space:nowrap;z-index:8}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+<div class="search"><svg width="50" height="50" viewBox="0 0 50 50"><circle cx="21" cy="21" r="14" fill="none" stroke="#0f172a" stroke-width="6"/><path d="M31 31 L44 44" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/></svg><span class="q">code promo hacoo</span><span class="cur" id="cur"></span></div>
+  <div class="scene" data-s="0"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd">Mon panier Hacoo</div><div class="row"><span class="ic"><svg width="84" height="84" viewBox="0 0 200 200"><path d="M50 40 H95 V125 Q140 125 160 140 Q168 150 160 160 H50 Z" fill="#c9a27a"/><rect x="50" y="155" width="112" height="14" rx="5" fill="#4a3424"/><path d="M60 60 H90 M60 80 H90 M60 100 H90" stroke="#7a5a3a" stroke-width="5"/></svg></span>Bottines<span class="p">36,00 €</span></div><div class="row"><span class="ic"><svg width="84" height="84" viewBox="0 0 200 200"><path d="M40 120 Q40 40 100 40 Q160 40 160 120" fill="none" stroke="#b49cff" stroke-width="14" stroke-linecap="round"/><rect x="28" y="108" width="40" height="64" rx="16" fill="#7a5fe0"/><rect x="132" y="108" width="40" height="64" rx="16" fill="#7a5fe0"/><rect x="36" y="118" width="24" height="44" rx="10" fill="#d9ccff"/><rect x="140" y="118" width="24" height="44" rx="10" fill="#d9ccff"/></svg></span>Casque audio<span class="p">22,00 €</span></div>
+     <div class="rc">Recommandé pour toi</div><div class="tiles"><div></div><div></div><div></div><div></div></div></div></div></div>
+   <div class="hook">Où est la case<br><b>code promo Hacoo</b> ?</div>
+   <div class="stk" style="left:600px;top:1180px;transform:rotate(5deg);font-size:90px">?!</div></div>
+  <div class="scene" data-s="1" data-in="right"><div class="zm" data-zg="1.1" data-zs="1.2" style="transform-origin:470px 700px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd">Mon panier Hacoo</div><div class="row"><span class="ic"><svg width="84" height="84" viewBox="0 0 200 200"><path d="M50 40 H95 V125 Q140 125 160 140 Q168 150 160 160 H50 Z" fill="#c9a27a"/><rect x="50" y="155" width="112" height="14" rx="5" fill="#4a3424"/><path d="M60 60 H90 M60 80 H90 M60 100 H90" stroke="#7a5a3a" stroke-width="5"/></svg></span>Bottines<span class="p">36,00 €</span></div><div class="row"><span class="ic"><svg width="84" height="84" viewBox="0 0 200 200"><path d="M40 120 Q40 40 100 40 Q160 40 160 120" fill="none" stroke="#b49cff" stroke-width="14" stroke-linecap="round"/><rect x="28" y="108" width="40" height="64" rx="16" fill="#7a5fe0"/><rect x="132" y="108" width="40" height="64" rx="16" fill="#7a5fe0"/><rect x="36" y="118" width="24" height="44" rx="10" fill="#d9ccff"/><rect x="140" y="118" width="24" height="44" rx="10" fill="#d9ccff"/></svg></span>Casque audio<span class="p">22,00 €</span></div>
+     <div class="rc">Recommandé pour toi</div><div class="tiles"><div></div><div></div><div></div><div></div></div></div></div></div></div>
+   <div class="stk" style="left:520px;top:880px;transform:rotate(-4deg)" data-g="1.2" data-fx="stamp">58,00 €</div></div>
+  <div class="scene" data-s="2" data-in="up"><div class="step">ÉTAPE <b>1/3</b> · TOUT EN BAS</div><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div data-g="2.0" data-fx="up"><div class="tiles cut"><div></div><div></div></div>
+     <div class="lb">Sous-total (2 articles)</div><div class="row" style="height:80px">Bottines + casque<span class="p">58,00 €</span></div>
+     <div class="lb">Code promo Hacoo</div>
+     <div class="fr2"><div class="fd" style="color:#94a3b8">Ajouter un code</div><div class="ap2">Appliquer</div></div>
+     <div class="tot"><span>Total</span><span><b>58,00 €</b></span></div><div class="ex">prix d'exemple</div></div></div></div></div><div class="hand" data-tap="2.1" data-fx0="0" data-fy0="380" style="left:404px;top:1044px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="2.1" style="left:470px;top:1050px"></div><i class="abs" data-g="2.1" data-fx="tap"></i>
+   <div class="down" style="left:330px;top:1265px" data-g="2.1" data-fx="pop">↓ SOUS LE PANIER</div></div>
+  <div class="scene" data-s="3" data-in="right"><div class="step">ÉTAPE <b>2/3</b> · LA CASE</div>
+   <div class="zm" data-zg="3.1" data-zs="1.18" style="transform-origin:360px 1000px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div><div class="tiles cut"><div></div><div></div></div>
+     <div class="lb">Sous-total (2 articles)</div><div class="row" style="height:80px">Bottines + casque<span class="p">58,00 €</span></div>
+     <div class="lb">Code promo Hacoo</div>
+     <div class="fr2"><div class="fd" style="color:#94a3b8">Ajouter un code</div><div class="ap2">Appliquer</div></div>
+     <div class="tot"><span>Total</span><span><b>58,00 €</b></span></div><div class="ex">prix d'exemple</div></div></div></div></div><div class="hand" data-tap="3.1" data-fx0="260" data-fy0="420" style="left:264px;top:994px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="3.1" style="left:330px;top:1000px"></div><i class="abs" data-g="3.1" data-fx="tap"></i></div>
+   <div class="stk" style="left:150px;top:1268px" data-g="3.2" data-fx="pop">CODE PROMO HACOO</div></div>
+  <div class="scene" data-s="4" data-in="right"><div class="step">ÉTAPE <b>3/3</b> · HZKLINK + APPLIQUER</div>
+   <div class="zm" data-zg="4.1" data-zs="1.1" style="transform-origin:360px 1000px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div><div class="tiles cut"><div></div><div></div></div>
+     <div class="lb">Sous-total (2 articles)</div><div class="row" style="height:80px">Bottines + casque<span class="p">58,00 €</span></div>
+     <div class="lb">Code promo Hacoo</div>
+     <div class="fr2"><div class="fd on"><span class="cd"><span data-g="4.1" data-fx="type">hzklink</span></span></div><div class="ap2">Appliquer</div></div>
+     <div class="tot"><span>Total</span><span><b>58,00 €</b></span></div><div class="ex">prix d'exemple</div></div></div><div class="kb" data-g="4.1" data-fx="up"><i>a</i><i class="h">z</i><i>e</i><i>r</i><i>t</i><i>y</i><i>u</i><i>i</i><i>o</i><i>p</i><i>q</i><i>s</i><i>d</i><i>f</i><i>g</i><i class="h">h</i><i>j</i><i class="h">k</i><i class="h">l</i><i>m</i><i>w</i><i>x</i><i>c</i><i>v</i><i>b</i><i>n</i></div></div></div><div class="hand" data-tap="4.2" data-fx0="260" data-fy0="420" style="left:594px;top:994px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="4.2" style="left:660px;top:1000px"></div><i class="abs" data-g="4.2" data-fx="tap"></i></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div><div class="tiles cut"><div></div><div></div></div>
+     <div class="lb">Sous-total (2 articles)</div><div class="row" style="height:80px">Bottines + casque<span class="p">58,00 €</span></div>
+     <div class="lb">Code promo Hacoo</div>
+     <div class="fr2"><div class="fd on"><span class="cd">hzklink</span></div><div class="ap2">Appliquer</div></div><div class="disc" data-g="5.0" data-fx="right">Code promo Hacoo (-14 %)<span class="p">-8,12 €</span></div>
+     <div class="tot"><span>Total</span><span><s>58,00 €</s><b>49,88 €</b></span></div><div class="ex">prix d'exemple</div></div></div></div></div>
+   <div class="gain" style="left:590px;top:585px" data-g="5.0" data-fx="stamp">-8,12 €</div>
+   <div class="gain" style="left:300px;top:1180px;font-size:110px" data-g="5.2" data-fx="stamp" data-slow="5.2">49,88 €</div></div>
+  <div class="scene" data-s="6" data-in="pop"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div><div class="tiles cut"><div></div><div></div></div>
+     <div class="lb">Sous-total (2 articles)</div><div class="row" style="height:80px">Bottines + casque<span class="p">58,00 €</span></div>
+     <div class="lb">Code promo Hacoo</div>
+     <div class="fr2"><div class="fd on"><span class="cd">hzklink</span></div><div class="ap2">Appliquer</div></div><div class="disc">Code promo Hacoo (-14 %)<span class="p">-8,12 €</span></div>
+     <div class="tot"><span>Total</span><span><s>58,00 €</s><b>49,88 €</b></span></div><div class="ex">prix d'exemple</div></div></div></div></div>
+   <div class="endc" data-g="6.0" data-fx="up"><div class="k">CODE PROMO HACOO</div><div class="c">hzklink</div><div class="d">-14 % sur l'appli Hacoo</div><div class="b">liens des articles tendance en bio</div></div>
+   <div class="cond" style="top:1290px;background:#fff" data-g="6.1" data-fx="fade">Prix d'exemple · -14 % avec le code promo Hacoo hzklink sur l'appli Hacoo · Offre soumise aux conditions en vigueur</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 6.148, 10.771, 14.632, 19.262, 24.143, 28.264], END=36.859;
+const G=[[[0.04, 0.768, "Où se cache"], [0.768, 1.814, "la case <em>code promo</em>"], [1.814, 5.017, "sur l'appli <em>Hacoo</em> ?"], [5.017, 6.048, "Je te montre."]], [[6.188, 7.569, "Ton panier :"], [7.569, 9.915, "bottines, casque,"], [9.915, 10.671, "<i>58 €</i>."]], [[10.811, 11.596, "<em>Un</em> :"], [11.596, 12.993, "descends tout en bas,"], [12.993, 14.532, "sous le panier."]], [[14.672, 15.854, "<em>Deux</em> :"], [15.854, 16.903, "touche la case"], [16.903, 19.162, "<em>code promo Hacoo</em>."]], [[19.302, 20.69, "<em>Trois</em> :"], [20.69, 21.929, "tape <em>hzklink</em>,"], [21.929, 24.043, "puis appliquer."]], [[24.183, 25.219, "<i>-8,12 €</i>."], [25.219, 26.828, "Total :"], [26.828, 28.164, "<em>49,88 €</em>."]], [[28.304, 29.78, "Prix d'exemple."], [29.78, 31.084, "Enregistre la vidéo,"], [31.084, 31.686, "et note le"], [31.686, 33.325, "<em>code promo Hacoo</em>"], [33.325, 34.459, "<em>hzklink</em>."]]];
+const CAM=0.35, PUSH=0.006;
+const HANDS=[...document.querySelectorAll('[data-tap]')].map(el=>{const [i,j]=el.dataset.tap.split('.').map(Number);return {el,i,j,fx:+el.dataset.fx0,fy:+el.dataset.fy0}});
+const RIPS=[...document.querySelectorAll('[data-rip]')].map(el=>{const [i,j]=el.dataset.rip.split('.').map(Number);return {el,i,j}});
+const ZMS=[...document.querySelectorAll('.zm[data-zg]')].map(el=>{const [i,j]=el.dataset.zg.split('.').map(Number);return {el,i,j,s:+(el.dataset.zs||1.25)}});
+function extra(t){
+ HANDS.forEach(h=>{const t0=GT(h.i,h.j);const d=t-t0;
+  if(d<-0.55){h.el.style.opacity=0;return}
+  const k=eo((d+0.55)/0.5);const press=(d>-0.05&&d<0.18)?0.86:1;
+  h.el.style.opacity=cl((d+0.55)/0.15);
+  h.el.style.transform=`translate(${(1-k)*h.fx}px,${(1-k)*h.fy}px) scale(${press})`;h.el.style.transformOrigin='44% 3%';});
+ RIPS.forEach(r=>{const d=t-GT(r.i,r.j);if(d<0||d>0.6){r.el.style.opacity=0;return}
+  r.el.style.opacity=1-d/0.6;r.el.style.transform=`scale(${1+d*7})`;});
+ ZMS.forEach(z=>{const d=t-GT(z.i,z.j);const k=d<0?0:eb(d/0.35);z.el.style.transform=`scale(${1+(z.s-1)*k})`;});
+ const c=document.getElementById('cur');if(c)c.style.opacity=(Math.floor(t*2.2)%2)?0:1;
+}
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
