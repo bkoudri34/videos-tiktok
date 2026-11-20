@@ -84,6 +84,7 @@ Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'age
 
 ## Styles disponibles (`veille/styles.md` tient le catalogue à jour)
 - **V3 « nuit & or »** (voir plus haut) : motion design noir et or, une voix.
+- **D2 « Duo dessiné »** (voir plus bas) : le même duo en 2D au trait sur papier, sans Three.js.
 - **D « Duo 3D »** (`cfg/duo.py`, `outils/duo3d.js`, `outils/base_duo.css`, exemple `cfg/hacoo30.py`) : deux mannequins 3D façon pâte à modeler (Three.js) sur un sol quadrillé sombre, « le malin » (sportif, à droite) et « le pigeon » (costaud, à gauche), qui dialoguent. Inspiré du format « le connaisseur vs l'ignorant » repéré chez @pileinfo.tv : on reprend le format et le rythme, jamais son contenu.
 
 ## Règles de variation
@@ -111,6 +112,12 @@ Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'age
   - carte de fin blanche : « CODE PROMO HACOO », `hzklink`, « -14 % sur l'appli Hacoo », « liens des articles tendance en bio » et les conditions.
 - Rendu : `render.py` lance Chromium avec `--enable-unsafe-swiftshader --use-angle=swiftshader` pour la 3D ; Three.js r149 est embarqué dans le dépôt (`modeles/outils/vendor/three.min.js`, récupéré le 20/11 par `git clone --sparse` de github.com/mrdoob/three.js, tag r149) et chargé par un chemin relatif (`outils/vendor/three.min.js`) : aucun accès réseau n'est nécessaire au rendu.
 - Les règles Hacoo du 10/11 s'appliquent : « Hacou » dit au moins 2 fois, dont une dans les 3 premières secondes, et « code promo Hacou H Z K link ».
+
+## Style D2 « Duo dessiné » : fabrication (construit le 20/11/2026)
+- Le format du style D (dialogue « le malin vs le pigeon », 8 à 10 répliques, 25 à 32 s, une synthèse Speko par réplique, `SPLITS`, `MINLEN = 0.9`, `GAP = 0.12`, `TAIL = 2.6`) sur le papier ligné du style T, sans Three.js.
+- Briques : `cfg/duo2d.py` (`duo2d_js(DUO_LINES, p_bun=False, cap=couleur)`, `duo2d_body(nom_M, nom_P)`, `anc()`), `duo2d.js` (personnages SVG, poses, bouche qui s'ouvre quand il parle, yeux ronds quand choqué, « boil » du trait par feTurbulence dont la graine change toutes les 0,15 s, plans `wide` / `M` / `P` avec coupe franche et zoom « punch »), `base_duo2d.css` (sous-titres noirs à halo papier, mot clé en `<em>` rouge, code en `<i>` jaune ; cartes, étiquettes, bulle, téléphone et carte de fin au feutre). Exemple : `cfg/hacoo40.py`.
+- `DUO_LINES` identiques au style D (mêmes poses : idle, talk, point, shrug, hip, shock, head, cool, think ; `'lbl': False` quand une carte occupe le haut ou sur l'écran de fin). `p_bun=True` ajoute un chignon au pigeon (« la pigeonne », voix féminine).
+- Pour éviter qu'un mot surligné passe seul à la ligne, mettre la ponctuation dans la balise (`<em>combien ?</em>`) ou utiliser `&nbsp;`.
 
 # Contrôle qualité AVANT programmation et envoi (règle de Badr du 18/11/2026)
 

@@ -1,0 +1,57 @@
+/* Style D2 « Duo dessiné » : le format du Duo 3D (le malin vs le pigeon) en 2D au trait, sur le papier du style T.
+   Deux bonshommes SVG posés par duo2d.js (poses, bouche qui parle, « boil » du trait), coupe + zoom « punch » à chaque réplique,
+   sous-titres énormes mot par mot, cartes au feutre qui surgissent au-dessus des têtes. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 1000px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#duo2d{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+#duo2d .k{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+#duo2d .kf{fill:#fff;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+#duo2d .h{fill:none;stroke:#111;stroke-width:4;stroke-linecap:round;opacity:.55}
+
+/* Sous-titres : énormes, noirs avec un halo papier, mot clé surligné rouge, code en jaune */
+#sub{position:absolute;left:40px;top:1400px;width:1000px;text-align:center;font:900 84px/1.08 'Inter','Arial Black',sans-serif;text-transform:uppercase;letter-spacing:-1px;color:#111;
+ -webkit-text-stroke:14px #faf9f6;paint-order:stroke fill;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;color:#fff;background:#e63946;-webkit-text-stroke:0;padding:0 14px;border-radius:12px;box-shadow:5px 6px 0 #111;display:inline-block}
+#sub i{font-style:normal;color:#111;background:#ffe14d;-webkit-text-stroke:0;padding:0 14px;border-radius:12px;box-shadow:5px 6px 0 #111;display:inline-block;text-transform:none}
+
+/* Étiquettes écrites à la main au-dessus des têtes (positionnées par duo2d.js) */
+.lbl{position:absolute;left:0;top:0;transform:translate(-50%,-100%) rotate(-3deg);font:700 36px 'Comic Relief','Comic Sans MS',cursive;color:#e63946;white-space:nowrap;z-index:4}
+.anc{position:absolute;left:0;top:0;width:0;height:0;z-index:5}
+
+/* Accroche fixe en haut dès la 1re image */
+.hook{position:absolute;left:50px;top:230px;width:980px;text-align:center;font:900 80px/1.08 'Inter','Arial Black',sans-serif;text-transform:uppercase;color:#111}
+.hook mark{background:#ffe14d;color:#111;padding:0 10px}
+.hook em{font-style:normal;color:#e63946}
+.note{position:absolute;font:700 46px 'Comic Relief','Comic Sans MS',cursive;color:#e63946;white-space:nowrap}
+
+/* Cartes au feutre */
+.card{position:absolute;transform-origin:50% 100%;background:#fff;color:#111;border:6px solid #111;border-radius:26px;box-shadow:9px 11px 0 #111;text-align:center;white-space:nowrap}
+.card .t{font:800 24px 'Inter',sans-serif;letter-spacing:3px;color:#555;text-transform:uppercase}
+.card .p{font:900 72px 'Inter','Arial Black',sans-serif;letter-spacing:-2px}
+.card .x{font:700 20px 'Inter',sans-serif;letter-spacing:2px;color:#777;text-transform:uppercase}
+.card .ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.tag{position:absolute;padding:8px 22px;border:5px solid #111;border-radius:16px;background:#ffe14d;color:#111;font:900 52px 'Inter','Arial Black',sans-serif;white-space:nowrap;box-shadow:6px 7px 0 #111}
+.tag.red{background:#e63946;color:#fff}
+.tag.green{background:#2bb673;color:#fff}
+.tag s{color:#555;font-size:34px;text-decoration-color:#e63946;text-decoration-thickness:5px;margin-right:10px}
+.bub{position:absolute;width:180px;height:180px;border-radius:50%;background:#fff;border:6px solid #111;color:#e63946;display:flex;align-items:center;justify-content:center;font:700 100px 'Comic Relief',cursive;box-shadow:7px 8px 0 #111}
+.phone{position:absolute;width:520px;padding:30px 30px 26px;border-radius:40px;background:#fff;border:7px solid #111;box-shadow:10px 12px 0 #111;text-align:left;white-space:nowrap}
+.phone .t{font:900 28px 'Inter',sans-serif;letter-spacing:2px;color:#e63946}
+.phone .f{margin-top:14px;height:104px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 64px 'DejaVu Sans Mono',monospace}
+.phone .f .ph{color:#b9b4aa;font:700 36px Inter}
+.phone .ok{margin-top:14px;font:700 40px 'Comic Relief',cursive;color:#2bb673}
+.endc{position:absolute;left:110px;top:220px;width:860px;padding:38px 30px 32px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endc .k{font:900 50px Inter;letter-spacing:2px}
+.endc .c{display:inline-block;margin:10px 0;font:900 128px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endc .d{font:800 42px Inter}
+.endc .b{margin-top:16px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endc .x{margin-top:16px;font:600 23px Inter;color:#555;white-space:normal}
