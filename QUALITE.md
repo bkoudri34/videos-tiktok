@@ -21,3 +21,5 @@ Règles complètes : voir STYLE.md, sections « Contrôle qualité AVANT program
 | 20/11/2026 | @htm.invest | boursorama (16:00) | F8 | 93 | aucun | — (accroche figée ≈ 3,5 s, relevé à faire apparaître ligne par ligne la prochaine fois) |
 | 20/11/2026 | @htm.invest | hello-bank (18:00) | F6 | 91 | aucun | — (carte d'ouverture fixe 2,7 s ; pastille « = 330 € » au ras de la marge droite) |
 | 20/11/2026 | @htm.invest | revolut (21:00) | F7 | 84 → 89 | « Étapes de l'invitation » débordait de sa carte (corrigé) | texte des cartes réduit, « Suivre l'invitation » / « Payer par carte », message affiché dès l'étape 1, un seul nouveau rendu |
+| 20/11/2026 | affiliation Hacoo | hacoo (1) | V3 nuit & or rouge signal · F1 STOP en rubriques | 91 | aucun | — (écran de fin à afficher d'un bloc la prochaine fois) |
+| 20/11/2026 | affiliation Hacoo | hacoo-2 | T tuto illustré (repli du style D2 « Duo dessiné », non construit) · F10 raconté | 86 | aucun | 1re ligne de description avec « code promo Hacoo » ; « 60,20 € » et cartes au ras de la marge droite (à réduire la prochaine fois) |

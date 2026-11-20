@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo plein pot duo tuto</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.cart{left:140px;top:560px;width:800px;padding:30px 40px 34px}
+.cart .h{font:900 46px Inter;margin-bottom:10px}
+.cart .row{height:104px}
+.cart .tot{display:flex;justify-content:space-between;margin-top:14px;padding-top:16px;border-top:4px dashed #111;font:900 56px Inter;white-space:nowrap}
+.ex{position:absolute;left:0;width:1080px;text-align:center;font:700 30px 'Comic Relief',cursive;color:#555}
+.tk{position:absolute;padding:20px 30px;background:#fff;border:6px solid #111;border-radius:12px;box-shadow:8px 10px 0 #111;font:900 64px Inter;white-space:nowrap;transform:rotate(-6deg)}
+.tk small{display:block;font:700 26px Inter;color:#555}
+.lb{position:absolute;font:700 34px 'Comic Relief',cursive;color:#111;white-space:nowrap}
+.bub{position:absolute;padding:26px 34px;background:#fff;border:6px solid #111;border-radius:40px;font:900 46px Inter;white-space:nowrap;box-shadow:8px 10px 0 #111}
+.fld{position:absolute;left:150px;top:640px;width:780px;padding:34px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.fld .k{font:900 36px Inter;letter-spacing:2px;color:#e63946;margin-bottom:16px}
+.fld .row2{display:flex;justify-content:space-between;font:900 44px Inter;margin-top:22px;white-space:nowrap}
+.big2{position:absolute;left:0;top:640px;width:1080px;text-align:center}
+.big2 .o{display:inline-block;position:relative;font:900 110px Inter;color:#777}
+.big2 .n{font:900 190px Inter;line-height:1.1;margin-top:20px}
+.big2 .n span{background:#ffe14d;padding:0 24px}
+.calc{position:absolute;left:110px;top:620px;width:860px;padding:44px;border-radius:26px;background:#25352b;border:18px solid #8a6a43;box-shadow:10px 12px 0 #111;color:#f4f1e8;text-align:center}
+.calc .l{font:700 70px 'Comic Relief',cursive;white-space:nowrap;line-height:1.5}
+.calc .l span{background:#ffe14d;color:#111;padding:0 18px;border-radius:10px}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:220px;font-size:84px">Il a payé plein pot<br>sur <mark>Hacoo</mark>…</div><svg class="abs ink" style="left:130px;top:700px;overflow:visible" width="280" height="540" viewBox="0 0 280 540"><g class="ink"><circle cx="130" cy="90" r="62"/><path d="M108 82 l0 8 M152 82 l0 8"/><path d="M108 122 Q130 136 152 122"/>
+ <ellipse cx="130" cy="290" rx="100" ry="130"/><path d="M70 230 L190 350 M60 280 L170 390 M95 200 L200 305"/>
+ <path d="M90 410 L70 520 M170 410 L190 520"/><path d="M40 250 L-10 170"/><path d="M220 250 L280 190"/></g></svg><svg class="abs ink" style="left:700px;top:760px;overflow:visible" width="240" height="520" viewBox="0 0 240 520"><g class="ink"><circle cx="110" cy="90" r="52"/><path d="M58 76 Q110 20 162 76 Z" style="fill:#e63946"/><path d="M150 72 L210 78"/>
+ <path d="M92 96 l0 6 M128 96 l0 6"/><path d="M94 120 Q112 128 132 116"/>
+ <path d="M110 142 L110 360"/><path d="M110 360 L70 500 M110 360 L150 500"/><path d="M110 200 L30 280"/><path d="M110 200 L200 150"/></g></svg>
+   <div class="tk" style="left:330px;top:640px">70,00 €<small>ticket · prix d'exemple</small></div>
+   <div class="lb" style="left:150px;top:1270px">le pigeon</div><div class="lb" style="left:720px;top:1290px">le malin</div>
+   <div class="note" style="left:470px;top:880px;transform:rotate(-8deg)" data-g="0.2" data-fx="pop">plein pot !</div></div>
+  <div class="scene" data-s="1" data-in="up"><div class="ttl" style="top:220px;font-size:90px">Son panier</div><div class="paper cart"><div class="h">Son panier Hacoo</div><div class="row"><span class="ico"><svg width="88" height="88" viewBox="0 0 200 200"><path d="M18 128 Q20 100 42 96 L84 92 Q100 70 118 74 Q132 78 140 96 Q172 104 182 124 L184 140 Q184 150 172 150 L28 150 Q16 150 18 138 Z" fill="#f5f6f8"/><path d="M18 140 H184 V150 Q184 160 172 160 H28 Q16 160 18 150 Z" fill="#d7dbe2"/><path d="M60 98 L70 120 M76 94 L86 118 M92 90 L102 114" stroke="#9aa3b2" stroke-width="5" stroke-linecap="round"/><path d="M120 76 Q132 82 138 98" stroke="#5b8cff" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M22 140 H182" stroke="#5b8cff" stroke-width="5"/></svg></span>Baskets de running<span class="p">49,00 €</span></div><div class="row"><span class="ico"><svg width="88" height="88" viewBox="0 0 200 200"><path d="M38 120 Q38 56 100 56 Q162 56 162 120 Z" fill="#e5322d"/><path d="M100 56 V120 M70 62 Q66 90 66 120 M130 62 Q134 90 134 120" stroke="#b91c1c" stroke-width="4"/><circle cx="100" cy="56" r="7" fill="#b91c1c"/><path d="M30 120 H170 Q196 124 192 136 Q186 146 160 140 H30 Z" fill="#991b1b"/></svg></span>Casquette<span class="p">12,00 €</span></div><div class="row"><span class="ico"><svg width="88" height="88" viewBox="0 0 200 200"><rect x="84" y="20" width="32" height="26" rx="6" fill="#2a2a2a"/><rect x="68" y="44" width="64" height="134" rx="24" fill="#ff4f9a"/><rect x="68" y="90" width="64" height="30" fill="#ffd1e4"/></svg></span>Gourde<span class="p">9,00 €</span></div><div class="tot"><span>Total</span><span>70,00 €</span></div></div><svg class="abs red" style="left:520px;top:1000px;overflow:visible" width="440" height="150" viewBox="0 0 440 150"><path class="dr" pathLength="1" d="M35.2 82.5 C22.0 15.0,374.0 -7.5,426.8 67.5 C448.8 135.0,88.0 157.5,26.4 93.0 L52.8 60.0" data-g="1.2" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="ex" style="top:400px">prix d'exemple</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="ttl" style="top:220px;font-size:90px">Le malin :</div><svg class="abs ink" style="left:130px;top:760px;overflow:visible" width="280" height="540" viewBox="0 0 280 540"><g class="ink"><circle cx="130" cy="90" r="62"/><path d="M108 82 l0 8 M152 82 l0 8"/><path d="M108 122 Q130 136 152 122"/>
+ <ellipse cx="130" cy="290" rx="100" ry="130"/><path d="M70 230 L190 350 M60 280 L170 390 M95 200 L200 305"/>
+ <path d="M90 410 L70 520 M170 410 L190 520"/><path d="M40 250 L-10 170"/><path d="M220 250 L280 190"/></g></svg><svg class="abs ink" style="left:700px;top:800px;overflow:visible" width="240" height="520" viewBox="0 0 240 520"><g class="ink"><circle cx="110" cy="90" r="52"/><path d="M58 76 Q110 20 162 76 Z" style="fill:#e63946"/><path d="M150 72 L210 78"/>
+ <path d="M92 96 l0 6 M128 96 l0 6"/><path d="M94 120 Q112 128 132 116"/>
+ <path d="M110 142 L110 360"/><path d="M110 360 L70 500 M110 360 L150 500"/><path d="M110 200 L30 280"/><path d="M110 200 L200 150"/></g></svg>
+   <div class="bub" style="left:150px;top:560px;font-size:40px" data-g="2.1" data-fx="pop">« T'as mis le <span class="hl">code promo</span> ? »</div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="ttl" style="top:220px;font-size:90px">Le pigeon :</div><svg class="abs ink" style="left:80px;top:800px;overflow:visible" width="280" height="540" viewBox="0 0 280 540"><g class="ink"><circle cx="130" cy="90" r="62"/><path d="M104 80 l10 8 M156 80 l-10 8"/><ellipse cx="130" cy="128" rx="14" ry="18"/>
+ <ellipse cx="130" cy="290" rx="100" ry="130"/><path d="M70 230 L190 350 M60 280 L170 390 M95 200 L200 305"/>
+ <path d="M90 410 L70 520 M170 410 L190 520"/><path d="M40 250 Q20 120 80 60"/><path d="M220 250 Q240 120 180 60"/></g></svg>
+   <div class="note" style="left:120px;top:650px;font-size:120px;transform:rotate(-6deg)" data-g="3.0" data-fx="stamp">?!</div>
+   <div class="fld" style="left:400px;top:700px;width:520px;padding:28px 30px" data-g="3.1" data-fx="pop"><div class="k" style="font-size:28px">CODE PROMO HACOO</div><div class="field"><span class="ph">Ajouter un code</span></div></div><svg class="abs red" style="left:380px;top:790px;overflow:visible" width="560" height="210" viewBox="0 0 560 210"><path class="dr" pathLength="1" d="M44.800000000000004 115.50000000000001 C28.0 21.0,476.0 -10.5,543.1999999999999 94.5 C571.2 189.0,112.0 220.5,33.6 130.2 L67.2 84.0" data-g="3.2" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="note" style="left:600px;top:1010px;transform:rotate(4deg)" data-g="3.2" data-fx="pop">vide !</div></div>
+  <div class="scene" data-s="4" data-in="pop"><div class="ttl" style="top:220px;font-size:86px">Code promo Hacoo</div>
+   <div class="fld"><div class="k">CODE PROMO HACOO</div><div class="field"><span data-g="4.1" data-fx="type">hzklink</span></div>
+    <div class="row2" data-g="4.2" data-fx="stamp"><span>Réduction</span><span style="color:#e63946">-14 %</span></div></div>
+   <div class="note" style="left:640px;top:1060px;transform:rotate(-5deg);font-size:60px" data-g="4.2" data-fx="pop">-14 % !</div></div>
+  <div class="scene" data-s="5" data-in="right"><div class="ttl" style="top:220px;font-size:90px">Le calcul</div>
+   <div class="calc"><div class="l">70 € × 14 %</div><div class="l" data-g="5.1" data-fx="stamp">= <span>9,80 €</span> en moins</div></div></div>
+  <div class="scene" data-s="6" data-in="pop"><div class="ttl" style="top:220px;font-size:80px">Ce qu'il aurait payé</div>
+   <div class="big2"><div class="o">70,00 €<svg class="abs red" style="left:-20px;top:40px;overflow:visible" width="500" height="40" viewBox="0 0 500 40"><path class="dr" pathLength="1" d="M0 30 L480 6" data-g="6.0" data-fx="draw"/></svg></div>
+    <div class="n" data-g="6.0" data-fx="stamp" data-slow="6.0"><span>60,20 €</span></div></div>
+   <div class="ex" style="top:1150px" data-g="6.2" data-fx="fade">prix d'exemple · code promo Hacoo hzklink</div></div>
+  <div class="scene" data-s="7" data-in="pop">
+   <div class="endw" data-g="7.0" data-fx="up"><div class="k">CODE PROMO HACOO</div><div class="c">hzklink</div><div class="d">-14 % sur l'appli Hacoo</div>
+    <div class="b">liens des articles tendance en bio</div><div class="x">Prix d'exemple · -14 % avec le code promo Hacoo hzklink · Offre soumise aux conditions en vigueur sur l'appli Hacoo</div></div>
+   <div class="note" style="left:190px;top:1000px;transform:rotate(-3deg)" data-g="7.0" data-fx="pop">envoie-la à ton pote<br>avant qu'il paie</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.94, 6.03, 8.4, 10.8, 14.07, 16.32, 19.07], END=24.827;
+const G=[[[0.04, 0.943, "<em>Il a payé plein pot</em>"], [0.943, 2.146, "sur l'appli <em>Hacoo</em>."], [2.146, 2.84, "Regarde."]], [[2.98, 4.11, "Baskets de running,"], [4.11, 5.257, "casquette, gourde :"], [5.257, 5.93, "<i>70 €</i>."]], [[6.07, 6.767, "Son pote lui demande :"], [6.767, 7.498, "t'as mis"], [7.498, 8.3, "le <em>code promo</em> ?"]], [[8.44, 9.352, "Quel code ?"], [9.352, 10.154, "La case était juste là,"], [10.154, 10.7, "<i>vide</i>."]], [[10.84, 12.362, "<em>Code promo Hacoo</em> :"], [12.362, 13.196, "<em>hzklink</em>."], [13.196, 13.97, "<i>-14 %</i>."]], [[14.11, 14.524, "Ça fait"], [14.524, 15.61, "<em>9,80 €</em> en moins."]], [[16.36, 16.795, "<em>60,20 €</em>"], [16.795, 17.534, "au lieu de 70."], [17.534, 18.97, "Prix d'exemple."]], [[19.11, 20.108, "Envoie-la à ton pote,"], [20.108, 21.245, "avant qu'il paie."], [21.245, 22.135, "<em>Code promo Hacoo</em>,"], [22.135, 22.827, "<em>hzklink</em>."]]];
+const CAM=0.6, PUSH=0.010;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
