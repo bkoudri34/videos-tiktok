@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>QG Monabanq resultat d abord</title>
+
+<style>
+:root{--bg:#e6edf5}
+/* Style E « Écran d'appli en gros plan » (vidéos QG) : bureau clair bleu-gris, gros téléphone dessiné (sans logo),
+   doigt qui tape (ondulation), zoom « punch » sur la case importante, barre de recherche « parrainage <banque> » en haut,
+   étapes 1-2-3-4 en pastilles, sous-titres blancs cerclés de noir. Hors des zones TikTok : 200 px du haut, 150 px de droite, 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#e6edf5}
+body{font-family:'Inter',sans-serif;color:#0f172a;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#e6edf5}
+#cam{position:absolute;inset:0;transform-origin:470px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(circle at 1px 1px,rgba(15,23,42,.10) 2px,transparent 2.5px) 0 0/44px 44px,linear-gradient(160deg,#f3f7fb 0%,#dfe8f2 60%,#d3dfec 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.035;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 45% 45%,rgba(0,0,0,0) 62%,rgba(20,40,80,.16) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#sub{position:absolute;left:40px;top:1395px;width:880px;text-align:center;font:900 66px/1.1 'Inter',sans-serif;color:#fff;-webkit-text-stroke:10px #0f172a;letter-spacing:1px;paint-order:stroke fill;transform-origin:50% 50%;z-index:9}
+#sub em{font-style:normal;color:#ffd43b}
+#sub i{font-style:normal;color:#ff6b6b}
+/* barre de recherche (mot-clé visible dès 0 s) */
+.search{position:absolute;left:70px;top:212px;width:800px;height:96px;border-radius:48px;background:#fff;border:4px solid #0f172a;display:flex;align-items:center;padding:0 30px;gap:20px;font:800 44px Inter;box-shadow:0 10px 0 rgba(15,23,42,.15);z-index:8;white-space:nowrap}
+.search svg{flex:none}
+.search .q{color:#0f172a}
+.search .cur{width:4px;height:52px;background:#2563eb}
+/* téléphone en gros plan */
+.ph{position:absolute;left:110px;top:400px;width:720px;height:1500px;border-radius:96px;background:#0f172a;padding:22px;box-shadow:30px 40px 60px rgba(15,23,42,.28)}
+.ph .sc{position:absolute;inset:22px;border-radius:76px;background:#fff;overflow:hidden}
+.ph .isl{position:absolute;left:290px;top:40px;width:140px;height:40px;border-radius:20px;background:#0f172a;z-index:3}
+.ph .bar{position:absolute;left:0;right:0;top:0;height:120px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 64px 14px;font:800 28px Inter;color:#0f172a}
+.ap{position:absolute;left:52px;right:52px;top:140px}
+.ap .hd{display:flex;align-items:center;gap:18px;font:900 44px Inter;margin-bottom:30px}
+.ap .bk{width:60px;height:60px;border-radius:30px;background:#eef2f7;display:flex;align-items:center;justify-content:center;font:900 34px Inter;color:#64748b}
+.ap .lb{font:700 30px Inter;color:#64748b;margin:20px 0 10px}
+.ap .fd{height:104px;border-radius:24px;border:4px solid #cbd5e1;display:flex;align-items:center;padding:0 26px;font:800 40px Inter;white-space:nowrap;background:#f8fafc}
+.ap .fd.on{border-color:#2563eb;background:#eff6ff}
+.ap .ok{margin-left:auto;color:#16a34a;font:900 40px Inter}
+.ap .btn{height:112px;border-radius:56px;background:#2563eb;color:#fff;font:900 40px Inter;display:flex;align-items:center;justify-content:center;margin-top:34px;white-space:nowrap}
+.ap .gl{height:24px;border-radius:12px;background:#e2e8f0;margin:16px 0}
+.ap .big{font:900 150px/1 Inter;letter-spacing:-4px;margin:10px 0}
+.ap .row{display:flex;align-items:center;gap:22px;height:104px;border-bottom:3px solid #eef2f7;font:800 38px Inter;white-space:nowrap}
+.ap .row .n{width:64px;height:64px;border-radius:32px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font:900 34px Inter;flex:none}
+.ap .row .v{margin-left:auto;font:900 40px Inter;color:#16a34a}
+.ap .tg{width:120px;height:68px;border-radius:34px;background:#cbd5e1;position:relative;margin-left:auto;flex:none}
+.ap .tg i{position:absolute;left:6px;top:6px;width:56px;height:56px;border-radius:28px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.ap .tg.on{background:#16a34a}.ap .tg.on i{left:58px}
+/* pastille d'étape, gain, autocollant */
+.step{position:absolute;left:70px;top:326px;height:64px;padding:0 26px;border-radius:32px;background:#0f172a;color:#fff;font:900 34px Inter;display:flex;align-items:center;gap:12px;letter-spacing:1px;z-index:8;white-space:nowrap}
+.step b{color:#ffd43b}
+.gain{position:absolute;padding:14px 30px;border-radius:30px;background:#16a34a;color:#fff;font:900 70px Inter;box-shadow:0 12px 0 #0f5f2c;white-space:nowrap;z-index:7}
+.stk{position:absolute;padding:12px 28px;border-radius:18px;background:#ffd43b;border:5px solid #0f172a;font:900 58px Inter;color:#0f172a;box-shadow:8px 8px 0 #0f172a;white-space:nowrap;z-index:7}
+.cal{display:flex;gap:18px;margin-top:20px}
+.cal .m{flex:1;height:200px;border-radius:24px;border:4px solid #cbd5e1;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 32px Inter;color:#64748b;gap:8px}
+.cal .m b{font:900 44px Inter;color:#16a34a}
+.endc{position:absolute;left:80px;top:420px;width:780px;padding:36px 30px 34px;border-radius:44px;background:#0f172a;color:#fff;text-align:center;box-shadow:0 24px 50px rgba(15,23,42,.35);z-index:8}
+.endc .k{font:900 42px Inter;letter-spacing:1px}
+.endc .c{display:inline-block;white-space:nowrap;margin:16px 0;font:900 74px Inter;background:#ffd43b;color:#0f172a;padding:2px 24px;border-radius:16px}
+.endc .d{font:800 38px Inter}
+.endc .b{margin-top:16px;font:800 30px Inter;color:#93c5fd}
+.cond{position:absolute;left:80px;width:780px;font:600 25px/1.35 Inter;color:#334155;text-align:center;background:rgba(255,255,255,.92);border-radius:24px;padding:18px 22px;z-index:8}
+/* doigt + ondulation */
+.hand{position:absolute;width:150px;height:190px;z-index:10;pointer-events:none}
+.rip{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:6px solid #2563eb;opacity:0;z-index:9}
+.zm{position:absolute;inset:0}
+
+
+.lk{text-align:center;font:800 32px Inter;color:#64748b;margin-top:0}
+.lk b{display:block;font:900 160px/1 Inter;color:#0f172a;letter-spacing:-4px;margin-bottom:6px}
+.ntf{margin-top:46px;border-radius:34px;background:#f1f5f9;border:3px solid #e2e8f0;padding:24px 28px;box-shadow:0 16px 30px rgba(15,23,42,.16)}
+.ntf .t{display:flex;align-items:center;gap:16px;font:800 28px Inter;color:#64748b}
+.ntf .t i{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#2563eb,#60a5fa);display:block;flex:none}
+.ntf .t span{margin-left:auto}
+.ntf .h{font:900 40px Inter;margin-top:16px}
+.ntf .a{font:900 92px/1.05 Inter;color:#16a34a;margin-top:4px;letter-spacing:-2px}
+.ntf .s{font:700 30px Inter;color:#475569}
+.ex{position:absolute;padding:6px 18px;border-radius:12px;background:#0f172a;color:#fff;font:800 26px Inter;letter-spacing:2px;z-index:7}
+.ctr{text-align:center;margin-top:24px}
+.ctr .v{font:900 150px/1 Inter;letter-spacing:-4px}
+.ctr .k{font:800 34px Inter;color:#64748b;margin-top:8px}
+.pb{height:44px;border-radius:22px;background:#e2e8f0;overflow:hidden;margin-top:34px}
+.pb i{display:block;height:100%;width:100%;background:#16a34a;transform-origin:0 50%}
+.m13{width:250px;height:250px;border-radius:30px;border:5px solid #0f172a;background:#fff;text-align:center;overflow:hidden;box-shadow:10px 10px 0 #0f172a}
+.m13 .t{height:70px;background:#2563eb;color:#fff;font:900 34px/70px Inter;letter-spacing:2px}
+.m13 .n{font:900 120px/1.4 Inter}
+.ap .tot .r{display:flex;justify-content:space-between;font:800 36px Inter;height:76px;align-items:center;border-bottom:3px solid #eef2f7}
+.ap .tot .r b{color:#16a34a;font:900 38px Inter}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+<div class="search"><svg width="50" height="50" viewBox="0 0 50 50"><circle cx="21" cy="21" r="14" fill="none" stroke="#0f172a" stroke-width="6"/><path d="M31 31 L44 44" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/></svg><span class="q">parrainage monabanq</span><span class="cur" id="cur"></span></div>
+  <div class="scene" data-s="0">
+   <div class="zm" data-zg="0.1" data-zs="1.12" style="transform-origin:470px 860px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="lk"><b>9:41</b>vendredi 20 novembre</div>
+     <div class="ntf"><div class="t"><i></i>BANQUE<span>maintenant</span></div><div class="h">Virement reçu</div><div class="a">+80,00 €</div><div class="s">Prime de bienvenue (20 € + 60 €)</div></div>
+     <div class="gl" style="margin-top:40px"></div><div class="gl" style="width:60%"></div></div></div></div><div class="hand" data-tap="0.1" data-fx0="260" data-fy0="420" style="left:584px;top:824px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="0.1" style="left:650px;top:830px"></div><i class="abs" data-g="0.1" data-fx="tap"></i></div>
+   <div class="ex" style="left:640px;top:690px;transform:rotate(4deg)">EXEMPLE</div>
+   <div class="gain" style="left:420px;top:1150px;font-size:84px" data-g="0.2" data-fx="stamp">+80 €</div>
+   <div class="stk" style="left:150px;top:420px;transform:rotate(-4deg)" data-g="0.4" data-fx="stamp">jusqu'à 280 €</div></div>
+  <div class="scene" data-s="1" data-in="right"><div class="step">ÉTAPE <b>1/4</b> · OUVERTURE</div>
+   <div class="zm" data-zg="1.0" data-zs="1.12" style="transform-origin:470px 900px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd"><span class="bk">‹</span>Ouvrir un compte</div>
+     <div class="lb">Parrainage</div><div class="fd on">Lien d'invitation<span class="ok">✓</span></div>
+     <div class="lb">Compte</div><div class="fd">Compte courant</div>
+     <div class="btn">Ouvrir mon compte</div><div class="gl"></div><div class="gl" style="width:60%"></div></div></div></div><div class="hand" data-tap="1.0" data-fx0="260" data-fy0="420" style="left:404px;top:974px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="1.0" style="left:470px;top:980px"></div><i class="abs" data-g="1.0" data-fx="tap"></i></div>
+   <div class="gain" style="left:520px;top:1150px" data-g="1.1" data-fx="stamp">+20 €</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="step">ÉTAPE <b>2/4</b> · 1ER VERSEMENT</div>
+   <div class="zm" data-zg="2.0" data-zs="1.15" style="transform-origin:470px 770px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd"><span class="bk">‹</span>Alimenter</div>
+     <div class="lb">Montant</div><div class="fd on" style="height:130px;font-size:64px"><span data-g="2.0" data-fx="type">300,00 €</span></div>
+     <div class="lb">au moins 300 €, en une ou plusieurs fois</div>
+     <div class="btn">Valider</div><div class="gl"></div><div class="gl" style="width:60%"></div></div></div></div><div class="hand" data-tap="2.1" data-fx0="260" data-fy0="420" style="left:404px;top:1004px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="2.1" style="left:470px;top:1010px"></div><i class="abs" data-g="2.1" data-fx="tap"></i></div>
+   <div class="stk" style="left:430px;top:420px;transform:rotate(4deg)" data-g="2.1" data-fx="pop">dans le mois</div>
+   <div class="gain" style="left:520px;top:1150px" data-g="2.2" data-fx="stamp">+60 €</div></div>
+  <div class="scene" data-s="3" data-in="right"><div class="step">ÉTAPE <b>3/4</b> · CARTE</div>
+   <div class="zm" data-zg="3.0" data-zs="1.1" style="transform-origin:470px 800px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd"><span class="bk">‹</span>Paiements carte</div>
+     <div class="ctr" data-g="3.0" data-fx="tick" data-count="30" data-suf=" / 30"><div class="v">0 / 30</div><div class="k">paiements</div></div>
+     <div class="pb"><i data-g="3.0" data-fx="grow"></i></div>
+     <div class="cal"><div class="m">Mois 1<b>✓</b></div><div class="m">Mois 2<b data-g="3.1" data-fx="pop">✓</b></div></div></div></div></div></div>
+   <div class="stk" style="left:470px;top:420px;transform:rotate(4deg)" data-g="3.1" data-fx="pop">en 2 mois</div>
+   <div class="gain" style="left:520px;top:1150px" data-g="3.2" data-fx="stamp">+60 €</div></div>
+  <div class="scene" data-s="4" data-in="right"><div class="step">ÉTAPE <b>4/4</b> · MOBILITÉ + FIDÉLITÉ</div>
+   <div class="zm" data-zg="4.0" data-zs="1.1" style="transform-origin:600px 720px"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd"><span class="bk">‹</span>Mobilité bancaire</div>
+     <div class="row" style="height:130px;font-size:44px">Changer de banque<span class="tg" style="display:block"><i></i>
+       <span data-g="4.0" data-fx="fade" style="position:absolute;inset:0;border-radius:34px;background:#16a34a;display:block"><i style="left:58px"></i></span></span></div>
+     <div class="lb">On prévient tes prélèvements et virements pour toi</div><div class="gl"></div><div class="gl" style="width:70%"></div></div></div></div><div class="hand" data-tap="4.0" data-fx0="260" data-fy0="420" style="left:624px;top:699px"><svg width="150" height="190" viewBox="0 0 150 190"><path d="M52 18 Q52 4 66 4 Q80 4 80 18 L80 84 Q84 72 98 74 Q110 76 110 90 Q116 80 128 84 Q140 88 138 104 L136 132 Q132 176 92 184 L70 186 Q40 184 28 156 L10 112 Q4 98 16 92 Q28 88 36 100 L52 124 Z" fill="#fff" stroke="#0f172a" stroke-width="7" stroke-linejoin="round"/>
+<path d="M80 84 L80 112 M110 90 L110 116" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/></svg></div><div class="rip" data-rip="4.0" style="left:690px;top:705px"></div><i class="abs" data-g="4.0" data-fx="tap"></i></div>
+   <div class="gain" style="left:150px;top:1060px" data-g="4.1" data-fx="stamp">+80 €</div>
+   <div class="m13 abs" style="left:560px;top:930px;transform:rotate(3deg)" data-g="4.2" data-fx="pop"><div class="t">MOIS</div><div class="n">13</div></div>
+   <div class="gain" style="left:560px;top:1210px;font-size:60px" data-g="4.3" data-fx="stamp">+60 €</div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="ph"><div class="sc"><div class="isl"></div><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="ap"><div class="hd">Mes primes</div><div class="big" style="font-size:120px">280 €</div></div></div></div>
+   <div class="endc" data-g="5.0" data-fx="up"><div class="k">ENVOIE-MOI EN PRIVÉ</div><div class="c">« MONABANQ »</div><div class="d">je t'envoie le lien</div><div class="b">@htm.invest</div></div>
+   <div class="gain" style="left:290px;top:770px;font-size:60px" data-g="5.0" data-fx="stamp">TOTAL : 280 €</div>
+   <div class="cond" style="top:925px" data-g="5.1" data-fx="fade">Offre soumise aux conditions en vigueur.<br>Offre de bienvenue Monabanq (1<sup>er</sup> compte courant, depuis le 01/07/2026), jusqu'à 280 € : 20 € à l'ouverture + 60 € si 300 € versés dans le mois + 60 € (carte Visa, 30 paiements en 2 mois) + 80 € (mobilité bancaire signée dans le mois) + 60 € au 13<sup>e</sup> mois (compte conservé et 2 autres produits dont 1 d'épargne). Primes reprises en cas de clôture sous 12 mois. Notification : exemple.<br>Lien de parrainage : je touche une prime.</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 6.28, 8.6, 12.01, 15.47, 20.8], END=25.47;
+const G=[[[0.05, 1.05, "<em>Parrainage Monabanq</em> :"], [1.05, 2.48, "cette notif,"], [2.48, 4.05, "c'est <em>80 €</em> de prime."], [4.05, 4.55, "Et ça monte"], [4.55, 6.18, "jusqu'à <em>280 €</em>."]], [[6.34, 7.6, "Un : tu ouvres ton compte."], [7.6, 8.5, "<em>20 €</em>"]], [[8.66, 10.14, "Deux : tu verses <em>300 €</em>"], [10.14, 10.84, "dans le mois."], [10.84, 11.91, "<em>60 €</em>"]], [[12.07, 13.31, "Trois : <em>30 paiements</em> carte"], [13.31, 14.13, "en 2 mois."], [14.13, 15.37, "Encore <em>60 €</em>"]], [[15.53, 17.18, "Quatre : la mobilité bancaire,"], [17.18, 18.23, "<em>80 €</em>."], [18.23, 19.56, "Et <em>60 €</em> de fidélité"], [19.56, 20.7, "au 13<sup>e</sup> mois."]], [[20.86, 22.04, "Envoie-moi <em>MONABANQ</em>"], [22.04, 22.64, "en privé,"], [22.64, 23.67, "je t'envoie le lien."]]];
+const CAM=0.35, PUSH=0.006;
+const HANDS=[...document.querySelectorAll('[data-tap]')].map(el=>{const [i,j]=el.dataset.tap.split('.').map(Number);return {el,i,j,fx:+el.dataset.fx0,fy:+el.dataset.fy0}});
+const RIPS=[...document.querySelectorAll('[data-rip]')].map(el=>{const [i,j]=el.dataset.rip.split('.').map(Number);return {el,i,j}});
+const ZMS=[...document.querySelectorAll('.zm[data-zg]')].map(el=>{const [i,j]=el.dataset.zg.split('.').map(Number);return {el,i,j,s:+(el.dataset.zs||1.25)}});
+function extra(t){
+ HANDS.forEach(h=>{const t0=GT(h.i,h.j);const d=t-t0;
+  if(d<-0.55){h.el.style.opacity=0;return}
+  const k=eo((d+0.55)/0.5);const press=(d>-0.05&&d<0.18)?0.86:1;
+  h.el.style.opacity=cl((d+0.55)/0.15);
+  h.el.style.transform=`translate(${(1-k)*h.fx}px,${(1-k)*h.fy}px) scale(${press})`;h.el.style.transformOrigin='44% 3%';});
+ RIPS.forEach(r=>{const d=t-GT(r.i,r.j);if(d<0||d>0.6){r.el.style.opacity=0;return}
+  r.el.style.opacity=1-d/0.6;r.el.style.transform=`scale(${1+d*7})`;});
+ ZMS.forEach(z=>{const d=t-GT(z.i,z.j);const k=d<0?0:eb(d/0.35);z.el.style.transform=`scale(${1+(z.s-1)*k})`;});
+ const c=document.getElementById('cur');if(c)c.style.opacity=(Math.floor(t*2.2)%2)?0:1;
+}
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
