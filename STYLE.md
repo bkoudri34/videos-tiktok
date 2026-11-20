@@ -109,7 +109,7 @@ Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'age
   - sous-titres énormes au centre, 2 à 3 mots par groupe, un mot clé en `<em>` (surligné rouge), le code en `<i>hzklink</i>` (jaune, jamais en majuscules) ;
   - cartes qui surgissent au-dessus de la tête de celui qui parle (`anc('M'|'P', ...)`) : article + prix d'exemple, ticket, téléphone avec le champ « CODE PROMO HACOO », bulle « ?! », gros total recalculé (un seul ralenti) ;
   - carte de fin blanche : « CODE PROMO HACOO », `hzklink`, « -14 % sur l'appli Hacoo », « liens des articles tendance en bio » et les conditions.
-- Rendu : `render.py` lance Chromium avec `--enable-unsafe-swiftshader --use-angle=swiftshader` pour la 3D ; Three.js est chargé depuis jsDelivr (`three@0.149.0`), il faut donc un accès réseau pendant le rendu.
+- Rendu : `render.py` lance Chromium avec `--enable-unsafe-swiftshader --use-angle=swiftshader` pour la 3D ; Three.js r149 est embarqué dans le dépôt (`modeles/outils/vendor/three.min.js`, récupéré le 20/11 par `git clone --sparse` de github.com/mrdoob/three.js, tag r149) et chargé par un chemin relatif (`outils/vendor/three.min.js`) : aucun accès réseau n'est nécessaire au rendu.
 - Les règles Hacoo du 10/11 s'appliquent : « Hacou » dit au moins 2 fois, dont une dans les 3 premières secondes, et « code promo Hacou H Z K link ».
 
 # Contrôle qualité AVANT programmation et envoi (règle de Badr du 18/11/2026)

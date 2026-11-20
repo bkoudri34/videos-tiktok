@@ -9,7 +9,7 @@ La config définit en plus :
 import json, pathlib
 
 OUT = pathlib.Path(__file__).resolve().parent.parent
-THREE = '<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>'
+THREE = '<script src="outils/vendor/three.min.js"></script>'
 BASE = 'base_duo.css'
 SFX = 'sfx_luxe_template.py'
 ROOT = ':root{--bg:#07080b}'
