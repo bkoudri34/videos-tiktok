@@ -30,3 +30,4 @@ La transcription écrit souvent « Hacou » en « Akou », « à coup » ou « A
 ## Journal
 - 19/11 : vidéo 3 (hacoo35, V3) = Manon (cartesia) ; vidéo 4 (hacoo36, E) = Marc (azure). Pas de nouvelle voix essayée.
 - 20/11 : vidéo 3 (hacoo39, D Duo 3D) = Soleil (azure, la maligne) + Louis (smallest, le pigeon) ; vidéo 4 (hacoo40, D2 Duo dessiné) = Etienne (cartesia, le malin) + Hélène (inworld, la pigeonne). Silences internes plafonnés à 0,24 s. Pas de nouvelle voix essayée.
+- 21/11 : tâche du jour, vidéo 1 (hacoo41, E) = voix par défaut (speechify) ; « Hacou » en fin de phrase compris « Assou » : réplique refaite en écrivant « Akou » (compris « Acou »). Vidéo 2 (hacoo42, D Duo 3D) = cosmo (xai, le malin) + Mathieu (inworld, le pigeon) ; « moins onze euros trente-quatre » compris « onze zéro trente-quatre » (refait en « ça fait onze euros trente-quatre de moins »), « Envoie-la » compris « En voilà » (refait en « Envoie cette vidéo »).
