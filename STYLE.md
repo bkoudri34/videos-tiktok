@@ -82,7 +82,7 @@ Dans chaque vidéo Hacoo, le spectateur doit comprendre sans hésiter que `hzkli
 
 Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'agent veille (tâche séparée, avant la tâche vidéo) écrit `veille/briefs/AAAA-MM-JJ.md` : il choisit le style de chaque vidéo Hacoo du jour et explique quoi faire (format, accroche type, rythme, scènes, voix). La tâche vidéo applique ce brief. S'il n'y a pas de brief du jour, elle applique elle-même les règles ci-dessous.
 
-## Styles disponibles (`veille/styles.md` tient le catalogue à jour)
+## Styles disponibles (`veille/styles.md` tient le catalogue à jour : V3, D, T, E, D2, A au 22/11)
 - **V3 « nuit & or »** (voir plus haut) : motion design noir et or, une voix.
 - **D2 « Duo dessiné »** (voir plus bas) : le même duo en 2D au trait sur papier, sans Three.js.
 - **D « Duo 3D »** (`cfg/duo.py`, `outils/duo3d.js`, `outils/base_duo.css`, exemple `cfg/hacoo30.py`) : deux mannequins 3D façon pâte à modeler (Three.js) sur un sol quadrillé sombre, « le malin » (sportif, à droite) et « le pigeon » (costaud, à gauche), qui dialoguent. Inspiré du format « le connaisseur vs l'ignorant » repéré chez @pileinfo.tv : on reprend le format et le rythme, jamais son contenu.
@@ -91,6 +91,7 @@ Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'age
 - Les 2 vidéos Hacoo du jour sont dans 2 styles différents dès qu'il en existe au moins 2.
 - Un même créneau (vidéo 1 ou vidéo 2) ne garde pas le même style 2 jours de suite.
 - Le reste varie toujours aussi : accroche, articles, prix d'exemple, couleur, ordre des écrans.
+- **Sujets de Badr** : lis aussi `veille/sujets.md` et applique sa règle de rotation (sur 3 jours glissants, au moins une vidéo Hacoo traite un de ces sujets, par ex. R « pourquoi éviter de demander un remboursement sur Hacoo »).
 
 ## Articles
 - Sport et streetwear autorisés et encouragés (baskets de running, survêt, sacoche, casquette, doudoune…), dessinés de façon générique dans `cfg/hacoo_items.py`.
@@ -118,6 +119,13 @@ Les vidéos Hacoo ne doivent plus toutes avoir le même look. Chaque jour, l'age
 - Briques : `cfg/duo2d.py` (`duo2d_js(DUO_LINES, p_bun=False, cap=couleur)`, `duo2d_body(nom_M, nom_P)`, `anc()`), `duo2d.js` (personnages SVG, poses, bouche qui s'ouvre quand il parle, yeux ronds quand choqué, « boil » du trait par feTurbulence dont la graine change toutes les 0,15 s, plans `wide` / `M` / `P` avec coupe franche et zoom « punch »), `base_duo2d.css` (sous-titres noirs à halo papier, mot clé en `<em>` rouge, code en `<i>` jaune ; cartes, étiquettes, bulle, téléphone et carte de fin au feutre). Exemple : `cfg/hacoo40.py`.
 - `DUO_LINES` identiques au style D (mêmes poses : idle, talk, point, shrug, hip, shock, head, cool, think ; `'lbl': False` quand une carte occupe le haut ou sur l'écran de fin). `p_bun=True` ajoute un chignon au pigeon (« la pigeonne », voix féminine).
 - Pour éviter qu'un mot surligné passe seul à la ligne, mettre la ponctuation dans la balise (`<em>combien ?</em>`) ou utiliser `&nbsp;`.
+
+## Style A « Alerte stickers » : fabrication (construit le 22/11/2026, style envoyé par Badr)
+- Format « mise en garde » : 6 à 8 répliques, 28 à 35 s, une seule voix calme et sérieuse, une synthèse Speko par réplique, `SPLITS`, `MINLEN = 1.6`, `GAP = 0.22`, `TAIL = 2.2`. Une scène par réplique, chacune avec son étiquette de rubrique (`tag()`), un ou deux bandeaux (`ban(texte, top, 'red'|'grn'|'yel'|'', g=…)`) et un dessin autocollant (`stk()`).
+- Briques : `cfg/alerte.py` (`chrome()` en tête de BODY = gribouillis + compte à rebours `#cd` qui décompte la durée réelle ; `kara()` pour écrire les groupes de sous-titres : pavés noirs, `<em>` pavé jaune, `<i>` pavé rouge, ponctuation collée automatiquement avec espace insécable ; dessins prêts : `PADLOCK`, `avatar()` + `banned()`, `BOX`, `tee(couleur)`, `GUY` + `ARROWS_IN`, `TAPE`, `BOOKMARK`, `red_circle()` qui se trace), `base_alerte.css` (`.card`, `.pill`, `.tag`, `.ban`, `.stk`). Exemple complet : `cfg/hacoo_alerte1.py`.
+- Zones : titres entre 300 et 1050 px, sous-titres à 1180 px (2 lignes max), rien d'important sous 1540 px ni à droite de 950 px. L'accroche (bandeau rouge « ⚠ ATTENTION » ou équivalent + « Hacoo ») est visible dès la 1re image, sans animation.
+- Fin : marque-page orange + « ENREGISTRE CETTE VIDÉO » + « ENVOIE-LA ↗ » + pastille « CODE PROMO HACOO : hzklink » + mention des conditions.
+- Sujets qui vont bien avec ce style : les mises en garde de `veille/sujets.md` (retours et remboursements, erreurs avant de payer, faux codes…). Ne jamais affirmer un fait non vérifié : écrire « des utilisateurs racontent… » plutôt que « Hacoo bannit à vie ».
 
 # Contrôle qualité AVANT programmation et envoi (règle de Badr du 18/11/2026)
 

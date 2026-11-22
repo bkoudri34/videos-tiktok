@@ -1,0 +1,40 @@
+/* Style A « Alerte stickers » (repéré chez @hacooultra14 le 22/11) : papier crème à points, gribouillis roses en fond (%, €, étoiles, lunes),
+   étiquette de rubrique jaune en haut à gauche, compte à rebours en haut à droite, titres sur bandeaux noirs penchés (rouge = alerte),
+   dessins plats façon autocollants (contour noir épais + liseré blanc), sous-titres karaoké en pavés noirs, mot clé en pavé jaune. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#f3ece0}
+body{font-family:Inter,'Arial Black','Helvetica Neue',Arial,sans-serif;color:#141414;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#f3ece0}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(circle,rgba(120,100,80,.22) 2.6px,transparent 3px) 0 0/44px 44px,#f3ece0}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.04;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(90,60,30,.10) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+/* gribouillis de fond */
+.dood{position:absolute;inset:0;pointer-events:none}
+.dood span{position:absolute;font:900 120px Inter,'Arial Black',sans-serif;color:#e8a3a8;opacity:.42}
+/* étiquette de rubrique + compte à rebours */
+.tag{position:absolute;left:96px;top:205px;padding:8px 22px;border-radius:12px;background:#ffd84a;border:5px solid #141414;font:900 34px Inter,'Arial Black',sans-serif;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;box-shadow:5px 6px 0 #141414;z-index:4}
+#cd{position:absolute;right:96px;top:198px;padding:10px 26px;border-radius:40px;background:#141414;color:#fff;font:900 42px 'DejaVu Sans Mono',Menlo,monospace;z-index:8}
+/* bandeaux de titre */
+.ban{position:absolute;left:0;width:1080px;text-align:center;z-index:3}
+.ban b{display:inline-block;padding:10px 34px 12px;background:#141414;color:#fff;font:900 76px/1.05 Inter,'Arial Black',sans-serif;text-transform:uppercase;letter-spacing:1px;border-radius:12px;box-shadow:8px 10px 0 rgba(0,0,0,.25);white-space:nowrap}
+.ban.red b{background:#ee3b3b;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.yel b{background:#ffd84a;color:#141414;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.grn b{background:#2fa35a;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.sm b{font-size:52px;padding:8px 28px}
+/* autocollants */
+.stk{position:absolute;filter:drop-shadow(0 0 0 #fff) drop-shadow(7px 0 0 #fff) drop-shadow(-7px 0 0 #fff) drop-shadow(0 7px 0 #fff) drop-shadow(0 -7px 0 #fff) drop-shadow(10px 14px 0 rgba(0,0,0,.18))}
+.stk svg{display:block;overflow:visible}
+.ol{stroke:#141414;stroke-width:8;stroke-linejoin:round;stroke-linecap:round}
+.card{position:absolute;background:#fff;border:7px solid #141414;border-radius:30px;box-shadow:10px 12px 0 #141414}
+.pill{display:inline-block;padding:8px 26px;border-radius:40px;border:5px solid #141414;font:900 40px Inter,'Arial Black',sans-serif;white-space:nowrap}
+.mono{font-family:'DejaVu Sans Mono',Menlo,monospace!important}
+/* sous-titres karaoké */
+#sub{position:absolute;left:50px;top:1180px;width:980px;text-align:center;font:900 82px/1.32 Inter,'Arial Black',sans-serif;text-transform:uppercase;transform-origin:50% 50%;z-index:6}
+#sub b,#sub em{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#141414;color:#fff;font-style:normal;box-shadow:6px 7px 0 rgba(0,0,0,.2)}
+#sub em{background:#ffd84a;color:#141414;border:5px solid #141414}
+#sub i{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#ee3b3b;color:#fff;font-style:normal;border:5px solid #141414}
+svg *{transform-box:fill-box;transform-origin:center}
