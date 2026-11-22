@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo checklist vert sapin</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.ck{position:absolute;left:150px;width:780px;padding:22px 34px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.ck .r{display:flex;align-items:center;gap:22px;height:84px;font:800 38px Inter;white-space:nowrap;color:#111}
+.ck .r.off{color:#9a958b}
+.ck .r.on{background:#e3f1e8;border-radius:16px;margin:0 -14px;padding:0 14px}
+.bx{position:relative;flex:none;width:60px;height:60px;border:6px solid #111;border-radius:12px;background:#fff}
+.bx svg{position:absolute;left:-8px;top:-22px}
+.vs path{fill:none;stroke:#1f6f4a;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+.stop{position:absolute;padding:6px 34px;border:12px solid #e63946;border-radius:22px;color:#e63946;font:900 130px Inter;letter-spacing:6px;transform:rotate(-12deg);background:rgba(255,255,255,.75)}
+.pay{position:absolute;left:500px;top:700px;width:380px;height:150px;border-radius:75px;background:#111;color:#fff;font:900 64px Inter;display:flex;align-items:center;justify-content:center;letter-spacing:3px;box-shadow:8px 10px 0 #1f6f4a}
+.tape{position:absolute;height:70px;background:#ffe14d;border:5px solid #111;border-radius:10px;background-image:repeating-linear-gradient(90deg,#111 0 4px,transparent 4px 30px);background-size:30px 26px;background-repeat:repeat-x;background-color:#ffe14d}
+.lb{position:absolute;font:700 40px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ph{position:absolute;width:210px;height:250px;background:#fff;border:6px solid #111;border-radius:20px;box-shadow:6px 8px 0 #111;text-align:center;padding-top:16px}
+.ph .im{margin:0 auto;width:160px;height:120px;border:5px solid #111;border-radius:10px;background:linear-gradient(160deg,#dcefe4 0 55%,#1f6f4a 55%)}
+.ph .st{font:900 34px Inter;color:#e6a400;margin-top:16px;letter-spacing:2px}
+.fld{position:absolute;left:150px;width:780px;padding:34px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.fld .k{font:900 36px Inter;letter-spacing:2px;color:#1f6f4a;margin-bottom:16px}
+.fld .row2{display:flex;justify-content:space-between;font:900 44px Inter;margin-top:22px;white-space:nowrap}
+.its{position:absolute;left:150px;width:780px;display:flex;justify-content:space-between}
+.its .it{width:240px;text-align:center;font:800 32px Inter;white-space:nowrap}.its .it .ico{display:block}
+.its .it b{display:block;font:900 44px Inter;margin-top:6px}
+.calc{position:absolute;left:130px;width:820px;padding:40px;border-radius:26px;background:#1f3a2b;border:18px solid #8a6a43;box-shadow:10px 12px 0 #111;color:#f4f1e8;text-align:center}
+.calc .l{font:700 66px 'Comic Relief',cursive;white-space:nowrap;line-height:1.5}
+.calc .l span{background:#ffe14d;color:#111;padding:0 18px;border-radius:10px}
+.ex{position:absolute;left:0;width:1080px;text-align:center;font:700 30px 'Comic Relief',cursive;color:#555}
+.big2{position:absolute;left:0;top:640px;width:1080px;text-align:center}
+.big2 .o{display:inline-block;position:relative;font:900 110px Inter;color:#777}
+.big2 .n{font:900 190px Inter;line-height:1.1;margin-top:20px}
+.big2 .n span{background:#ffe14d;padding:0 24px}
+.pin{position:absolute;left:150px;top:1010px;width:780px;height:120px;border-radius:60px;background:#1f6f4a;color:#fff;display:flex;align-items:center;justify-content:center;gap:18px;font:900 44px Inter;white-space:nowrap;box-shadow:8px 10px 0 #111}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:220px;font-size:64px">Ta checklist <mark>Hacoo</mark><br>avant de payer :<br><em>enregistre-la</em></div><svg class="abs ink" style="left:150px;top:660px;overflow:visible" width="240" height="460" viewBox="0 0 240 460"><g class="ink"><circle cx="120" cy="80" r="56"/><path d="M98 72 l0 6 M142 72 l0 6"/><path d="M100 108 Q120 120 140 108"/>
+ <path d="M120 136 L120 330"/><path d="M120 330 L70 460 M120 330 L170 460"/><path d="M120 190 L40 270"/><path d="M120 190 L230 170"/></g></svg>
+   <div class="pay">PAYER</div>
+   <div class="stop" style="left:510px;top:850px;font-size:100px" data-g="0.0" data-fx="stamp">STOP</div>
+   <div class="note" style="left:170px;top:600px;transform:rotate(-6deg)" data-g="0.1" data-fx="pop">attends !</div>
+   <div class="ck" style="top:1060px;left:470px;width:400px;padding:14px 26px" data-g="0.3" data-fx="up"><div class="r "><div class="bx"></div></div><div class="r "><div class="bx"></div></div><div class="r "><div class="bx"></div></div></div></div>
+  <div class="scene" data-s="1" data-in="up"><div class="ttl" style="top:220px;font-size:90px">Case 1</div><div class="ck" style="top:360px"><div class="r on"><div class="bx"><svg data-g="1.0" data-fx="tick" class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>Mesures en cm</div><div class="r off"><div class="bx"></div>Avis avec photos</div><div class="r off"><div class="bx"></div>Case code promo</div></div>
+   <span class="abs ico" style="left:190px;top:780px"><svg width="230" height="230" viewBox="0 0 200 200"><path d="M50 40 H95 V125 Q140 125 160 140 Q168 150 160 160 H50 Z" fill="#c9a27a"/><rect x="50" y="155" width="112" height="14" rx="5" fill="#4a3424"/><path d="M60 60 H90 M60 80 H90 M60 100 H90" stroke="#7a5a3a" stroke-width="5"/></svg></span><span class="abs ico" style="left:610px;top:780px"><svg width="230" height="230" viewBox="0 0 200 200"><path d="M50 50 Q100 80 150 50 L150 75 Q100 105 50 75 Z" fill="#d9a24c"/><rect x="110" y="70" width="32" height="95" rx="6" fill="#d9a24c"/><path d="M114 165 v12 M122 165 v12 M130 165 v12 M138 165 v12" stroke="#d9a24c" stroke-width="4"/><path d="M60 62 H140" stroke="#7a5016" stroke-width="5" opacity=".5"/></svg></span>
+   <div class="tape" style="left:170px;top:1040px;width:740px" data-g="1.1" data-fx="left"></div>
+   <div class="lb" style="left:420px;top:900px;transform:rotate(-6deg)" data-g="1.1" data-fx="pop">en cm !</div>
+   <div class="lb" style="left:360px;top:1150px;color:#111" data-g="1.2" data-fx="pop">pas juste « M » ou « L »</div><svg class="abs red" style="left:400px;top:1215px;overflow:visible" width="300" height="40" viewBox="0 0 300 40"><path class="dr" pathLength="1" d="M0 8 Q150.0 0 300 10" data-g="1.2" data-fx="draw"/><path class="dr" pathLength="1" d="M10 30 Q150.0 22 294 32" data-g="1.2" data-fx="draw"/></svg></div>
+  <div class="scene" data-s="2" data-in="right"><div class="ttl" style="top:220px;font-size:90px">Case 2</div><div class="ck" style="top:360px"><div class="r "><div class="bx"><svg class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>Mesures en cm</div><div class="r on"><div class="bx"><svg data-g="2.0" data-fx="tick" class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>Avis avec photos</div><div class="r off"><div class="bx"></div>Case code promo</div></div>
+   <div class="ph" style="left:150px;top:800px;transform:rotate(-5deg)" data-g="2.1" data-fx="pop"><div class="im"></div><div class="st">★★★★★</div></div>
+   <div class="ph" style="left:435px;top:780px" data-g="2.1" data-fx="pop"><div class="im"></div><div class="st">★★★★☆</div></div>
+   <div class="ph" style="left:720px;top:800px;transform:rotate(5deg)" data-g="2.1" data-fx="pop"><div class="im"></div><div class="st">★★★★★</div></div><svg class="abs red" style="left:120px;top:760px;overflow:visible" width="840" height="330" viewBox="0 0 840 330"><path class="dr" pathLength="1" d="M67.2 181.50000000000003 C42.0 33.0,714.0 -16.5,814.8 148.5 C856.8000000000001 297.0,168.0 346.5,50.4 204.6 L100.8 132.0" data-g="2.1" data-fx="draw" style="transform:rotate(-2deg)"/></svg>
+   <div class="lb" style="left:330px;top:1130px" data-g="2.1" data-fx="pop">des vraies photos</div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="ttl" style="top:220px;font-size:90px">Case 3</div><div class="ck" style="top:360px"><div class="r "><div class="bx"><svg class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>Mesures en cm</div><div class="r "><div class="bx"><svg class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>Avis avec photos</div><div class="r on"><div class="bx"><svg data-g="3.0" data-fx="tick" class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>Case code promo</div></div>
+   <div class="fld" style="top:780px" data-g="3.1" data-fx="pop"><div class="k">CODE PROMO HACOO</div><div class="field"><span data-g="3.2" data-fx="type">hzklink</span></div>
+    <div class="row2" data-g="3.2" data-fx="stamp"><span>Réduction</span><span style="color:#1f6f4a">-14 %</span></div></div>
+   <div class="note" style="left:640px;top:1130px;transform:rotate(-5deg)" data-g="3.2" data-fx="pop">-14 % !</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="ttl" style="top:220px;font-size:90px">Exemple</div>
+   <div class="its" style="top:380px"><div class="it" data-g="4.0" data-fx="pop"><span class="ico"><svg width="170" height="170" viewBox="0 0 200 200"><path d="M50 40 H95 V125 Q140 125 160 140 Q168 150 160 160 H50 Z" fill="#c9a27a"/><rect x="50" y="155" width="112" height="14" rx="5" fill="#4a3424"/><path d="M60 60 H90 M60 80 H90 M60 100 H90" stroke="#7a5a3a" stroke-width="5"/></svg></span>Bottines<b>41 €</b></div><div class="it" data-g="4.0" data-fx="pop"><span class="ico"><svg width="170" height="170" viewBox="0 0 200 200"><path d="M50 50 Q100 80 150 50 L150 75 Q100 105 50 75 Z" fill="#d9a24c"/><rect x="110" y="70" width="32" height="95" rx="6" fill="#d9a24c"/><path d="M114 165 v12 M122 165 v12 M130 165 v12 M138 165 v12" stroke="#d9a24c" stroke-width="4"/><path d="M60 62 H140" stroke="#7a5016" stroke-width="5" opacity=".5"/></svg></span>Écharpe<b>13 €</b></div><div class="it" data-g="4.1" data-fx="pop"><span class="ico"><svg width="170" height="170" viewBox="0 0 200 200"><path d="M55 30 H95 V120 Q95 150 70 160 Q40 168 35 145 Q32 128 55 118 Z" fill="#f2d7a8"/><path d="M105 40 H145 V130 Q145 160 120 170 Q90 178 85 155 Q82 138 105 128 Z" fill="#e8b778"/><path d="M55 48 H95 M55 62 H95 M105 58 H145 M105 72 H145" stroke="#c0392b" stroke-width="6"/></svg></span>Chaussettes<b>6 €</b></div></div>
+   <div class="calc" style="top:780px"><div class="l">41 + 13 + 6</div><div class="l" data-g="4.2" data-fx="stamp">= <span>60,00 €</span></div></div>
+   <div class="ex" style="top:1180px">prix d'exemple</div></div>
+  <div class="scene" data-s="5" data-in="right"><div class="ttl" style="top:220px;font-size:90px">Le calcul</div>
+   <div class="calc" style="top:560px"><div class="l">60 € × 14 %</div><div class="l" data-g="5.2" data-fx="stamp">= <span>8,40 €</span> en moins</div></div>
+   <div class="fld" style="top:960px;padding:24px 40px"><div class="k" style="margin:0">CODE PROMO HACOO : <span style="color:#111;font-family:'DejaVu Sans Mono'">hzklink</span></div></div></div>
+  <div class="scene" data-s="6" data-in="pop"><div class="ttl" style="top:220px;font-size:90px">Ton total</div>
+   <div class="big2"><div class="o">60,00 €<svg class="abs red" style="left:-20px;top:40px;overflow:visible" width="500" height="40" viewBox="0 0 500 40"><path class="dr" pathLength="1" d="M0 30 L480 6" data-g="6.0" data-fx="draw"/></svg></div>
+    <div class="n" data-g="6.0" data-fx="stamp" data-slow="6.0"><span>51,60 €</span></div></div><svg class="abs red" style="left:150px;top:800px;overflow:visible" width="780" height="320" viewBox="0 0 780 320"><path class="dr" pathLength="1" d="M62.4 176.0 C39.0 32.0,663.0 -16.0,756.6 144.0 C795.6 288.0,156.0 336.0,46.8 198.4 L93.6 128.0" data-g="6.1" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="ex" style="top:1150px" data-g="6.1" data-fx="fade">prix d'exemple · code promo Hacoo hzklink</div></div>
+  <div class="scene" data-s="7" data-in="pop">
+   <div class="endw" data-g="7.0" data-fx="up"><div class="k">CODE PROMO HACOO</div><div class="c">hzklink</div><div class="d">-14 % sur l'appli Hacoo</div>
+    <div class="b">liens des articles tendance en bio</div><div class="x">Prix d'exemple · -14 % avec le code promo Hacoo hzklink · Offre soumise aux conditions en vigueur sur l'appli Hacoo</div></div>
+   <div class="pin" style="top:1150px" data-g="7.0" data-fx="pop">📌 ENREGISTRE CETTE VIDÉO</div>
+   <div class="ck" style="top:790px;left:300px;width:480px;padding:10px 24px;transform:scale(.8);transform-origin:50% 0" data-g="7.1" data-fx="up"><div class="r"><div class="bx"><svg class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>cm</div><div class="r"><div class="bx"><svg class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>photos</div><div class="r"><div class="bx"><svg class="vs" width="90" height="90" viewBox="0 0 90 90"><path d="M14 48 L36 70 L80 14"/></svg></div>hzklink</div></div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 3.46, 6.75, 8.85, 12.73, 15.27, 17.82, 20.28], END=26.49;
+const G=[[[0.05, 0.85, "<i>Stop !</i>"], [0.85, 1.55, "Ta checklist <em>Hacoo</em>"], [1.55, 2.35, "avant de payer :"], [2.35, 3.41, "coche ces 3 cases."]], [[3.53, 4.43, "<i>Case 1 :</i>"], [4.43, 5.73, "les mesures <em>en cm</em>,"], [5.73, 6.7, "pas juste la lettre."]], [[6.8, 7.39, "<i>Case 2 :</i>"], [7.39, 8.52, "les avis <em>avec photos</em>."]], [[8.9, 9.75, "<i>Case 3 :</i>"], [9.75, 10.85, "le <em>code promo Hacoo</em>,"], [10.85, 12.68, "<em>hzklink</em>."]], [[12.78, 13.65, "Bottines, écharpe,"], [13.65, 14.35, "chaussettes :"], [14.35, 15.22, "<i>60 €</i>."]], [[15.42, 16.07, "Avec le code,"], [16.07, 16.67, "tu économises"], [16.67, 17.77, "<em>8,40 €</em>."]], [[17.87, 19.33, "<em>51,60 €</em>."], [19.33, 20.23, "Prix d'exemple."]], [[20.33, 21.18, "Enregistre cette vidéo"], [21.18, 22.68, "pour ta prochaine commande."], [22.68, 23.48, "<em>Code promo Hacoo</em>,"], [23.48, 24.79, "<em>hzklink</em>."]]];
+const CAM=0.6, PUSH=0.010;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
