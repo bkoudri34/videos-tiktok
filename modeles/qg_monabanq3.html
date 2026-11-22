@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>QG Monabanq pourquoi la banque te paie</title>
+
+<style>
+:root{--bg:#0d0b09}
+/* Style X « Explainer mascotte » (QG, construit le 22/11/2026 d'après la mécanique envoyée par Badr) :
+   fond anthracite chaud + motif de petits points dorés (≈ 8 %) + halo doré au centre, accent or htm.invest #d4af37,
+   blanc cassé #f4efe4, titres Anton en majuscules, mascotte « Sou » (pièce dorée), icônes plates qui surgissent,
+   sous-titre court dans une pastille sombre arrondie en bas au centre (au-dessus de la zone TikTok), mot important en or.
+   Zones de sécurité : rien d'important sous y = 1540, au-delà de x = 930, au-dessus de y = 200. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0d0b09}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:#f4efe4;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#0d0b09}
+#cam{position:absolute;inset:0;transform-origin:465px 860px}
+#bgtex{position:absolute;inset:-60px;
+ background:
+  radial-gradient(46% 30% at 47% 44%,rgba(212,175,55,.16),rgba(212,175,55,0) 70%),
+  radial-gradient(circle,rgba(212,175,55,.08) 2.6px,transparent 3.2px) 0 0/38px 38px,
+  linear-gradient(180deg,#16130f 0%,#0d0b09 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:screen;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 47% 45%,rgba(0,0,0,0) 58%,rgba(0,0,0,.45) 100%)}
+#flash{position:absolute;inset:0;background:#d4af37;opacity:0;mix-blend-mode:screen}
+/* sous-titre en pastille, centré sur la zone sûre (0-930 px) */
+#sub{position:absolute;left:465px;top:1400px;translate:-50% 0;width:max-content;max-width:800px;text-align:center;
+ font:800 54px/1.15 'Inter',sans-serif;color:#f4efe4;background:rgba(18,15,11,.93);border:3px solid rgba(212,175,55,.45);
+ border-radius:46px;padding:16px 38px 18px;box-shadow:0 10px 30px rgba(0,0,0,.55);z-index:8;transform-origin:50% 50%}
+#sub em{font-style:normal;color:#d4af37}
+#sub i{font-style:normal;color:#ff8a5c}
+/* titres */
+.xt{position:absolute;left:40px;width:890px;text-align:center;font-family:'Anton',sans-serif;text-transform:uppercase;line-height:1.02;letter-spacing:1px;white-space:nowrap}
+.xt .l1{font-size:112px;color:#f4efe4}
+.xt .l2{font-size:92px;color:#d4af37}
+.uline{position:absolute}
+.uline path{fill:none;stroke:#d4af37;stroke-width:12;stroke-linecap:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.k{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:1px}
+/* pastilles et cartes */
+.pill{position:absolute;white-space:nowrap;font:800 44px Inter;padding:14px 34px;border-radius:44px;background:#d4af37;color:#16130f}
+.pill.dk{background:rgba(18,15,11,.92);color:#f4efe4;border:3px solid rgba(212,175,55,.6)}
+.pill.sm{font:700 30px Inter;padding:10px 24px}
+.stampx{position:absolute;font:400 150px/1 'Anton',sans-serif;color:#d4af37;border:12px solid #d4af37;border-radius:26px;padding:6px 34px 12px;white-space:nowrap}
+.lab{position:absolute;font:800 38px/1.15 Inter;color:#f4efe4;text-align:center;white-space:nowrap}
+.lab em{font-style:normal;color:#d4af37}
+.card{position:absolute;background:#f4efe4;color:#16130f;border-radius:34px;box-shadow:0 18px 40px rgba(0,0,0,.5);padding:26px 32px}
+.card .t{font:800 32px Inter;color:#6b604c;letter-spacing:.5px}
+.card .v{font:400 96px/1.05 'Anton',sans-serif;color:#16130f}
+.card .s{font:800 34px Inter}
+/* notification « virement reçu » */
+.notif{position:absolute;left:90px;width:820px;background:rgba(244,239,228,.97);color:#16130f;border-radius:38px;padding:26px 30px;display:flex;gap:26px;align-items:center;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+.notif .ic{width:110px;height:110px;border-radius:28px;background:#16130f;display:flex;align-items:center;justify-content:center;flex:none}
+.notif .tx{flex:1}
+.notif .a{font:700 30px Inter;color:#6b604c}
+.notif .b{font:800 40px Inter}
+.notif .m{font:400 92px/1 'Anton',sans-serif;color:#1d8a4a}
+.cnote{position:absolute;left:90px;width:820px;text-align:center;font:800 36px Inter;color:#d4af37;white-space:nowrap}
+/* étapes */
+.steps{position:absolute;left:80px;width:540px}
+.steps .r{display:flex;align-items:center;gap:20px;height:96px;font:700 34px Inter;white-space:nowrap;color:#f4efe4}
+.steps .r b{display:inline-flex;align-items:center;justify-content:center;min-width:150px;height:74px;border-radius:37px;background:#d4af37;color:#16130f;font:400 50px 'Anton',sans-serif}
+.steps .tot{margin-top:16px;font:400 70px 'Anton',sans-serif;color:#d4af37;white-space:nowrap}
+/* fausse conversation de messagerie */
+.chat{position:absolute;left:80px;top:250px;width:840px;height:900px;border-radius:50px;background:#1c1813;border:4px solid rgba(212,175,55,.35);overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.6)}
+.chat .hd{height:130px;display:flex;align-items:center;gap:22px;padding:0 36px;background:#241f18;border-bottom:3px solid rgba(212,175,55,.25)}
+.chat .av{width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a6,#d4af37 55%,#8a6a12);flex:none}
+.chat .nm{font:800 40px Inter;color:#f4efe4}
+.chat .st{font:600 26px Inter;color:#9b927f}
+.msg{position:absolute;max-width:600px;font:700 46px/1.2 Inter;padding:22px 34px;border-radius:40px;white-space:nowrap}
+.msg.me{right:40px;background:#d4af37;color:#16130f;border-bottom-right-radius:10px}
+.msg.you{left:40px;background:#f4efe4;color:#16130f;border-bottom-left-radius:10px}
+.msg .tm{display:block;font:600 22px Inter;opacity:.55;margin-top:6px;text-align:right}
+.dots{position:absolute;left:40px;background:#f4efe4;border-radius:36px;padding:24px 30px;display:flex;gap:12px}
+.dots i{width:18px;height:18px;border-radius:50%;background:#6b604c;display:block}
+.cond{position:absolute;left:80px;width:840px;font:600 23px/1.38 Inter;color:#b9ad93;text-align:center}
+.cond b{color:#f4efe4}
+/* icônes plates */
+.ico{position:absolute}
+.ico .f{fill:#d4af37}.ico .w{fill:#f4efe4}.ico .d{fill:#16130f}.ico .g{fill:#1d8a4a}.ico .r{fill:#e0633f}
+.ico .sk{fill:none;stroke:#f4efe4;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.emo{position:absolute;font-size:110px;line-height:1}
+/* bulle de BD de la mascotte */
+.bd{position:absolute;background:#f4efe4;color:#16130f;border-radius:50px;padding:30px 40px;font:400 76px/1.05 'Anton',sans-serif;text-transform:uppercase;text-align:center;white-space:nowrap;box-shadow:0 16px 36px rgba(0,0,0,.5)}
+.bd:after{content:'';position:absolute;left:var(--tx,90px);bottom:-46px;border:26px solid transparent;border-top:30px solid #f4efe4;border-bottom:0;transform:skewX(-18deg)}
+.bd em{font-style:normal;color:#b8901c}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.qm{position:absolute;font:400 120px/1 Anton;color:#d4af37}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="xt" style="top:240px"><div class="l1" style="font-size:104px">Parrainage Monabanq</div><div class="l2" style="font-size:96px">pourquoi elle te paie ?</div></div><svg class="uline" style="left:135px;top:448px;overflow:visible" width="700" height="30" viewBox="0 0 700 30"><path class="dr" pathLength="1" d="M6 18 Q350.0 4 694 14" data-g="0.1" data-fx="draw"/></svg><svg class="abs masc" data-anim="jump" data-brow="up" style="left:310px;top:600px;overflow:visible" width="375" height="412" viewBox="0 0 300 330"><defs><radialGradient id="cg" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#fff0b3"/><stop offset=".45" stop-color="#e3bf4c"/><stop offset="1" stop-color="#9c7716"/></radialGradient></defs><g class="mb"><g class="armL"><path d="M48 160 Q10 120 4 70" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="4" cy="70" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><g class="armR"><path d="M252 160 Q290 120 296 70" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="296" cy="70" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><path d="M118 268 L112 300 M182 268 L188 300" style="stroke:#9c7716;stroke-width:12;stroke-linecap:round"/><ellipse cx="104" cy="306" rx="26" ry="12" style="fill:#16130f"/><ellipse cx="196" cy="306" rx="26" ry="12" style="fill:#16130f"/><circle cx="150" cy="150" r="126" style="fill:url(#cg);stroke:#8a6a12;stroke-width:9"/><circle cx="150" cy="150" r="102" style="fill:none;stroke:rgba(138,106,18,.55);stroke-width:5;stroke-dasharray:4 9"/><text x="150" y="252" text-anchor="middle" style="font:400 34px Anton;letter-spacing:6px;fill:#8a6a12">SOU</text><g class="brows"><path d="M94 92 Q116 78 138 90" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/><path d="M162 90 Q184 78 206 92" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><g class="eyes"><ellipse cx="116" cy="130" rx="23" ry="27" style="fill:#fff"/><ellipse cx="184" cy="130" rx="23" ry="27" style="fill:#fff"/><circle cx="120" cy="134" r="12" style="fill:#16130f"/><circle cx="188" cy="134" r="12" style="fill:#16130f"/><circle cx="124" cy="129" r="4" style="fill:#fff"/><circle cx="192" cy="129" r="4" style="fill:#fff"/></g><g class="mouth"><ellipse cx="150" cy="192" rx="17" ry="21" style="fill:#16130f"/></g><ellipse cx="96" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/><ellipse cx="204" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/></g></svg>
+   <div class="qm" style="left:190px;top:600px;rotate:-14deg" data-g="0.1" data-fx="pop">?</div>
+   <div class="qm" style="left:730px;top:560px;rotate:12deg;font-size:150px" data-g="0.2" data-fx="pop">?</div>
+   <div class="pill" style="left:255px;top:1060px" data-g="0.1" data-fx="pop">jusqu'à 280 € pour toi*</div>
+   <div class="lab" style="left:0;width:930px;top:1160px;font:700 28px Inter;color:#b9ad93" data-g="0.1" data-fx="fade">* prime filleul si conditions remplies · offre soumise à conditions</div></div>
+  <div class="scene" data-s="1" data-in="right">
+   <div class="stampx" style="left:180px;top:250px;rotate:-5deg" data-g="1.0" data-fx="stamp">ARNAQUE ?</div>
+   <div class="pill" style="left:600px;top:470px;font:400 80px Anton;padding:6px 40px" data-g="1.1" data-fx="stamp">NON</div><svg class="ico" style="left:365px;top:600px" width="230" height="230" viewBox="0 0 200 200" data-g="1.2" data-fx="pop"><path class="f" d="M100 14 L190 62 L10 62 Z"/><rect class="f" x="14" y="66" width="172" height="14" rx="4"/><rect class="w" x="30" y="88" width="22" height="70" rx="4"/><rect class="w" x="68" y="88" width="22" height="70" rx="4"/><rect class="w" x="110" y="88" width="22" height="70" rx="4"/><rect class="w" x="148" y="88" width="22" height="70" rx="4"/><rect class="f" x="10" y="164" width="180" height="20" rx="5"/><circle class="d" cx="100" cy="44" r="10"/></svg>
+   <div class="lab" style="left:0;width:930px;top:850px" data-g="1.3" data-fx="up">1 nouveau client = <em>très cher</em></div><svg class="ico" style="left:90px;top:950px;rotate:-6deg" width="210" height="210" viewBox="0 0 200 200" data-g="1.4" data-fx="pop"><path class="sk" d="M70 20 L100 48 L130 20"/><rect class="w" x="10" y="48" width="180" height="124" rx="22"/><rect class="d" x="26" y="62" width="148" height="96" rx="12"/><path class="f" d="M86 86 L124 110 L86 134 Z"/><rect class="w" x="60" y="176" width="80" height="12" rx="6"/></svg><svg class="ico" style="left:370px;top:950px;rotate:4deg" width="210" height="210" viewBox="0 0 200 200" data-g="1.5" data-fx="pop"><rect class="w" x="40" y="130" width="14" height="62" rx="5"/><rect class="w" x="146" y="130" width="14" height="62" rx="5"/><rect class="f" x="6" y="22" width="188" height="116" rx="16"/><rect class="d" x="18" y="34" width="164" height="92" rx="10"/><text x="100" y="108" text-anchor="middle" style="font:400 70px Anton;fill:#d4af37;letter-spacing:3px">PUB</text></svg><svg class="ico" style="left:650px;top:950px;rotate:6deg" width="210" height="210" viewBox="0 0 200 200" data-g="1.6" data-fx="pop"><rect class="w" x="46" y="6" width="108" height="188" rx="22"/><rect class="d" x="56" y="24" width="88" height="148" rx="12"/><path class="f" d="M100 54 l10 22 24 3 -18 16 5 24 -21 -12 -21 12 5 -24 -18 -16 24 -3z"/><path class="r" d="M100 158 C88 146 76 140 82 132 C86 126 96 128 100 136 C104 128 114 126 118 132 C124 140 112 146 100 158Z"/></svg>
+   <div class="lab" style="left:95px;top:1170px;font-size:32px;width:200px" data-g="1.4" data-fx="fade">pubs</div>
+   <div class="lab" style="left:375px;top:1170px;font-size:32px;width:200px" data-g="1.5" data-fx="fade">affiches</div>
+   <div class="lab" style="left:655px;top:1170px;font-size:32px;width:200px" data-g="1.6" data-fx="fade">influenceurs</div><svg class="abs masc" data-anim="idle" data-brow="" style="left:80px;top:560px;overflow:visible" width="186" height="204" viewBox="0 0 300 330" data-g="1.2" data-fx="pop"><defs><radialGradient id="cg" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#fff0b3"/><stop offset=".45" stop-color="#e3bf4c"/><stop offset="1" stop-color="#9c7716"/></radialGradient></defs><g class="mb"><g class="armL"><path d="M48 170 Q14 200 6 236" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="6" cy="236" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><g class="armR"><path d="M252 150 Q300 120 340 96" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="340" cy="96" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><path d="M118 268 L112 300 M182 268 L188 300" style="stroke:#9c7716;stroke-width:12;stroke-linecap:round"/><ellipse cx="104" cy="306" rx="26" ry="12" style="fill:#16130f"/><ellipse cx="196" cy="306" rx="26" ry="12" style="fill:#16130f"/><circle cx="150" cy="150" r="126" style="fill:url(#cg);stroke:#8a6a12;stroke-width:9"/><circle cx="150" cy="150" r="102" style="fill:none;stroke:rgba(138,106,18,.55);stroke-width:5;stroke-dasharray:4 9"/><text x="150" y="252" text-anchor="middle" style="font:400 34px Anton;letter-spacing:6px;fill:#8a6a12">SOU</text><g class="brows"><path d="M94 92 Q116 78 138 90" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/><path d="M162 90 Q184 78 206 92" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><g class="eyes"><ellipse cx="116" cy="130" rx="23" ry="27" style="fill:#fff"/><ellipse cx="184" cy="130" rx="23" ry="27" style="fill:#fff"/><circle cx="120" cy="134" r="12" style="fill:#16130f"/><circle cx="188" cy="134" r="12" style="fill:#16130f"/><circle cx="124" cy="129" r="4" style="fill:#fff"/><circle cx="192" cy="129" r="4" style="fill:#fff"/></g><g class="mouth"><path d="M122 190 L178 190" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><ellipse cx="96" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/><ellipse cx="204" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/></g></svg></div>
+  <div class="scene" data-s="2" data-in="up"><svg class="ico" style="left:365px;top:230px" width="220" height="220" viewBox="0 0 200 200"><path class="f" d="M100 14 L190 62 L10 62 Z"/><rect class="f" x="14" y="66" width="172" height="14" rx="4"/><rect class="w" x="30" y="88" width="22" height="70" rx="4"/><rect class="w" x="68" y="88" width="22" height="70" rx="4"/><rect class="w" x="110" y="88" width="22" height="70" rx="4"/><rect class="w" x="148" y="88" width="22" height="70" rx="4"/><rect class="f" x="10" y="164" width="180" height="20" rx="5"/><circle class="d" cx="100" cy="44" r="10"/></svg>
+   <div class="lab" style="left:0;width:930px;top:470px;font-size:44px" data-g="2.0" data-fx="pop">le <em>parrainage</em></div>
+   <div class="fly" style="position:absolute;left:180px;top:560px"><svg class="ico" style="left:0px;top:0px;rotate:-18deg" width="170" height="170" viewBox="0 0 200 200" data-g="2.1" data-fx="left"><rect class="g" x="8" y="50" width="184" height="100" rx="14" style="fill:#2f9e5c"/><rect x="20" y="62" width="160" height="76" rx="10" style="fill:none;stroke:#bff0cf;stroke-width:5"/><circle cx="100" cy="100" r="28" style="fill:#bff0cf"/><text x="100" y="114" text-anchor="middle" style="font:400 40px Anton;fill:#1d6b3e">€</text></svg></div>
+   <div class="fly" style="position:absolute;left:590px;top:560px"><svg class="ico" style="left:0px;top:0px;rotate:16deg" width="170" height="170" viewBox="0 0 200 200" data-g="2.1" data-fx="right"><rect class="g" x="8" y="50" width="184" height="100" rx="14" style="fill:#2f9e5c"/><rect x="20" y="62" width="160" height="76" rx="10" style="fill:none;stroke:#bff0cf;stroke-width:5"/><circle cx="100" cy="100" r="28" style="fill:#bff0cf"/><text x="100" y="114" text-anchor="middle" style="font:400 40px Anton;fill:#1d6b3e">€</text></svg></div>
+   <div class="card" style="left:70px;top:760px;width:380px;text-align:center" data-g="2.2" data-fx="up"><div class="t">TOI · FILLEUL</div><div class="v">280 €</div><div class="s">maximum, par étapes</div></div>
+   <div class="card" style="left:500px;top:760px;width:380px;text-align:center" data-g="2.3" data-fx="up"><div class="t">TON PARRAIN</div><div class="v">30-50 €</div><div class="s">selon le compte</div></div>
+   <div class="emo" style="left:410px;top:1080px" data-g="2.3" data-fx="pop">🤝</div></div>
+  <div class="scene" data-s="3" data-in="pop"><svg class="abs masc" data-anim="idle" data-brow="up" style="left:90px;top:640px;overflow:visible" width="345" height="379" viewBox="0 0 300 330"><defs><radialGradient id="cg" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#fff0b3"/><stop offset=".45" stop-color="#e3bf4c"/><stop offset="1" stop-color="#9c7716"/></radialGradient></defs><g class="mb"><g class="armL"><path d="M50 180 Q10 190 30 240" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="30" cy="240" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><g class="armR"><path d="M250 180 Q290 190 270 240" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="270" cy="240" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><path d="M118 268 L112 300 M182 268 L188 300" style="stroke:#9c7716;stroke-width:12;stroke-linecap:round"/><ellipse cx="104" cy="306" rx="26" ry="12" style="fill:#16130f"/><ellipse cx="196" cy="306" rx="26" ry="12" style="fill:#16130f"/><circle cx="150" cy="150" r="126" style="fill:url(#cg);stroke:#8a6a12;stroke-width:9"/><circle cx="150" cy="150" r="102" style="fill:none;stroke:rgba(138,106,18,.55);stroke-width:5;stroke-dasharray:4 9"/><text x="150" y="252" text-anchor="middle" style="font:400 34px Anton;letter-spacing:6px;fill:#8a6a12">SOU</text><g class="brows"><path d="M94 92 Q116 78 138 90" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/><path d="M162 90 Q184 78 206 92" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><g class="eyes"><ellipse cx="116" cy="130" rx="23" ry="27" style="fill:#fff"/><ellipse cx="184" cy="130" rx="23" ry="27" style="fill:#fff"/><circle cx="120" cy="134" r="12" style="fill:#16130f"/><circle cx="188" cy="134" r="12" style="fill:#16130f"/><circle cx="124" cy="129" r="4" style="fill:#fff"/><circle cx="192" cy="129" r="4" style="fill:#fff"/></g><g class="mouth"><path d="M114 176 Q150 236 186 176 Z" style="fill:#16130f"/><path d="M130 200 Q150 220 170 200 Z" style="fill:#e0633f"/></g><ellipse cx="96" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/><ellipse cx="204" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/></g></svg>
+   <div class="bd" style="left:110px;top:300px;--tx:160px" data-g="3.0" data-fx="pop">Et elle y gagne<br><em>quoi ?</em></div><svg class="ico" style="left:560px;top:600px" width="200" height="200" viewBox="0 0 200 200" data-g="3.1" data-fx="pop"><circle class="w" cx="84" cy="56" r="34"/><path class="w" d="M24 184 Q24 102 84 100 Q144 102 144 184 Z"/><path class="r" d="M156 116 C130 92 112 80 124 64 C132 52 150 56 156 70 C162 56 180 52 188 64 C200 80 182 92 156 116Z"/></svg>
+   <div class="lab" style="left:520px;top:810px;width:290px;font-size:34px" data-g="3.1" data-fx="fade">un client <em>fidèle</em></div><svg class="ico" style="left:480px;top:900px;rotate:-8deg" width="170" height="170" viewBox="0 0 200 200" data-g="3.2" data-fx="pop"><rect class="f" x="8" y="40" width="184" height="120" rx="18"/><rect class="d" x="8" y="64" width="184" height="24"/><rect class="w" x="26" y="104" width="38" height="28" rx="6"/><rect class="d" x="110" y="130" width="64" height="10" rx="5"/></svg><svg class="ico" style="left:680px;top:900px;rotate:6deg" width="170" height="170" viewBox="0 0 200 200" data-g="3.2" data-fx="pop"><ellipse class="f" cx="96" cy="108" rx="78" ry="60"/><path class="f" d="M60 60 L72 26 L94 54 Z"/><rect class="f" x="40" y="150" width="22" height="34" rx="8"/><rect class="f" x="120" y="150" width="22" height="34" rx="8"/><ellipse cx="172" cy="108" rx="20" ry="24" style="fill:#e3bf4c;stroke:#8a6a12;stroke-width:4"/><circle class="d" cx="168" cy="100" r="4"/><circle class="d" cx="168" cy="116" r="4"/><circle class="d" cx="124" cy="86" r="7"/><rect class="d" x="74" y="56" width="44" height="9" rx="4"/><circle class="w" cx="96" cy="30" r="18"/><text x="96" y="38" text-anchor="middle" style="font:400 24px Anton;fill:#8a6a12">€</text></svg>
+   <div class="lab" style="left:470px;top:1080px;width:400px;font-size:32px" data-g="3.2" data-fx="fade">+ d'autres <em>services</em></div></div>
+  <div class="scene" data-s="4" data-in="right"><div class="notif" style="top:250px" data-g="4.0" data-fx="up"><div class="ic"><svg width="80" height="80" viewBox="0 0 200 200"><path d="M100 14 L190 62 L10 62 Z" style="fill:#d4af37"/><rect x="30" y="80" width="26" height="74" style="fill:#f4efe4"/><rect x="87" y="80" width="26" height="74" style="fill:#f4efe4"/><rect x="144" y="80" width="26" height="74" style="fill:#f4efe4"/><rect x="10" y="162" width="180" height="22" style="fill:#d4af37"/></svg></div><div class="tx"><div class="a">MAINTENANT · Banque</div><div class="b">Virement reçu</div><div class="a">Prime de bienvenue</div></div><div class="m">+60 €</div></div>
+   <div class="cnote" style="top:455px" data-g="4.0" data-fx="fade">prime filleul si conditions remplies</div>
+   <div class="steps" style="top:540px">
+    <div class="r" data-g="4.1" data-fx="left"><b>20 €</b>ouverture</div>
+    <div class="r" data-g="4.1" data-fx="left"><b>60 €</b>300 € versés</div>
+    <div class="r" data-g="4.2" data-fx="left"><b>60 €</b>30 paiements carte</div>
+    <div class="r" data-g="4.2" data-fx="left"><b>80 €</b>mobilité bancaire</div>
+    <div class="r" data-g="4.2" data-fx="left"><b>60 €</b>fidélité 13e mois</div>
+    <div class="tot" data-g="4.3" data-fx="stamp">= jusqu'à 280 €</div></div><svg class="abs masc" data-anim="jump" data-brow="up" style="left:620px;top:820px;overflow:visible" width="276" height="303" viewBox="0 0 300 330"><defs><radialGradient id="cg" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#fff0b3"/><stop offset=".45" stop-color="#e3bf4c"/><stop offset="1" stop-color="#9c7716"/></radialGradient></defs><g class="mb"><g class="armL"><path d="M48 160 Q10 120 4 70" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="4" cy="70" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><g class="armR"><path d="M252 160 Q290 120 296 70" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="296" cy="70" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><path d="M118 268 L112 300 M182 268 L188 300" style="stroke:#9c7716;stroke-width:12;stroke-linecap:round"/><ellipse cx="104" cy="306" rx="26" ry="12" style="fill:#16130f"/><ellipse cx="196" cy="306" rx="26" ry="12" style="fill:#16130f"/><circle cx="150" cy="150" r="126" style="fill:url(#cg);stroke:#8a6a12;stroke-width:9"/><circle cx="150" cy="150" r="102" style="fill:none;stroke:rgba(138,106,18,.55);stroke-width:5;stroke-dasharray:4 9"/><text x="150" y="252" text-anchor="middle" style="font:400 34px Anton;letter-spacing:6px;fill:#8a6a12">SOU</text><g class="brows"><path d="M94 92 Q116 78 138 90" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/><path d="M162 90 Q184 78 206 92" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><g class="eyes"><ellipse cx="116" cy="130" rx="23" ry="27" style="fill:#fff"/><ellipse cx="184" cy="130" rx="23" ry="27" style="fill:#fff"/><circle cx="120" cy="134" r="12" style="fill:#16130f"/><circle cx="188" cy="134" r="12" style="fill:#16130f"/><circle cx="124" cy="129" r="4" style="fill:#fff"/><circle cx="192" cy="129" r="4" style="fill:#fff"/></g><g class="mouth"><path d="M114 176 Q150 236 186 176 Z" style="fill:#16130f"/><path d="M130 200 Q150 220 170 200 Z" style="fill:#e0633f"/></g><ellipse cx="96" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/><ellipse cx="204" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/></g></svg>
+   <div class="pill dk" style="left:220px;top:1230px;font:400 64px Anton;color:#d4af37" data-g="4.3" data-fx="stamp">GAGNANT-GAGNANT</div></div>
+  <div class="scene" data-s="5" data-in="up">
+   <div class="chat" style="top:220px;height:820px"><div class="hd"><div class="av"></div><div><div class="nm">@htm.invest</div><div class="st">parrainage Monabanq</div></div></div>
+    <div class="msg me" style="top:190px" data-g="5.1" data-fx="pop">MONABANQ<span class="tm">lu ✓✓</span></div>
+    <div class="dots" style="top:340px" data-g="5.2" data-fx="pop"><i></i><i></i><i></i></div>
+    <div class="msg you" style="top:340px" data-g="5.3" data-fx="pop">je te parraine 🤝</div>
+    <div class="pill dk sm" style="left:60px;top:520px;font-size:28px" data-g="5.3" data-fx="up">⏳ offre Monabanq en cours · vérifiée le 22/11/2026</div>
+   </div><svg class="abs masc" data-anim="idle" data-brow="" style="left:620px;top:850px;overflow:visible" width="165" height="181" viewBox="0 0 300 330" data-g="5.0" data-fx="pop"><defs><radialGradient id="cg" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#fff0b3"/><stop offset=".45" stop-color="#e3bf4c"/><stop offset="1" stop-color="#9c7716"/></radialGradient></defs><g class="mb"><g class="armL"><path d="M48 170 Q14 200 6 236" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="6" cy="236" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><g class="armR"><path d="M252 150 Q300 120 340 96" style="fill:none;stroke:#e3bf4c;stroke-width:16;stroke-linecap:round"/><circle cx="340" cy="96" r="17" style="fill:#f4efe4;stroke:#9c7716;stroke-width:4"/></g><path d="M118 268 L112 300 M182 268 L188 300" style="stroke:#9c7716;stroke-width:12;stroke-linecap:round"/><ellipse cx="104" cy="306" rx="26" ry="12" style="fill:#16130f"/><ellipse cx="196" cy="306" rx="26" ry="12" style="fill:#16130f"/><circle cx="150" cy="150" r="126" style="fill:url(#cg);stroke:#8a6a12;stroke-width:9"/><circle cx="150" cy="150" r="102" style="fill:none;stroke:rgba(138,106,18,.55);stroke-width:5;stroke-dasharray:4 9"/><text x="150" y="252" text-anchor="middle" style="font:400 34px Anton;letter-spacing:6px;fill:#8a6a12">SOU</text><g class="brows"><path d="M94 92 Q116 78 138 90" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/><path d="M162 90 Q184 78 206 92" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><g class="eyes"><ellipse cx="116" cy="130" rx="23" ry="27" style="fill:#fff"/><ellipse cx="184" cy="130" rx="23" ry="27" style="fill:#fff"/><circle cx="120" cy="134" r="12" style="fill:#16130f"/><circle cx="188" cy="134" r="12" style="fill:#16130f"/><circle cx="124" cy="129" r="4" style="fill:#fff"/><circle cx="192" cy="129" r="4" style="fill:#fff"/></g><g class="mouth"><path d="M112 178 Q150 214 188 178" style="fill:none;stroke:#16130f;stroke-width:9;stroke-linecap:round"/></g><ellipse cx="96" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/><ellipse cx="204" cy="176" rx="14" ry="8" style="fill:rgba(224,99,63,.35)"/></g></svg>
+   <div class="cond" style="top:1065px"><b>Offre soumise aux conditions en vigueur.</b> Parrainage Monabanq, offre vérifiée le 22/11/2026 sur monabanq.com : filleul jusqu'à 280 € (offre de bienvenue : 20 € à l'ouverture + 60 € si 300 € versés dans le mois + 60 € pour 30 paiements carte en 2 mois + 80 € avec la mobilité bancaire + 60 € au 13e mois avec 2 autres produits dont 1 épargne) ; parrain 30 € ou 50 € selon le compte ouvert. Nouveaux clients majeurs résidant en France, sous réserve d'acceptation du dossier. <b>Lien de parrainage : je touche une prime.</b></div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 3.482, 9.988, 13.662, 17.594, 22.394], END=26.806;
+const G=[[[0.045, 1.185, "<em>Parrainage Monabanq</em> :"], [1.185, 1.805, "pourquoi la banque"], [1.805, 2.215, "te <em>paie</em>"], [2.215, 3.432, "pour ouvrir un compte ?"]], [[3.53, 4.56, "Une <em>arnaque</em> ?"], [4.56, 5.39, "<em>Non.</em>"], [5.39, 6.42, "Trouver un client,"], [6.42, 7.14, "ça lui coûte <em>cher</em> :"], [7.14, 7.76, "des <em>pubs</em>,"], [7.76, 8.69, "des <em>affiches</em>,"], [8.69, 9.938, "des <em>influenceurs</em>."]], [[10.042, 10.962, "Avec le <em>parrainage</em>,"], [10.962, 11.892, "elle donne cet argent"], [11.892, 12.512, "à <em>toi</em>"], [12.512, 13.612, "et à ton <em>parrain</em>."]], [[13.712, 14.742, "Et elle y gagne <em>quoi</em> ?"], [14.742, 15.982, "Un client <em>fidèle</em>,"], [15.982, 17.544, "qui prendra d'autres services."]], [[17.647, 18.987, "Toi, tu touches <em>ta prime</em>"], [18.987, 19.807, "par étapes,"], [19.807, 21.457, "si tu remplis <em>les conditions</em>."], [21.457, 22.344, "<em>Gagnant-gagnant</em>."]], [[22.441, 23.161, "Envoie-moi le mot"], [23.161, 23.781, "<em>MONABANQ</em>"], [23.781, 24.501, "en privé,"], [24.501, 25.506, "et je te <em>parraine</em>."]]];
+const CAM=0.5, PUSH=0.008;
+const MASC=[...document.querySelectorAll('.masc')];
+function extra(t){MASC.forEach((m,i)=>{const p=i*1.37;const an=m.dataset.anim;
+ const b=m.querySelector('.mb'),ey=m.querySelector('.eyes'),br=m.querySelector('.brows'),al=m.querySelector('.armL'),ar=m.querySelector('.armR');
+ let y=Math.sin(t*4.2+p)*7, sq=1;
+ if(an==='jump'){const k=Math.abs(Math.sin(t*5.2+p));y=-k*70;sq=k<0.15?0.93:1;}
+ b.style.transform=`translateY(${y}px) scale(${1/sq},${sq})`;
+ const bl=((t+p*0.9+1.3)%2.6)<0.13; ey.style.transform=`scaleY(${bl?0.12:1})`;
+ const up=m.dataset.brow==='up'?(-12-5*Math.sin(t*3+p)):(-2*Math.sin(t*2+p)); br.style.transform=`translateY(${up}px)`;
+ const wv=an==='jump'?22:8;
+ al.style.transformOrigin='100% 0%';al.style.transform=`rotate(${Math.sin(t*5.1+p)*wv}deg)`;
+ ar.style.transformOrigin='0% 100%';ar.style.transform=`rotate(${Math.sin(t*4.4+p+1)*wv*0.8}deg)`;
+});
+document.querySelectorAll('.dots i').forEach((d,k)=>{d.style.transform=`translateY(${-Math.max(0,Math.sin(t*9-k*0.9))*10}px)`});
+document.querySelectorAll('.fly').forEach((f,k)=>{f.style.translate=`0 ${Math.sin(t*3.1+k)*10}px`;f.style.rotate=`${Math.sin(t*2.3+k*2)*6}deg`});
+}
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>

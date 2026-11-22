@@ -1,0 +1,82 @@
+/* Style X « Explainer mascotte » (QG, construit le 22/11/2026 d'après la mécanique envoyée par Badr) :
+   fond anthracite chaud + motif de petits points dorés (≈ 8 %) + halo doré au centre, accent or htm.invest #d4af37,
+   blanc cassé #f4efe4, titres Anton en majuscules, mascotte « Sou » (pièce dorée), icônes plates qui surgissent,
+   sous-titre court dans une pastille sombre arrondie en bas au centre (au-dessus de la zone TikTok), mot important en or.
+   Zones de sécurité : rien d'important sous y = 1540, au-delà de x = 930, au-dessus de y = 200. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0d0b09}
+body{font-family:'Inter','Noto Color Emoji',sans-serif;color:#f4efe4;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#0d0b09}
+#cam{position:absolute;inset:0;transform-origin:465px 860px}
+#bgtex{position:absolute;inset:-60px;
+ background:
+  radial-gradient(46% 30% at 47% 44%,rgba(212,175,55,.16),rgba(212,175,55,0) 70%),
+  radial-gradient(circle,rgba(212,175,55,.08) 2.6px,transparent 3.2px) 0 0/38px 38px,
+  linear-gradient(180deg,#16130f 0%,#0d0b09 100%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:screen;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 47% 45%,rgba(0,0,0,0) 58%,rgba(0,0,0,.45) 100%)}
+#flash{position:absolute;inset:0;background:#d4af37;opacity:0;mix-blend-mode:screen}
+/* sous-titre en pastille, centré sur la zone sûre (0-930 px) */
+#sub{position:absolute;left:465px;top:1400px;translate:-50% 0;width:max-content;max-width:800px;text-align:center;
+ font:800 54px/1.15 'Inter',sans-serif;color:#f4efe4;background:rgba(18,15,11,.93);border:3px solid rgba(212,175,55,.45);
+ border-radius:46px;padding:16px 38px 18px;box-shadow:0 10px 30px rgba(0,0,0,.55);z-index:8;transform-origin:50% 50%}
+#sub em{font-style:normal;color:#d4af37}
+#sub i{font-style:normal;color:#ff8a5c}
+/* titres */
+.xt{position:absolute;left:40px;width:890px;text-align:center;font-family:'Anton',sans-serif;text-transform:uppercase;line-height:1.02;letter-spacing:1px;white-space:nowrap}
+.xt .l1{font-size:112px;color:#f4efe4}
+.xt .l2{font-size:92px;color:#d4af37}
+.uline{position:absolute}
+.uline path{fill:none;stroke:#d4af37;stroke-width:12;stroke-linecap:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.k{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:1px}
+/* pastilles et cartes */
+.pill{position:absolute;white-space:nowrap;font:800 44px Inter;padding:14px 34px;border-radius:44px;background:#d4af37;color:#16130f}
+.pill.dk{background:rgba(18,15,11,.92);color:#f4efe4;border:3px solid rgba(212,175,55,.6)}
+.pill.sm{font:700 30px Inter;padding:10px 24px}
+.stampx{position:absolute;font:400 150px/1 'Anton',sans-serif;color:#d4af37;border:12px solid #d4af37;border-radius:26px;padding:6px 34px 12px;white-space:nowrap}
+.lab{position:absolute;font:800 38px/1.15 Inter;color:#f4efe4;text-align:center;white-space:nowrap}
+.lab em{font-style:normal;color:#d4af37}
+.card{position:absolute;background:#f4efe4;color:#16130f;border-radius:34px;box-shadow:0 18px 40px rgba(0,0,0,.5);padding:26px 32px}
+.card .t{font:800 32px Inter;color:#6b604c;letter-spacing:.5px}
+.card .v{font:400 96px/1.05 'Anton',sans-serif;color:#16130f}
+.card .s{font:800 34px Inter}
+/* notification « virement reçu » */
+.notif{position:absolute;left:90px;width:820px;background:rgba(244,239,228,.97);color:#16130f;border-radius:38px;padding:26px 30px;display:flex;gap:26px;align-items:center;box-shadow:0 20px 50px rgba(0,0,0,.55)}
+.notif .ic{width:110px;height:110px;border-radius:28px;background:#16130f;display:flex;align-items:center;justify-content:center;flex:none}
+.notif .tx{flex:1}
+.notif .a{font:700 30px Inter;color:#6b604c}
+.notif .b{font:800 40px Inter}
+.notif .m{font:400 92px/1 'Anton',sans-serif;color:#1d8a4a}
+.cnote{position:absolute;left:90px;width:820px;text-align:center;font:800 36px Inter;color:#d4af37;white-space:nowrap}
+/* étapes */
+.steps{position:absolute;left:80px;width:540px}
+.steps .r{display:flex;align-items:center;gap:20px;height:96px;font:700 34px Inter;white-space:nowrap;color:#f4efe4}
+.steps .r b{display:inline-flex;align-items:center;justify-content:center;min-width:150px;height:74px;border-radius:37px;background:#d4af37;color:#16130f;font:400 50px 'Anton',sans-serif}
+.steps .tot{margin-top:16px;font:400 70px 'Anton',sans-serif;color:#d4af37;white-space:nowrap}
+/* fausse conversation de messagerie */
+.chat{position:absolute;left:80px;top:250px;width:840px;height:900px;border-radius:50px;background:#1c1813;border:4px solid rgba(212,175,55,.35);overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.6)}
+.chat .hd{height:130px;display:flex;align-items:center;gap:22px;padding:0 36px;background:#241f18;border-bottom:3px solid rgba(212,175,55,.25)}
+.chat .av{width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a6,#d4af37 55%,#8a6a12);flex:none}
+.chat .nm{font:800 40px Inter;color:#f4efe4}
+.chat .st{font:600 26px Inter;color:#9b927f}
+.msg{position:absolute;max-width:600px;font:700 46px/1.2 Inter;padding:22px 34px;border-radius:40px;white-space:nowrap}
+.msg.me{right:40px;background:#d4af37;color:#16130f;border-bottom-right-radius:10px}
+.msg.you{left:40px;background:#f4efe4;color:#16130f;border-bottom-left-radius:10px}
+.msg .tm{display:block;font:600 22px Inter;opacity:.55;margin-top:6px;text-align:right}
+.dots{position:absolute;left:40px;background:#f4efe4;border-radius:36px;padding:24px 30px;display:flex;gap:12px}
+.dots i{width:18px;height:18px;border-radius:50%;background:#6b604c;display:block}
+.cond{position:absolute;left:80px;width:840px;font:600 23px/1.38 Inter;color:#b9ad93;text-align:center}
+.cond b{color:#f4efe4}
+/* icônes plates */
+.ico{position:absolute}
+.ico .f{fill:#d4af37}.ico .w{fill:#f4efe4}.ico .d{fill:#16130f}.ico .g{fill:#1d8a4a}.ico .r{fill:#e0633f}
+.ico .sk{fill:none;stroke:#f4efe4;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.emo{position:absolute;font-size:110px;line-height:1}
+/* bulle de BD de la mascotte */
+.bd{position:absolute;background:#f4efe4;color:#16130f;border-radius:50px;padding:30px 40px;font:400 76px/1.05 'Anton',sans-serif;text-transform:uppercase;text-align:center;white-space:nowrap;box-shadow:0 16px 36px rgba(0,0,0,.5)}
+.bd:after{content:'';position:absolute;left:var(--tx,90px);bottom:-46px;border:26px solid transparent;border-top:30px solid #f4efe4;border-bottom:0;transform:skewX(-18deg)}
+.bd em{font-style:normal;color:#b8901c}
+svg *{transform-box:fill-box;transform-origin:center}
