@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo alerte cadeaux de Noël</title>
+
+<style>
+:root{--bg:#f3ece0}
+/* Style A « Alerte stickers » (repéré chez @hacooultra14 le 22/11) : papier crème à points, gribouillis roses en fond (%, €, étoiles, lunes),
+   étiquette de rubrique jaune en haut à gauche, compte à rebours en haut à droite, titres sur bandeaux noirs penchés (rouge = alerte),
+   dessins plats façon autocollants (contour noir épais + liseré blanc), sous-titres karaoké en pavés noirs, mot clé en pavé jaune. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#f3ece0}
+body{font-family:Inter,'Arial Black','Helvetica Neue',Arial,sans-serif;color:#141414;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#f3ece0}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(circle,rgba(120,100,80,.22) 2.6px,transparent 3px) 0 0/44px 44px,#f3ece0}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.04;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(90,60,30,.10) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+/* gribouillis de fond */
+.dood{position:absolute;inset:0;pointer-events:none}
+.dood span{position:absolute;font:900 120px Inter,'Arial Black',sans-serif;color:#e8a3a8;opacity:.42}
+/* étiquette de rubrique + compte à rebours */
+.tag{position:absolute;left:96px;top:205px;padding:8px 22px;border-radius:12px;background:#ffd84a;border:5px solid #141414;font:900 34px Inter,'Arial Black',sans-serif;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;box-shadow:5px 6px 0 #141414;z-index:4}
+#cd{position:absolute;right:96px;top:198px;padding:10px 26px;border-radius:40px;background:#141414;color:#fff;font:900 42px 'DejaVu Sans Mono',Menlo,monospace;z-index:8}
+/* bandeaux de titre */
+.ban{position:absolute;left:0;width:1080px;text-align:center;z-index:3}
+.ban b{display:inline-block;padding:10px 34px 12px;background:#141414;color:#fff;font:900 76px/1.05 Inter,'Arial Black',sans-serif;text-transform:uppercase;letter-spacing:1px;border-radius:12px;box-shadow:8px 10px 0 rgba(0,0,0,.25);white-space:nowrap}
+.ban.red b{background:#ee3b3b;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.yel b{background:#ffd84a;color:#141414;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.grn b{background:#2fa35a;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.sm b{font-size:52px;padding:8px 28px}
+/* autocollants */
+.stk{position:absolute;filter:drop-shadow(0 0 0 #fff) drop-shadow(7px 0 0 #fff) drop-shadow(-7px 0 0 #fff) drop-shadow(0 7px 0 #fff) drop-shadow(0 -7px 0 #fff) drop-shadow(10px 14px 0 rgba(0,0,0,.18))}
+.stk svg{display:block;overflow:visible}
+.ol{stroke:#141414;stroke-width:8;stroke-linejoin:round;stroke-linecap:round}
+.card{position:absolute;background:#fff;border:7px solid #141414;border-radius:30px;box-shadow:10px 12px 0 #141414}
+.pill{display:inline-block;padding:8px 26px;border-radius:40px;border:5px solid #141414;font:900 40px Inter,'Arial Black',sans-serif;white-space:nowrap}
+.mono{font-family:'DejaVu Sans Mono',Menlo,monospace!important}
+/* sous-titres karaoké */
+#sub{position:absolute;left:50px;top:1180px;width:980px;text-align:center;font:900 82px/1.32 Inter,'Arial Black',sans-serif;text-transform:uppercase;transform-origin:50% 50%;z-index:6}
+#sub b,#sub em{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#141414;color:#fff;font-style:normal;box-shadow:6px 7px 0 rgba(0,0,0,.2)}
+#sub em{background:#ffd84a;color:#141414;border:5px solid #141414}
+#sub i{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#ee3b3b;color:#fff;font-style:normal;border:5px solid #141414}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+#sub u{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#ffd84a;color:#141414;border:5px solid #141414;text-decoration:none;text-transform:none;font-family:'DejaVu Sans Mono',Menlo,monospace}
+.lc{text-transform:none!important}
+.tk{left:170px;width:740px;padding:30px 40px 28px;font:800 34px Inter,'Arial Black',sans-serif}
+.tk .r{display:flex;justify-content:space-between;padding:8px 0;white-space:nowrap}
+.tk .r.red{color:#ee3b3b}
+.tk .r.grey{color:#8a8178}
+.tk .t{font:900 40px Inter,'Arial Black',sans-serif;text-align:center;margin-bottom:8px}
+.tk .tot{border-top:5px dashed #141414;margin-top:10px;padding-top:14px;font-size:48px}
+.tk .ex{text-align:center;font:700 24px Inter,sans-serif;color:#6b6257;margin-top:10px}
+.dl{left:170px;width:740px;padding:26px 36px;font:800 34px Inter,'Arial Black',sans-serif}
+.dl .t{font:900 36px Inter,'Arial Black',sans-serif;margin-bottom:10px}
+.dl .d{display:flex;justify-content:space-between;align-items:center;border:5px solid #141414;border-radius:18px;padding:14px 20px;background:#eaf7ef}
+.cp{left:130px;top:430px;width:820px;padding:34px 44px 36px}
+.cp .lab{font:900 34px Inter,'Arial Black',sans-serif;letter-spacing:2px}
+.cp .f{margin-top:14px;height:110px;border:6px solid #141414;border-radius:20px;background:#fff;display:flex;align-items:center;padding:0 28px;font:900 66px 'DejaVu Sans Mono',Menlo,monospace}
+.cp .ok{margin-top:16px;font:900 46px Inter,'Arial Black',sans-serif;color:#2fa35a}
+.cond{position:absolute;left:90px;width:900px;text-align:center;font:700 26px Inter,sans-serif;color:#6b6257}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+<div class="dood"><span style="left:60px;top:330px">%</span><span style="left:900px;top:300px">€</span><span style="left:820px;top:640px">★</span><span style="left:70px;top:900px">%</span><span style="left:930px;top:1000px">☾</span><span style="left:120px;top:1560px">€</span><span style="left:860px;top:1620px">★</span><span style="left:640px;top:1760px">%</span><span style="left:300px;top:470px">☾</span></div><div id="cd">0:30</div>
+  <div class="scene" data-s="0"><div class="tag">CADEAUX DE NOËL</div><div class="ban red" style="top:300px"><b style="transform:rotate(-3deg)">⚠ ATTENTION</b></div><div class="ban " style="top:425px"><b style="transform:rotate(1deg);font-size:58px">Cadeaux sur Hacoo ?</b></div><div class="ban yel" style="top:535px"><b style="transform:rotate(-1deg);font-size:54px">Lis ça avant</b></div><div class="stk" style="left:190px;top:680px" data-wob="1"><svg width="360" height="360" viewBox="0 0 400 400"><rect class="ol" x="60" y="170" width="280" height="200" rx="14" fill="#ee3b3b"/>
+<rect class="ol" x="40" y="120" width="320" height="70" rx="14" fill="#f25a5a"/>
+<rect class="ol" x="176" y="120" width="48" height="250" fill="#2fa35a"/>
+<path class="ol" d="M200 120 Q140 40 110 80 Q90 120 200 120 Q310 120 290 80 Q260 40 200 120 Z" fill="#2fa35a"/>
+<path d="M80 200 V300" stroke="#ff9a9a" stroke-width="12" stroke-linecap="round"/></svg></div><div class="stk" style="left:560px;top:700px" data-wob="1"><svg width="300" height="300" viewBox="0 0 400 400"><path class="ol" d="M70 190 L200 150 L330 190 L330 345 L200 385 L70 345 Z" fill="#d79a5c"/>
+<path class="ol" d="M200 230 L200 385 M70 190 L200 230 L330 190" fill="none"/>
+<path class="ol" d="M70 190 L30 245 L160 285 L200 230 Z" fill="#e8b27a"/><path class="ol" d="M330 190 L370 245 L240 285 L200 230 Z" fill="#c4874a"/>
+<path d="M120 300 L170 315" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".55"/></svg></div></div>
+  <div class="scene" data-s="1" data-in="pop"><div class="tag">RÉFLEXE 1</div><div class="ban yel" style="top:300px"><b style="transform:rotate(-2deg);font-size:56px">La date de livraison</b></div><div class="ban grn" style="top:415px" data-g="1.3" data-fx="stamp"><b style="transform:rotate(2deg);font-size:58px">AVANT de payer</b></div><div class="stk" style="left:80px;top:560px" data-g="1.1" data-fx="pop" data-wob="1"><svg width="320" height="320" viewBox="0 0 400 400"><rect class="ol" x="50" y="70" width="300" height="290" rx="30" fill="#fff"/>
+<path class="ol" d="M50 100 Q50 70 80 70 H320 Q350 70 350 100 V150 H50 Z" fill="#ee3b3b"/>
+<rect class="ol" x="110" y="40" width="26" height="70" rx="13" fill="#c9d0d8"/><rect class="ol" x="264" y="40" width="26" height="70" rx="13" fill="#c9d0d8"/>
+<text x="200" y="135" text-anchor="middle" font-family="Inter,Arial Black,sans-serif" font-weight="900" font-size="44" fill="#fff">DÉCEMBRE</text>
+<text x="200" y="305" text-anchor="middle" font-family="Inter,Arial Black,sans-serif" font-weight="900" font-size="150" fill="#141414">24</text></svg></div>
+   <div class="card dl" style="left:440px;width:520px;top:640px" data-g="1.2" data-fx="right"><div class="t">Livraison estimée</div><div class="d"><span>📦 regarde-la</span><span>✓</span></div></div><svg class="abs" style="left:445px;top:715px;overflow:visible;z-index:5" width="520" height="120" viewBox="0 0 520 120"><path pathLength="1" d="M36.400000000000006 66.0 C20.8 9.6,447.2 -4.8,504.4 54.0 C530.4 110.4,104.0 127.2,26.0 74.4 L57.2 45.6" fill="none" stroke="#ee3b3b" stroke-width="11" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;transform:rotate(-3deg)" data-g="1.3" data-fx="draw"/></svg></div>
+  <div class="scene" data-s="2" data-in="right"><div class="tag">RÉFLEXE 2</div><div class="ban grn" style="top:300px"><b style="transform:rotate(-2deg);font-size:62px">Le total final</b></div><div class="ban " style="top:415px" data-g="2.2" data-fx="pop"><b style="transform:rotate(1deg);font-size:54px">livraison comprise</b></div>
+   <div class="card tk" style="top:560px"><div class="t">RÉCAP COMMANDE</div><div class="r"><span>Articles</span><span>49,00 €</span></div><div class="r grey"><span>Livraison</span><span>à vérifier</span></div><div class="r tot"><span>Total final</span><span>?</span></div><div class="ex">prix d'exemple</div></div><svg class="abs" style="left:110px;top:738px;overflow:visible;z-index:5" width="860" height="160" viewBox="0 0 860 160"><path pathLength="1" d="M60.2 88.0 C34.4 12.8,739.6 -6.4,834.1999999999999 72.0 C877.2 147.20000000000002,172.0 169.60000000000002,43.0 99.2 L94.6 60.8" fill="none" stroke="#ee3b3b" stroke-width="11" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;transform:rotate(-3deg)" data-g="2.1" data-fx="draw"/></svg></div>
+  <div class="scene" data-s="3" data-in="pop"><div class="tag">RÉFLEXE 3</div>
+   <div class="card cp" style="top:330px"><div class="lab">CODE PROMO HACOO</div><div class="f"><span class="lc" data-g="3.2" data-fx="type">hzklink</span></div><div class="ok" data-g="3.4" data-fx="fade">✓ -14 % appliqué</div></div><div class="ban yel" style="top:820px" data-g="3.4" data-fx="stamp"><b style="transform:rotate(-4deg);font-size:150px">-14 %</b></div></div>
+  <div class="scene" data-s="4" data-in="right"><div class="tag">MES CADEAUX</div><div class="stk" style="left:110px;top:330px" data-g="4.0" data-fx="pop" data-wob="1"><svg width="220" height="220" viewBox="0 0 200 200"><path d="M55 40 L82 30 Q100 46 118 30 L145 40 L165 95 L145 102 L142 120 L58 120 L55 102 L35 95 Z" fill="#c9b8ff"/><path d="M62 118 H138 L142 175 H108 L100 135 L92 175 H58 Z" fill="#a993f0"/><circle cx="100" cy="62" r="5" fill="#fff"/><circle cx="100" cy="82" r="5" fill="#fff"/><circle cx="100" cy="102" r="5" fill="#fff"/><path d="M70 60 l6 6 M120 70 l6 6 M80 140 l6 6" stroke="#fff" stroke-width="4"/></svg></div><div class="stk" style="left:430px;top:300px" data-g="4.1" data-fx="pop" data-wob="1"><svg width="220" height="220" viewBox="0 0 200 200"><path d="M20 60 Q100 130 180 60" fill="none" stroke="#3a5a3a" stroke-width="5"/><g fill="#ffd36a"><circle cx="45" cy="88" r="13"/><circle cx="100" cy="108" r="13" fill="#ff8fb1"/><circle cx="155" cy="88" r="13" fill="#7fd8ff"/><circle cx="72" cy="101" r="10" fill="#b8f28a"/><circle cx="128" cy="101" r="10"/></g></svg></div><div class="stk" style="left:750px;top:330px" data-g="4.1" data-fx="pop" data-wob="1"><svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="52" r="26" fill="none" stroke="#d9a24c" stroke-width="9"/><rect x="92" y="76" width="16" height="22" fill="#d9a24c"/><path d="M100 98 L140 120 Q150 150 120 170 Q100 180 80 170 Q50 150 60 120 Z" fill="#7fd8ff"/><circle cx="100" cy="138" r="14" fill="#fff" opacity=".7"/></svg></div>
+   <div class="card tk" style="top:640px"><div class="r"><span>Pyjama</span><span>29,00 €</span></div><div class="r"><span>Guirlande</span><span>13,00 €</span></div><div class="r"><span>Porte-clés</span><span>7,00 €</span></div>
+    <div class="r tot" data-g="4.2" data-fx="stamp"><span>Sous-total</span><span>49,00 €</span></div><div class="ex">prix d'exemple</div></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="tag">CODE PROMO HACOO</div>
+   <div class="card tk" style="top:330px"><div class="r"><span>Sous-total</span><span>49,00 €</span></div><div class="r red" data-g="5.0" data-fx="left"><span>Code <span class="lc">hzklink</span> -14 %</span><span>-6,86 €</span></div>
+    <div class="r tot"><span>Total</span><span data-g="5.2" data-fx="stamp" data-slow="5.2">42,14 €</span></div><div class="ex">prix d'exemple</div></div><div class="ban grn" style="top:800px" data-g="5.2" data-fx="stamp"><b style="transform:rotate(-3deg);font-size:130px">42,14 €</b></div></div>
+  <div class="scene" data-s="6" data-in="pop"><div class="tag">PARTAGE</div><div class="stk" style="left:430px;top:290px" data-g="6.0" data-fx="pop" data-wob="1"><svg width="220" height="300" viewBox="0 0 260 320"><path class="ol" d="M60 20 H200 Q220 20 220 40 V300 L130 240 L40 300 V40 Q40 20 60 20 Z" fill="#ff8a2a"/><path d="M80 50 V200" stroke="#ffc08a" stroke-width="12" stroke-linecap="round"/></svg></div><div class="ban " style="top:630px" data-g="6.0" data-fx="pop"><b style="transform:rotate(-2deg);font-size:50px">Enregistre cette vidéo</b></div><div class="ban red" style="top:750px" data-g="6.1" data-fx="pop"><b style="transform:rotate(2deg);font-size:52px">pour tes cadeaux 🎁</b></div>
+   <div class="ban" style="top:880px" data-g="6.2" data-fx="up"><span class="pill" style="background:#ffd84a;font-size:44px">CODE PROMO HACOO : <span class="mono lc">hzklink</span></span></div>
+   <div class="ban" style="top:975px" data-g="6.3" data-fx="up"><span class="pill" style="background:#fff;font-size:38px">-14 % sur l'appli Hacoo</span></div>
+   <div class="ban" style="top:1060px" data-g="6.3" data-fx="up"><span class="pill" style="background:#fff;font-size:34px">liens des articles tendance en bio</span></div>
+   <div class="cond" style="top:1470px">Offre soumise aux conditions en vigueur sur l'appli Hacoo · prix d'exemple</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.91, 6.96, 11.61, 16.88, 20.08, 23.23], END=28.86;
+const G=[[[0.04, 0.828, "<b>Tes</b> <em>cadeaux de Noël</em>"], [0.828, 1.775, "<b>sur</b> <b>l'appli</b> <em>Hacoo ?</em>"], [1.775, 2.89, "<i>Attends,</i> <b>lis</b> <b>ça.</b>"]], [[2.95, 3.569, "<em>Réflexe 1 :</em>"], [3.569, 4.616, "<b>regarde</b> <b>la</b> <b>date</b>"], [4.616, 5.678, "<b>de</b> <em>livraison</em> <b>estimée,</b>"], [5.678, 6.94, "<i>avant</i> <b>de</b> <b>payer.</b>"]], [[7.0, 7.55, "<em>Réflexe 2 :</em>"], [7.55, 8.733, "<b>vérifie</b> <b>le</b> <em>total final,</em>"], [8.733, 9.742, "<b>livraison</b> <b>comprise,</b>"], [9.742, 10.661, "<b>pas</b> <b>juste</b> <b>le</b> <b>prix</b>"], [10.661, 11.59, "<b>des</b> <b>articles.</b>"]], [[11.65, 12.445, "<em>Réflexe 3 :</em>"], [12.445, 13.687, "<em>code promo Hacoo</em>"], [13.687, 14.403, "<u>hzklink</u>"], [14.403, 16.106, "<b>dans</b> <b>la</b> <b>case</b> <b>code</b> <b>promo.</b>"], [16.106, 16.86, "<i>-14 %</i>"]], [[16.92, 18.361, "<b>Pyjama,</b> <b>guirlande,</b>"], [18.361, 19.332, "<b>porte-clés :</b>"], [19.332, 20.06, "<em>49 €.</em>"]], [[20.12, 21.183, "<b>Avec</b> <b>le</b> <b>code,</b>"], [21.183, 22.015, "<b>ça</b> <b>fait</b>"], [22.015, 23.21, "<em>42,14 €.</em>"]], [[23.27, 24.137, "<em>Enregistre</em> <b>cette</b> <b>vidéo</b>"], [24.137, 24.999, "<b>pour</b> <b>tes</b> <b>cadeaux.</b>"], [24.999, 25.866, "<b>Les</b> <b>liens</b> <b>des</b> <b>articles</b>"], [25.866, 26.86, "<b>sont</b> <b>dans</b> <b>ma</b> <b>bio.</b>"]]];
+const CAM=0.45, PUSH=0.008;
+function extra(t){const cd=document.getElementById('cd');if(cd){const r=Math.max(0,Math.ceil(END-t));cd.textContent=Math.floor(r/60)+':'+String(r%60).padStart(2,'0');}
+ document.querySelectorAll('.dood span').forEach((s,k)=>{s.style.transform=`translate(${Math.sin(t*0.7+k)*10}px,${Math.cos(t*0.55+k*1.7)*12}px) rotate(${(k%2?1:-1)*(12+Math.sin(t*0.4+k)*6)}deg)`});
+ document.querySelectorAll('[data-wob]').forEach((s,k)=>{s.style.rotate=(Math.sin(t*2.2+k)*2.2)+'deg'});}
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
