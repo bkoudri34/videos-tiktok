@@ -1,0 +1,81 @@
+/* Style C « Collage POV en papier découpé » (vidéos QG, construit le 24/11/2026).
+   Mise en scène repérée chez @cryptoboye (veille du 23/11) : rien de copié (ni texte, ni visuel, ni son).
+   Fond uni vif texture papier kraft, ombres portées douces, personnages en papier découpé (têtes rondes, gros yeux
+   montés sur attache parisienne), typo condensée blanche à gros contour noir, étiquettes de papier collées de travers
+   avec du ruban adhésif, animation saccadée façon stop-motion (12 i/s, voir qg_collage.py), confettis de papier. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:'Anton','Archivo Black',sans-serif;color:#1b1a17;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:-40px;background-color:var(--bg);background-image:var(--paper);background-size:420px 420px}
+#bgtex:after{content:'';position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 40%,rgba(255,255,255,.18),rgba(0,0,0,0) 70%)}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,35,0,.35) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+
+/* papier découpé : bord légèrement irrégulier + ombre portée douce */
+.pp{position:absolute;filter:drop-shadow(7px 10px 0 rgba(40,25,0,.22)) drop-shadow(0 18px 24px rgba(40,25,0,.18))}
+.sheet{background:#fbf7ee;border-radius:10px 14px 8px 16px / 14px 8px 16px 10px}
+.kraft{background:#d9b98a;border-radius:8px 12px 10px 6px}
+.tape{position:absolute;width:150px;height:46px;background:rgba(255,250,230,.62);border-left:3px dashed rgba(0,0,0,.06);border-right:3px dashed rgba(0,0,0,.06)}
+
+/* typo : condensée blanche à gros contour noir */
+.big{font-family:'Anton',sans-serif;text-transform:uppercase;color:#fff;-webkit-text-stroke:14px #1b1a17;paint-order:stroke fill;letter-spacing:1px;line-height:1.02;white-space:nowrap}
+.ink{font-family:'Anton',sans-serif;text-transform:uppercase;color:#1b1a17;letter-spacing:1px;line-height:1.02;white-space:nowrap}
+.hand{font-family:'Comic Relief','Archivo Black',sans-serif;font-weight:700;color:#1b1a17}
+
+/* étiquette collée de travers */
+.lab{position:absolute;padding:10px 26px 14px;background:#fbf7ee;font:400 64px/1 'Anton',sans-serif;text-transform:uppercase;color:#1b1a17;white-space:nowrap;
+ filter:drop-shadow(6px 8px 0 rgba(40,25,0,.25));clip-path:polygon(0 4%,3% 0,40% 3%,72% 0,100% 2%,99% 50%,100% 96%,70% 100%,35% 97%,2% 100%,0 60%)}
+.lab.red{background:#e2452f;color:#fff}
+.lab.blue{background:#2f6fe2;color:#fff}
+.lab.green{background:#2e9e5b;color:#fff}
+.lab.dark{background:#1b1a17;color:#fbf7ee}
+
+/* bandeau mot-clé (visible dès la 1re image) */
+.kw{position:absolute;left:70px;top:215px;width:860px;padding:18px 20px 24px;text-align:center;background:#1b1a17;color:#fff;font:400 66px/1.06 'Anton',sans-serif;text-transform:uppercase;
+ clip-path:polygon(0 6%,4% 0,50% 4%,96% 0,100% 8%,99% 92%,95% 100%,50% 96%,3% 100%,0 90%);filter:drop-shadow(8px 10px 0 rgba(40,25,0,.25))}
+.kw b{font-weight:400;color:#ffd84a}
+
+/* téléphone en papier + notification */
+.ph{position:absolute;width:380px;height:560px;border-radius:46px;background:#1b1a17;padding:22px}
+.ph .scr{width:100%;height:100%;border-radius:30px;background:#f3ead8;position:relative;overflow:hidden}
+.ph .tm{position:absolute;left:0;right:0;top:54px;text-align:center;font:400 84px/1 'Anton',sans-serif;color:#1b1a17}
+.ph .dt{position:absolute;left:0;right:0;top:146px;text-align:center;font:700 24px 'Inter',sans-serif;color:#6b5a3e}
+.nt{position:absolute;left:14px;right:14px;top:200px;padding:16px 16px 14px;border-radius:22px;background:#fff;text-align:left;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.nt .a{font:800 20px 'Inter',sans-serif;color:#6b5a3e;letter-spacing:1px;text-transform:uppercase}
+.nt .b{font:800 27px 'Inter',sans-serif;color:#1b1a17;margin-top:4px}
+.nt .c{font:400 66px/1.05 'Anton',sans-serif;color:#2e9e5b;margin-top:2px}
+.ph .cond{position:absolute;left:14px;right:14px;top:390px;font:800 21px/1.2 'Inter',sans-serif;color:#1b1a17;text-align:center;background:#ffd84a;padding:8px 6px;border-radius:10px}
+
+/* carte de valeur */
+.vc{position:absolute;padding:24px 34px 26px;text-align:center}
+.vc .t{font:400 54px/1 'Anton',sans-serif;text-transform:uppercase;letter-spacing:2px}
+.vc .v{font:400 190px/1 'Anton',sans-serif;color:#1b1a17}
+.vc .x{font:800 30px/1.25 'Inter',sans-serif;color:#4a3d28}
+
+/* calendrier papier */
+.cal{position:absolute;width:420px;background:#fbf7ee;text-align:center;border-radius:12px;overflow:hidden}
+.cal .h{background:#e2452f;color:#fff;font:400 54px/1 'Anton',sans-serif;padding:16px 0}
+.cal .d{font:400 220px/1 'Anton',sans-serif;color:#1b1a17;padding:14px 0 0}
+.cal .s{font:400 60px/1 'Anton',sans-serif;color:#e2452f;padding:0 0 24px}
+
+/* conversation de fin (papier) */
+.bub{position:absolute;padding:20px 30px 22px;border-radius:34px;font:800 58px/1.15 'Inter',sans-serif;white-space:nowrap}
+.bub.me{background:#2f6fe2;color:#fff;border-bottom-right-radius:8px}
+.bub.you{background:#fbf7ee;color:#1b1a17;border-bottom-left-radius:8px}
+.mention{position:absolute;left:70px;width:860px;padding:16px 22px;background:rgba(251,247,238,.92);font:600 21px/1.35 'Inter',sans-serif;color:#3b3226;border-radius:8px}
+
+/* personnage en papier découpé */
+.perso{position:absolute;overflow:visible}
+.perso .arm{transform-box:view-box}
+.conf{position:absolute;width:26px;height:16px}
+
+/* sous-titres : condensés blancs à gros contour noir, zone sûre */
+#sub{position:absolute;left:465px;top:1330px;translate:-50% 0;width:max-content;max-width:840px;text-align:center;font:400 96px/1.04 'Anton',sans-serif;text-transform:uppercase;
+ color:#fff;-webkit-text-stroke:15px #1b1a17;paint-order:stroke fill;letter-spacing:1px;transform-origin:50% 50%;z-index:9}
+#sub em{font-style:normal;color:#ffd84a}
+#sub i{font-style:normal;color:#7fe0a0}
