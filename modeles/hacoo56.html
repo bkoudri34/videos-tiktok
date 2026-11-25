@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Hacoo carte au tresor brique</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+#bgtex{background:linear-gradient(rgba(150,90,40,.08) 2px,transparent 2px) 0 0/100% 64px,#fbf6ec !important}
+.ttl em{color:#c4501f}
+.map{position:absolute;left:110px;width:860px;height:640px;border:7px solid #111;border-radius:30px;background:#f3e3c3;box-shadow:10px 12px 0 #111;overflow:hidden}
+.isl{position:absolute;border:6px solid #111;border-radius:48% 52% 45% 55%;background:#d9c08a;display:flex;align-items:center;justify-content:center;font:900 34px Inter;color:#111;white-space:nowrap;text-align:center;line-height:1.1}
+.xx{position:absolute;font:900 150px Inter;color:#e63946;line-height:1}
+.pap{position:absolute;left:190px;width:700px;padding:34px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #c4501f}
+.pap .t{font:900 38px Inter;margin-bottom:10px}
+.pap .r{display:flex;align-items:center;gap:20px;font:800 34px Inter;white-space:nowrap;margin-top:8px}
+.pap .r b{margin-left:auto;font:900 38px Inter}
+.pap .tot{display:flex;justify-content:space-between;font:900 40px Inter;margin-top:16px;border-top:4px dashed #bbb;padding-top:14px;white-space:nowrap}
+.pap .bt{margin-top:24px;height:90px;border-radius:45px;background:#c4501f;color:#fff;font:900 38px Inter;display:flex;align-items:center;justify-content:center;letter-spacing:2px;border:5px solid #111}
+.pap .ln{display:flex;justify-content:space-between;font:800 34px Inter;padding:18px 0;border-bottom:3px solid #eee;white-space:nowrap}
+.pap .cp{display:flex;justify-content:space-between;font:900 34px Inter;padding:18px 16px;margin-top:8px;border:5px dashed #c4501f;border-radius:18px;color:#c4501f;white-space:nowrap}
+.pap .pay{margin-top:24px;height:90px;border-radius:45px;background:#111;color:#fff;font:900 38px Inter;display:flex;align-items:center;justify-content:center;letter-spacing:2px}
+.fld{position:absolute;left:150px;width:780px;padding:34px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #c4501f}
+.fld .k{font:900 36px Inter;letter-spacing:2px;color:#c4501f;margin-bottom:16px}
+.fld .fr{display:flex;gap:16px}.fld .fr .field{flex:1}
+.fld .ap{height:100px;padding:0 26px;border-radius:18px;background:#c4501f;color:#fff;font:900 34px Inter;display:flex;align-items:center;border:5px solid #111}
+.fld .ok{margin-top:20px;font:900 40px Inter;color:#c4501f;display:flex;justify-content:space-between;white-space:nowrap}
+.chest{position:absolute;left:340px;width:400px;height:250px}
+.loot{position:absolute;left:0;width:1080px;text-align:center}
+.loot span{display:inline-block;padding:10px 40px;border:7px solid #111;border-radius:24px;background:#ffe14d;font:900 110px Inter;box-shadow:8px 10px 0 #111;white-space:nowrap}
+.ex{position:absolute;left:0;width:1080px;text-align:center;font:700 32px 'Comic Relief',cursive;color:#555}
+.big2{position:absolute;left:0;top:520px;width:1080px;text-align:center}
+.big2 .o{display:inline-block;position:relative;font:900 110px Inter;color:#777}
+.big2 .n{font:900 190px Inter;line-height:1.1;margin-top:20px}
+.big2 .n span{background:#ffe14d;padding:0 24px}
+.pin{position:absolute;left:150px;width:780px;height:120px;border-radius:60px;background:#c4501f;color:#fff;display:flex;align-items:center;justify-content:center;gap:18px;font:900 31px Inter;white-space:nowrap;box-shadow:8px 10px 0 #111}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:220px;font-size:68px">Où se cache la case<br><mark>code promo Hacoo</mark> ?</div><div class="map" style="top:470px"><svg class="abs red" style="left:0px;top:0px;overflow:visible" width="860" height="640" viewBox="0 0 860 640"><path d="M150 470 C260 420 300 300 400 330 C500 360 520 200 640 180" style="stroke-dasharray:4 26;stroke-width:12"/></svg><div class="isl" style="left:60px;top:420px;width:220px;height:150px">1<br>PANIER</div><div class="isl" style="left:300px;top:250px;width:230px;height:150px">2<br>COMMANDE</div><div class="xx" style="left:600px;top:90px">✕</div><div class="note" style="left:560px;top:250px;transform:rotate(-6deg)">la case !</div></div><svg class="abs ink" style="left:700px;top:820px;overflow:visible" width="300" height="440" viewBox="0 0 300 440"><g class="ink"><circle cx="120" cy="80" r="56"/><path d="M98 72 l0 6 M142 72 l0 6"/><path d="M104 110 Q120 104 136 110"/>
+ <path d="M120 136 L120 320"/><path d="M120 320 L75 440 M120 320 L165 440"/><path d="M120 190 L50 260"/><path d="M120 190 L210 150"/>
+ <circle cx="250" cy="120" r="46" style="fill:rgba(255,255,255,.6)"/><path d="M216 152 L200 172"/></g></svg>
+   <div class="ex" style="top:1150px">carte au trésor · prix d'exemple</div></div>
+  <div class="scene" data-s="1" data-in="up"><div class="ttl" style="top:240px;font-size:80px">1 · Ton <em>panier</em></div>
+   <div class="pap" style="top:420px"><div class="t">Mon panier Hacoo</div><div class="r"><svg width="70" height="70" viewBox="0 0 200 200"><path d="M18 128 Q20 100 42 96 L84 92 Q100 70 118 74 Q132 78 140 96 Q172 104 182 124 L184 140 Q184 150 172 150 L28 150 Q16 150 18 138 Z" fill="#f5f6f8"/><path d="M18 140 H184 V150 Q184 160 172 160 H28 Q16 160 18 150 Z" fill="#d7dbe2"/><path d="M60 98 L70 120 M76 94 L86 118 M92 90 L102 114" stroke="#9aa3b2" stroke-width="5" stroke-linecap="round"/><path d="M120 76 Q132 82 138 98" stroke="#5b8cff" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M22 140 H182" stroke="#5b8cff" stroke-width="5"/></svg><span>Baskets</span><b>54,00 €</b></div><div class="r"><svg width="70" height="70" viewBox="0 0 200 200"><path d="M40 30 Q100 0 160 30" stroke="#374151" stroke-width="8" fill="none"/><path d="M40 30 L52 92 M160 30 L148 92" stroke="#374151" stroke-width="8"/><rect x="40" y="86" width="120" height="84" rx="22" fill="#111827"/><rect x="52" y="98" width="96" height="30" rx="10" fill="#1f2937"/><path d="M58 113 H142" stroke="#9ca3af" stroke-width="4" stroke-dasharray="8 6"/><circle cx="100" cy="150" r="7" fill="#9ca3af"/></svg><span>Sacoche</span><b>19,00 €</b></div><div class="r"><svg width="70" height="70" viewBox="0 0 200 200"><path d="M55 30 H95 V120 Q95 150 70 160 Q40 168 35 145 Q32 128 55 118 Z" fill="#f2d7a8"/><path d="M105 40 H145 V130 Q145 160 120 170 Q90 178 85 155 Q82 138 105 128 Z" fill="#e8b778"/><path d="M55 48 H95 M55 62 H95 M105 58 H145 M105 72 H145" stroke="#c0392b" stroke-width="6"/></svg><span>Chaussettes</span><b>6,00 €</b></div>
+    <div class="tot"><span>Total</span><span>79,00 €</span></div><div class="bt" data-g="1.1" data-fx="pop">COMMANDER</div></div><svg class="abs red" style="left:170px;top:940px;overflow:visible" width="740" height="170" viewBox="0 0 740 170"><path class="dr" pathLength="1" d="M59.2 93.50000000000001 C37.0 17.0,629.0 -8.5,717.8 76.5 C754.8000000000001 153.0,148.0 178.5,44.4 105.4 L88.8 68.0" data-g="1.1" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="note" style="left:640px;top:1130px;transform:rotate(-6deg)" data-g="1.1" data-fx="pop">appuie !</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="ttl" style="top:240px;font-size:62px">2 · La page de <em>commande</em></div>
+   <div class="pap" style="top:420px"><div class="t">Commande</div><div class="ln"><span>Adresse</span><span>✓</span></div><div class="ln"><span>Livraison</span><span>✓</span></div>
+    <div class="cp"><span>Code promo</span><span>›</span></div><div class="pay">PAYER</div></div><svg class="abs red" style="left:220px;top:900px;overflow:visible" width="660" height="120" viewBox="0 0 660 120"><path class="dr" pathLength="1" d="M10 10 L640 110 M640 10 L10 110" data-g="2.2" data-fx="draw"/></svg>
+   <div class="note" style="left:560px;top:1060px;transform:rotate(-5deg)" data-g="2.2" data-fx="pop">avant Payer !</div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="ttl" style="top:240px;font-size:58px">3 · ✕ = la case <em>code promo</em></div>
+   <div class="fld" style="top:440px"><div class="k">CODE PROMO HACOO</div><div class="fr"><div class="field"><span data-g="3.3" data-fx="type">hzklink</span></div><div class="ap">Appliquer</div></div>
+    <div class="ok" data-g="3.4" data-fx="stamp"><span>✓ Appliqué</span><span>-14 %</span></div></div>
+   <div class="xx" style="left:820px;top:330px;font-size:110px" data-g="3.0" data-fx="stamp">✕</div><svg class="abs red" style="left:95px;top:390px;overflow:visible" width="890" height="430" viewBox="0 0 890 430"><path class="dr" pathLength="1" d="M71.2 236.50000000000003 C44.5 43.0,756.5 -21.5,863.3 193.5 C907.8000000000001 387.0,178.0 451.5,53.4 266.6 L106.8 172.0" data-g="3.4" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="note" style="left:160px;top:830px;transform:rotate(-4deg)" data-g="3.2" data-fx="pop">code promo Hacoo</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="ttl" style="top:220px;font-size:84px">Le trésor</div>
+   <div class="its" style="position:absolute;left:150px;top:360px;width:780px;display:flex;justify-content:space-between"><div style="width:240px;text-align:center;font:800 32px Inter;white-space:nowrap" data-g="4.0" data-fx="pop"><svg width="150" height="150" viewBox="0 0 200 200"><path d="M18 128 Q20 100 42 96 L84 92 Q100 70 118 74 Q132 78 140 96 Q172 104 182 124 L184 140 Q184 150 172 150 L28 150 Q16 150 18 138 Z" fill="#f5f6f8"/><path d="M18 140 H184 V150 Q184 160 172 160 H28 Q16 160 18 150 Z" fill="#d7dbe2"/><path d="M60 98 L70 120 M76 94 L86 118 M92 90 L102 114" stroke="#9aa3b2" stroke-width="5" stroke-linecap="round"/><path d="M120 76 Q132 82 138 98" stroke="#5b8cff" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M22 140 H182" stroke="#5b8cff" stroke-width="5"/></svg><br>Baskets<b style="display:block;font:900 44px Inter">54 €</b></div><div style="width:240px;text-align:center;font:800 32px Inter;white-space:nowrap" data-g="4.1" data-fx="pop"><svg width="150" height="150" viewBox="0 0 200 200"><path d="M40 30 Q100 0 160 30" stroke="#374151" stroke-width="8" fill="none"/><path d="M40 30 L52 92 M160 30 L148 92" stroke="#374151" stroke-width="8"/><rect x="40" y="86" width="120" height="84" rx="22" fill="#111827"/><rect x="52" y="98" width="96" height="30" rx="10" fill="#1f2937"/><path d="M58 113 H142" stroke="#9ca3af" stroke-width="4" stroke-dasharray="8 6"/><circle cx="100" cy="150" r="7" fill="#9ca3af"/></svg><br>Sacoche<b style="display:block;font:900 44px Inter">19 €</b></div><div style="width:240px;text-align:center;font:800 32px Inter;white-space:nowrap" data-g="4.1" data-fx="pop"><svg width="150" height="150" viewBox="0 0 200 200"><path d="M55 30 H95 V120 Q95 150 70 160 Q40 168 35 145 Q32 128 55 118 Z" fill="#f2d7a8"/><path d="M105 40 H145 V130 Q145 160 120 170 Q90 178 85 155 Q82 138 105 128 Z" fill="#e8b778"/><path d="M55 48 H95 M55 62 H95 M105 58 H145 M105 72 H145" stroke="#c0392b" stroke-width="6"/></svg><br>Chaussettes<b style="display:block;font:900 44px Inter">6 €</b></div></div>
+   <svg class="abs ink" style="left:340px;top:680px;overflow:visible" width="400" height="250" viewBox="0 0 400 250"><rect x="20" y="90" width="360" height="150" rx="14" style="fill:#c98a4b"/><path d="M20 90 Q200 0 380 90" style="fill:#a86a33"/><path d="M20 150 L380 150 M200 90 L200 240"/></svg>
+   <div class="loot" style="top:960px" data-g="4.2" data-fx="stamp"><span>-11,06 €</span></div>
+   <div class="ex" style="top:1150px">79,00 € × 14 % = 11,06 € · prix d'exemple</div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="ttl" style="top:220px;font-size:90px">Tu paies</div>
+   <div class="big2"><div class="o">79,00 €<svg class="abs red" style="left:-20px;top:40px;overflow:visible" width="500" height="40" viewBox="0 0 500 40"><path class="dr" pathLength="1" d="M0 30 L480 6" data-g="5.0" data-fx="draw"/></svg></div>
+    <div class="n" data-g="5.1" data-fx="stamp" data-slow="5.1"><span>67,94 €</span></div></div><svg class="abs red" style="left:150px;top:680px;overflow:visible" width="780" height="320" viewBox="0 0 780 320"><path class="dr" pathLength="1" d="M62.4 176.0 C39.0 32.0,663.0 -16.0,756.6 144.0 C795.6 288.0,156.0 336.0,46.8 198.4 L93.6 128.0" data-g="5.1" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="ex" style="top:1060px" data-g="5.1" data-fx="fade">prix d'exemple · code promo Hacoo hzklink (-14 %)</div></div>
+  <div class="scene" data-s="6" data-in="pop">
+   <div class="endw" data-g="6.0" data-fx="up"><div class="k">CODE PROMO HACOO</div><div class="c">hzklink</div><div class="d">-14 % sur l'appli Hacoo</div>
+    <div class="b">liens des articles tendance en bio</div><div class="x">Prix d'exemple · -14 % avec le code promo Hacoo hzklink · Offre soumise aux conditions en vigueur sur l'appli Hacoo</div></div>
+   <div class="pin" style="top:1000px" data-g="6.1" data-fx="pop">↗ ENVOIE-LA À TON POTE QUI COMMANDE</div>
+   </div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 3.764, 6.828, 11.066, 18.192, 22.868, 25.615], END=30.744;
+const G=[[[0.04, 1.314, "Où est la case <em>code promo</em>"], [1.314, 2.463, "sur l'appli <em>Hacoo</em> ?"], [2.463, 3.764, "Pas là où tu crois."]], [[3.804, 5.004, "<i>Étape 1 :</i> ton panier."], [5.004, 6.828, "Appuie sur <em>Commander</em>."]], [[6.868, 7.765, "<i>Étape 2 :</i> la page"], [7.765, 8.439, "de commande."], [8.439, 9.869, "Surtout, n'appuie pas"], [9.869, 11.066, "encore sur <i>Payer</i>."]], [[11.106, 12.539, "<i>Étape 3 :</i> la case"], [12.539, 14.012, "<em>code promo</em>."], [14.012, 15.719, "<em>Code promo Hacoo</em>,"], [15.719, 16.72, "<em>hzklink</em>,"], [16.72, 18.192, "et <em>Appliquer</em>."]], [[18.232, 19.416, "<em>79 €</em> de baskets,"], [19.416, 21.322, "sacoche et chaussettes :"], [21.322, 22.868, "<em>11,06 €</em> de moins."]], [[22.908, 24.163, "Tu paies"], [24.163, 25.615, "<em>67,94 €</em>."]], [[25.655, 26.422, "Envoie cette vidéo"], [26.422, 27.409, "à ton pote qui commande."], [27.409, 28.944, "Les liens sont dans ma bio."]]];
+const CAM=0.6, PUSH=0.010;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
