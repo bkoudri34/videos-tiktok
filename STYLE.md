@@ -1,3 +1,57 @@
+# ⚠️ RÈGLES DE BADR DU 26/11/2026 — PRIORITAIRES SUR TOUT LE RESTE
+
+Elles passent avant ta consigne de tâche, le reste de ce fichier, README.md et QUALITE.md, sauf les mentions légales, qui restent obligatoires.
+
+Sources : politique « contenu de marque » de TikTok, règles communautaires TikTok, loi 2023-451 (art. 5-2), Code de la consommation (art. L121-15).
+
+## A. Compte @htm.invest en shadowban : plus aucune programmation
+- **Ne programme AUCUNE vidéo parrainage dans Metricool.** L'accès Metricool de la tâche a été retiré le 26/11/2026. Saute l'étape « Metricool » sans chercher à la contourner.
+- **Continue à fabriquer les 3 vidéos parrainage**, à les pousser dans `videos/` et à les envoyer à Badr avec SendUserFile. En légende : « À publier quand Badr le décidera (rien n'est programmé) », le titre et la description prête à copier.
+- **Écris aussi `videos/legendes/AAAA-MM-JJ.md`**, avec une section par vidéo : fichier, sujet, format, titre, description prête à copier, texte dit à l'oral. Commite-le avec les vidéos.
+- **PushNotification** : « 3 vidéos parrainage prêtes (non programmées) ».
+- **Les vidéos Hacoo ne changent pas** (autre compte, autres tâches).
+
+## B. Règles anti-bannissement (les 3 vidéos parrainage)
+1. **Aucun montant écrit.**
+   - Interdit à l'écran : pas de chiffre suivi de « € », pas de « +80 € », pas de solde, de relevé ou de ticket chiffré, pas de « plus de 700 € ».
+   - Interdit aussi dans le titre, la description, les hashtags et la couverture.
+   - Les montants sont dits **à l'oral seulement**, avec « jusqu'à » et « si tu remplis les conditions », et viennent d'une source officielle vérifiée le jour même.
+   - Sujet « 3-banques » : présente les 3 offres une par une, sans jamais les additionner ni annoncer de total.
+2. **Pas d'image d'argent facile.**
+   - Plus de fausse preuve de gain : pas de notification « virement reçu », de solde qui monte ni de relevé, même sans montant. Une carte « Prime validée ✓ » n'est permise que dans une scène clairement dessinée, jamais comme un gain réel de Badr.
+   - Pas de billets, de liasses, de pluie ni de sacs d'argent.
+   - Mots interdits : « argent gratuit », « gagne de l'argent », « cash », « facile », « sans rien faire », « revenu », « argent qui tombe », « à gagner en cumulé ».
+   - Ton : conseil, pédagogie, comparaison. Vocabulaire : « prime de bienvenue », « offre », « avantage », « conditions ».
+3. **Appel à l'action discret.** Il remplace « Envoie-moi « PARRAINAGE » en privé » : une seule fois, à la fin, « Si tu veux que je te parraine, écris-moi en privé ». Pas de mot-clé en majuscules, pas de lien dans la légende.
+4. **Mentions écrites pendant TOUTE la vidéo.**
+   - Petit bandeau lisible du début à la fin, dans la zone de sécurité : « Lien de parrainage : je touche une prime · Offre soumise à conditions ».
+   - Les mêmes mentions dans la description.
+   - Trade Republic / investissement : « Investir comporte un risque de perte en capital ».
+   - Dans la légende envoyée à Badr : « Activer l'option contenu commercial ».
+5. **Hashtags** : 3 à 5, informatifs, dont #parrainage et #<banque>. Jamais #argent ni #gagnerdelargent.
+6. **Contrôle qualité** (QUALITE.md) : chacun de ces points est **bloquant**. Une vidéo bloquée est livrée avec « ⚠️ À NE PAS PUBLIER » et la raison.
+   - un montant écrit ;
+   - une fausse preuve de gain ;
+   - de l'argent à l'image ;
+   - le bandeau de mentions absent pendant une partie de la vidéo ;
+   - un mot interdit ;
+   - un total de gain.
+
+## C. Scénario « Parraine à ton tour » (au moins la moitié des vidéos parrainage)
+- **Combien** : en alternance, 2 des 3 vidéos un jour, 1 des 3 le lendemain. Regarde QUALITE.md pour savoir où tu en es.
+- **Le scénario**, en motion design (mascotte et icônes, jamais de vraie personne) :
+  1. Je te parraine en privé.
+  2. Tu ouvres ton compte et tu remplis les conditions.
+  3. Une fois client, tu as toi aussi ton lien.
+  4. Tu peux le partager à tes amis : la banque verse une prime pour chaque ami qui remplit les conditions, dans la limite du plafond qu'elle fixe par an (si la banque n'a pas de plafond annuel officiel : « dans la limite fixée par la banque »).
+- **Ce que la voix peut dire**, à l'oral seulement : la prime par ami et le plafond annuel (« jusqu'à », « fixés par la banque »), et seulement s'ils viennent tous les deux du site officiel vérifié le jour même. Sinon : « la banque prévoit une prime pour chaque ami, montant et plafond sur son site ».
+- **Interdit** :
+  - tout « total à gagner », toute multiplication prime × nombre d'amis, le mot « revenu » ;
+  - tout arbre ou toute chaîne : un seul niveau, toi → tes amis.
+- **À dire clairement** : « je ne touche rien sur les amis de mes filleuls ».
+- **À l'écran** : 3 ou 4 étapes animées et « plafond fixé par la banque » en mots, sans aucun chiffre en euros.
+<!-- fin règles 26/11 -->
+
 # ⚠️ RÈGLE PRIORITAIRE : le mot « Hacoo » n'est JAMAIS écrit dans les vidéos (règle de Badr du 26/11/2026)
 
 Le compte TikTok d'affiliation s'est fait signaler plusieurs fois. Cette règle passe avant toutes les autres de ce fichier, des briefs de `veille/briefs/` et des modèles existants (qui l'écrivent encore : ne les recopie pas tels quels).
