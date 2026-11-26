@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Alerte trop petit bleu ciel</title>
+
+<style>
+:root{--bg:#f3ece0}
+/* Style A « Alerte stickers » (repéré chez @hacooultra14 le 22/11) : papier crème à points, gribouillis roses en fond (%, €, étoiles, lunes),
+   étiquette de rubrique jaune en haut à gauche, compte à rebours en haut à droite, titres sur bandeaux noirs penchés (rouge = alerte),
+   dessins plats façon autocollants (contour noir épais + liseré blanc), sous-titres karaoké en pavés noirs, mot clé en pavé jaune. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#f3ece0}
+body{font-family:Inter,'Arial Black','Helvetica Neue',Arial,sans-serif;color:#141414;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#f3ece0}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:radial-gradient(circle,rgba(120,100,80,.22) 2.6px,transparent 3px) 0 0/44px 44px,#f3ece0}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.04;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 62%,rgba(90,60,30,.10) 100%)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+/* gribouillis de fond */
+.dood{position:absolute;inset:0;pointer-events:none}
+.dood span{position:absolute;font:900 120px Inter,'Arial Black',sans-serif;color:#e8a3a8;opacity:.42}
+/* étiquette de rubrique + compte à rebours */
+.tag{position:absolute;left:96px;top:205px;padding:8px 22px;border-radius:12px;background:#ffd84a;border:5px solid #141414;font:900 34px Inter,'Arial Black',sans-serif;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;box-shadow:5px 6px 0 #141414;z-index:4}
+#cd{position:absolute;right:96px;top:198px;padding:10px 26px;border-radius:40px;background:#141414;color:#fff;font:900 42px 'DejaVu Sans Mono',Menlo,monospace;z-index:8}
+/* bandeaux de titre */
+.ban{position:absolute;left:0;width:1080px;text-align:center;z-index:3}
+.ban b{display:inline-block;padding:10px 34px 12px;background:#141414;color:#fff;font:900 76px/1.05 Inter,'Arial Black',sans-serif;text-transform:uppercase;letter-spacing:1px;border-radius:12px;box-shadow:8px 10px 0 rgba(0,0,0,.25);white-space:nowrap}
+.ban.red b{background:#ee3b3b;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.yel b{background:#ffd84a;color:#141414;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.grn b{background:#2fa35a;border:6px solid #141414;box-shadow:8px 10px 0 #141414}
+.ban.sm b{font-size:52px;padding:8px 28px}
+/* autocollants */
+.stk{position:absolute;filter:drop-shadow(0 0 0 #fff) drop-shadow(7px 0 0 #fff) drop-shadow(-7px 0 0 #fff) drop-shadow(0 7px 0 #fff) drop-shadow(0 -7px 0 #fff) drop-shadow(10px 14px 0 rgba(0,0,0,.18))}
+.stk svg{display:block;overflow:visible}
+.ol{stroke:#141414;stroke-width:8;stroke-linejoin:round;stroke-linecap:round}
+.card{position:absolute;background:#fff;border:7px solid #141414;border-radius:30px;box-shadow:10px 12px 0 #141414}
+.pill{display:inline-block;padding:8px 26px;border-radius:40px;border:5px solid #141414;font:900 40px Inter,'Arial Black',sans-serif;white-space:nowrap}
+.mono{font-family:'DejaVu Sans Mono',Menlo,monospace!important}
+/* sous-titres karaoké */
+#sub{position:absolute;left:50px;top:1180px;width:980px;text-align:center;font:900 82px/1.32 Inter,'Arial Black',sans-serif;text-transform:uppercase;transform-origin:50% 50%;z-index:6}
+#sub b,#sub em{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#141414;color:#fff;font-style:normal;box-shadow:6px 7px 0 rgba(0,0,0,.2)}
+#sub em{background:#ffd84a;color:#141414;border:5px solid #141414}
+#sub i{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#ee3b3b;color:#fff;font-style:normal;border:5px solid #141414}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.dood span{color:#8cc8f0;opacity:.5}
+#sub u{display:inline-block;padding:2px 20px 6px;margin:0 4px;border-radius:12px;background:#ffd84a;color:#141414;border:5px solid #141414;text-decoration:none;text-transform:none;font-family:'DejaVu Sans Mono',Menlo,monospace}
+.lc{text-transform:none!important}
+.tk{left:170px;width:740px;padding:30px 40px 28px;font:800 34px Inter,'Arial Black',sans-serif}
+.tk .r{display:flex;justify-content:space-between;padding:8px 0;white-space:nowrap}
+.tk .r.red{color:#ee3b3b}
+.tk .t{font:900 40px Inter,'Arial Black',sans-serif;text-align:center;margin-bottom:8px}
+.tk .tot{border-top:5px dashed #141414;margin-top:10px;padding-top:14px;font-size:48px}
+.tk .ex{text-align:center;font:700 24px Inter,sans-serif;color:#6b6257;margin-top:10px}
+.st{position:relative;display:inline-block}
+.st:after{content:'';position:absolute;left:-4px;right:-4px;top:52%;height:5px;background:#ee3b3b;transform:rotate(-4deg)}
+.cp{left:130px;width:820px;padding:34px 44px 36px}
+.cp .lab{font:900 34px Inter,'Arial Black',sans-serif;letter-spacing:2px}
+.cp .f{margin-top:14px;height:110px;border:6px solid #141414;border-radius:20px;background:#fff;display:flex;align-items:center;padding:0 28px;font:900 66px 'DejaVu Sans Mono',Menlo,monospace}
+.cp .ok{margin-top:16px;font:900 46px Inter,'Arial Black',sans-serif;color:#2fa35a}
+.sz{left:150px;width:780px;padding:26px 36px;font:800 34px Inter,'Arial Black',sans-serif}
+.sz .t{font:900 38px Inter,'Arial Black',sans-serif;text-align:center;margin-bottom:12px}
+.sz .g{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sz .g span{border:5px solid #141414;border-radius:16px;text-align:center;padding:14px 0;font:900 46px Inter,'Arial Black',sans-serif;background:#eaf4fc}
+.sz .g span.on{background:#ffd84a}
+.cond{position:absolute;left:90px;width:900px;text-align:center;font:700 26px Inter,sans-serif;color:#6b6257}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+<div class="dood"><span style="left:60px;top:330px">%</span><span style="left:900px;top:300px">€</span><span style="left:820px;top:640px">★</span><span style="left:70px;top:900px">%</span><span style="left:930px;top:1000px">☾</span><span style="left:120px;top:1560px">€</span><span style="left:860px;top:1620px">★</span><span style="left:640px;top:1760px">%</span><span style="left:300px;top:470px">☾</span></div><div id="cd">0:30</div>
+  <div class="scene" data-s="0"><div class="tag">RETOURS SUR L'APPLI</div><div class="ban red" style="top:300px"><b style="transform:rotate(-3deg)">⚠ ATTENTION</b></div><div class="ban " style="top:425px"><b style="transform:rotate(1deg);font-size:60px">Trop petit sur l'appli ?</b></div><div class="ban yel" style="top:540px"><b style="transform:rotate(-1deg);font-size:60px">Ne le renvoie pas</b></div><div class="stk" style="left:150px;top:690px" data-wob="1"><svg width="380" height="380" viewBox="0 0 400 400"><path class="ol" d="M120 70 L170 48 Q200 80 230 48 L280 70 L335 130 L292 165 L280 152 L280 330 L120 330 L120 152 L108 165 L65 130 Z" fill="#5fb3ff"/><path d="M170 48 Q200 92 230 48" fill="none" class="ol"/><text x="200" y="20" text-anchor="middle" font-family="Inter,Arial Black,sans-serif" font-weight="900" font-size="44" fill="#ee3b3b">TROP PETIT</text><path d="M0 360 H62 M40 336 L66 360 L40 384" fill="none" stroke="#ee3b3b" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M400 360 H338 M360 336 L334 360 L360 384" fill="none" stroke="#ee3b3b" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="stk" style="left:600px;top:720px" data-wob="1"><svg width="300" height="300" viewBox="0 0 400 400"><path class="ol" d="M70 190 L200 150 L330 190 L330 345 L200 385 L70 345 Z" fill="#d79a5c"/>
+<path class="ol" d="M200 230 L200 385 M70 190 L200 230 L330 190" fill="none"/>
+<path class="ol" d="M70 190 L30 245 L160 285 L200 230 Z" fill="#e8b27a"/><path class="ol" d="M330 190 L370 245 L240 285 L200 230 Z" fill="#c4874a"/>
+<path d="M120 300 L170 315" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".55"/></svg></div><svg class="abs" style="left:580px;top:720px;overflow:visible;z-index:5" width="340" height="320" viewBox="0 0 340 320"><path pathLength="1" d="M23.8 176.0 C13.6 25.6,292.4 -12.8,329.8 144.0 C346.8 294.40000000000003,68.0 339.20000000000005,17.0 198.4 L37.4 121.6" fill="none" stroke="#ee3b3b" stroke-width="11" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;transform:rotate(-3deg)" data-g="0.3" data-fx="draw"/></svg></div>
+  <div class="scene" data-s="1" data-in="pop"><div class="tag">TÉMOIGNAGES</div><div class="ban " style="top:310px"><b style="transform:rotate(-2deg);font-size:60px">des comptes bloqués</b></div><div class="ban red" style="top:425px" data-g="1.3" data-fx="pop"><b style="transform:rotate(1deg);font-size:50px">après des remboursements</b></div><div class="stk" style="left:160px;top:600px" data-wob="1"><svg width="520" height="230" viewBox="0 0 520 230"><circle class="ol" cx="110" cy="110" r="58" fill="#f2c59a"/><path class="ol" d="M52 106 Q50 48 110 50 Q170 48 168 106 Q140 76 110 80 Q76 76 52 106 Z" fill="#3b2a20"/><circle cx="90" cy="112" r="7" fill="#141414"/><circle cx="130" cy="112" r="7" fill="#141414"/><path d="M92 128 Q110 144 128 128" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round"/><circle class="ol" cx="260" cy="110" r="58" fill="#c98b5e"/><path class="ol" d="M202 106 Q200 48 260 50 Q320 48 318 106 Q290 76 260 80 Q226 76 202 106 Z" fill="#141414"/><circle cx="240" cy="112" r="7" fill="#141414"/><circle cx="280" cy="112" r="7" fill="#141414"/><path d="M244 134 H276" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round"/><circle class="ol" cx="410" cy="110" r="58" fill="#f6d2b0"/><path class="ol" d="M352 106 Q350 48 410 50 Q470 48 468 106 Q440 76 410 80 Q376 76 352 106 Z" fill="#d8a24a"/><circle cx="390" cy="112" r="7" fill="#141414"/><circle cx="430" cy="112" r="7" fill="#141414"/><path d="M392 140 Q410 126 428 140" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round"/><g data-g="1.2" data-fx="stamp"><circle cx="410" cy="110" r="66" fill="rgba(238,59,59,.22)" stroke="#ee3b3b" stroke-width="14"/><path d="M364 156 L456 64" stroke="#ee3b3b" stroke-width="14" stroke-linecap="round"/></g></svg></div>
+   <div class="cond" style="top:900px;font-size:28px" data-g="1.0" data-fx="fade">témoignages d'utilisateurs, pas une règle officielle</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="tag">LE BON RÉFLEXE</div><div class="ban grn" style="top:300px" data-g="2.1" data-fx="pop"><b style="transform:rotate(-2deg);font-size:64px">✔ Revends-le</b></div><div class="ban " style="top:410px" data-g="2.2" data-fx="pop"><b style="transform:rotate(1deg);font-size:54px">en seconde main</b></div><div class="ban grn" style="top:520px" data-g="2.3" data-fx="pop"><b style="transform:rotate(-1deg);font-size:64px">✔ Ou offre-le</b></div><div class="stk" style="left:130px;top:690px" data-g="2.0" data-fx="pop" data-wob="1"><svg width="360" height="360" viewBox="0 0 400 400"><path class="ol" d="M120 70 L170 48 Q200 80 230 48 L280 70 L335 130 L292 165 L280 152 L280 330 L120 330 L120 152 L108 165 L65 130 Z" fill="#5fb3ff"/><path d="M170 48 Q200 92 230 48" fill="none" class="ol"/></svg></div><div class="stk" style="left:420px;top:700px" data-g="2.2" data-fx="pop" data-wob="1"><svg width="330" height="220" viewBox="0 0 400 240"><path class="ol" d="M40 120 L150 40 H330 Q350 40 350 60 V180 Q350 200 330 200 H150 Z" fill="#ffd84a"/>
+<circle cx="105" cy="120" r="16" fill="#fff" class="ol"/>
+<text x="262" y="136" text-anchor="middle" font-family="Inter,Arial Black,sans-serif" font-weight="900" font-size="42" fill="#141414">À VENDRE</text></svg></div><div class="stk" style="left:690px;top:860px" data-g="2.3" data-fx="pop" data-wob="1"><svg width="260" height="260" viewBox="0 0 400 400"><path class="ol" d="M200 200 Q120 90 70 150 Q40 220 200 200 Q360 220 330 150 Q280 90 200 200 Z" fill="#ee3b3b"/>
+<path class="ol" d="M200 200 L150 330 L190 310 L200 350 L210 310 L250 330 Z" fill="#ee3b3b"/><circle class="ol" cx="200" cy="200" r="30" fill="#ff6b6b"/></svg></div></div>
+  <div class="scene" data-s="3" data-in="pop"><div class="tag">MON CONSEIL</div><div class="ban " style="top:300px"><b style="transform:rotate(-2deg);font-size:60px">La prochaine fois</b></div>
+   <div class="card sz" style="top:430px" data-g="3.1" data-fx="pop"><div class="t">GUIDE DES TAILLES</div><div class="g"><span>S</span><span class="on">M</span><span>L</span><span>XL</span></div></div><div class="ban yel" style="top:700px" data-g="3.2" data-fx="pop"><b style="transform:rotate(1deg);font-size:48px">compare avec un vêtement</b></div><div class="ban yel" style="top:800px" data-g="3.3" data-fx="pop"><b style="transform:rotate(-1deg);font-size:48px">qui te va déjà</b></div><div class="stk" style="left:380px;top:920px" data-g="3.2" data-fx="pop" data-wob="1"><svg width="320" height="320" viewBox="0 0 400 400"><path class="ol" d="M120 70 L170 48 Q200 80 230 48 L280 70 L335 130 L292 165 L280 152 L280 330 L120 330 L120 152 L108 165 L65 130 Z" fill="#2fa35a"/><path d="M170 48 Q200 92 230 48" fill="none" class="ol"/></svg></div></div>
+  <div class="scene" data-s="4" data-in="right"><div class="tag">POUR PAYER MOINS</div>
+   <div class="card cp" style="top:320px"><div class="lab">CODE PROMO DU JOUR</div><div class="f"><span class="lc" data-g="4.2" data-fx="type">HACOO847</span></div><div class="ok" data-g="4.3" data-fx="fade">✓ -14 % appliqué</div></div><div class="ban yel" style="top:760px" data-g="4.3" data-fx="stamp"><b style="transform:rotate(-4deg);font-size:150px">-14 %</b></div><div class="ban red" style="top:960px" data-g="4.3" data-fx="pop"><b style="transform:rotate(2deg);font-size:50px">aujourd'hui seulement</b></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="tag">PANIER D'EXEMPLE</div><div class="stk" style="left:110px;top:300px" data-g="5.0" data-fx="pop" data-wob="1"><svg width="210" height="210" viewBox="0 0 200 200"><path d="M58 34 L84 26 Q100 40 116 26 L142 34 L168 108 L146 114 L144 172 L56 172 L54 114 L32 108 Z" fill="#1f2937"/><path d="M100 30 V172" stroke="#e5e7eb" stroke-width="5"/><path d="M58 34 L34 106 M142 34 L166 106" stroke="#5b8cff" stroke-width="7"/><rect x="56" y="160" width="88" height="12" fill="#111827"/><path d="M84 26 Q100 44 116 26" stroke="#5b8cff" stroke-width="6" fill="none"/></svg></div><div class="stk" style="left:430px;top:290px" data-g="5.0" data-fx="pop" data-wob="1"><svg width="220" height="220" viewBox="0 0 200 200"><path d="M55 45 L80 32 Q100 44 120 32 L145 45 L162 120 L142 124 L140 170 L60 170 L58 124 L38 120 Z" fill="#cfd9f5"/><path d="M58 70 H142 M58 98 H142 M60 126 H140 M60 152 H140" stroke="#7d93cc" stroke-width="5"/><line x1="100" y1="40" x2="100" y2="170" stroke="#4a5f99" stroke-width="5"/></svg></div><div class="stk" style="left:760px;top:310px" data-g="5.0" data-fx="pop" data-wob="1"><svg width="190" height="190" viewBox="0 0 200 200"><circle cx="100" cy="38" r="20" fill="#fff4f0"/><path d="M45 135 Q45 58 100 58 Q155 58 155 135 Z" fill="#e04848"/><path d="M70 70 L70 132 M100 60 L100 132 M130 70 L130 132" stroke="#b83232" stroke-width="6"/><rect x="38" y="128" width="124" height="34" rx="10" fill="#fff4f0"/></svg></div>
+   <div class="card tk" style="top:560px"><div class="r"><span>Survêt</span><span>36,00 €</span></div><div class="r"><span>Doudoune</span><span>58,00 €</span></div><div class="r"><span>Bonnet</span><span>9,00 €</span></div>
+    <div class="r"><span>Sous-total</span><span class="st">103,00 €</span></div><div class="r red" data-g="5.1" data-fx="left"><span>Code <span class="lc">HACOO847</span> -14 %</span><span>-14,42 €</span></div>
+    <div class="r tot"><span>Total</span><span data-g="5.2" data-fx="stamp" data-slow="5.2">88,58 €</span></div><div class="ex">prix d'exemple</div></div></div>
+  <div class="scene" data-s="6" data-in="pop"><div class="tag">PARTAGE</div><div class="stk" style="left:430px;top:280px" data-g="6.0" data-fx="pop" data-wob="1"><svg width="220" height="300" viewBox="0 0 260 320"><path class="ol" d="M60 20 H200 Q220 20 220 40 V300 L130 240 L40 300 V40 Q40 20 60 20 Z" fill="#ff8a2a"/><path d="M80 50 V200" stroke="#ffc08a" stroke-width="12" stroke-linecap="round"/></svg></div><div class="ban " style="top:620px" data-g="6.0" data-fx="pop"><b style="transform:rotate(-2deg);font-size:52px">Enregistre cette vidéo</b></div><div class="ban red" style="top:735px" data-g="6.1" data-fx="pop"><b style="transform:rotate(2deg);font-size:56px">Envoie-la ↗</b></div>
+   <div class="ban" style="top:860px" data-g="6.2" data-fx="up"><span class="pill" style="background:#ffd84a;font-size:44px">CODE PROMO : <span class="mono lc">HACOO847</span></span></div>
+   <div class="ban" style="top:955px" data-g="6.2" data-fx="up"><span class="pill" style="background:#fff;font-size:38px">-14 % · aujourd'hui seulement</span></div>
+   <div class="ban" style="top:1040px" data-g="6.2" data-fx="up"><span class="pill" style="background:#fff;font-size:34px">liens des articles tendance en bio</span></div>
+   <div class="cond" style="top:1440px">Offre soumise aux conditions en vigueur · prix d'exemple</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 5.05, 9.35, 13.38, 17.23, 22.32, 26.55], END=31.6;
+const G=[[[0.04, 0.563, "<i>Attention.</i>"], [0.563, 1.889, "<b>Ton</b> <b>article</b> <b>de</b> <b>l'appli</b>"], [1.889, 2.935, "<b>est</b> <b>arrivé</b> <em>trop petit ?</em>"], [2.935, 4.046, "<i>Ne le renvoie pas</i>"], [4.046, 5.03, "<b>tout</b> <b>de</b> <b>suite.</b>"]], [[5.09, 6.199, "<b>Des</b> <b>utilisateurs</b> <b>racontent</b>"], [6.199, 6.888, "<b>que</b> <b>leur</b> <b>compte</b>"], [6.888, 7.462, "<b>a</b> <b>été</b> <i>bloqué</i>"], [7.462, 8.265, "<b>après</b> <b>des</b> <b>demandes</b>"], [8.265, 9.33, "<b>de</b> <em>remboursement.</em>"]], [[9.39, 10.117, "<em>Le bon réflexe :</em>"], [10.117, 10.725, "<b>revends-le</b>"], [10.725, 11.452, "<b>en</b> <b>seconde</b> <b>main.</b>"], [11.452, 12.331, "<b>Ou</b> <em>offre-le,</em>"], [12.331, 13.36, "<b>Noël</b> <b>arrive.</b>"]], [[13.42, 14.158, "<b>La</b> <b>prochaine</b> <b>fois,</b>"], [14.158, 15.61, "<b>compare</b> <b>le</b> <em>guide des tailles</em>"], [15.61, 16.278, "<b>avec</b> <b>un</b> <b>vêtement</b>"], [16.278, 17.21, "<b>qui</b> <b>te</b> <b>va</b> <em>déjà.</em>"]], [[17.27, 19.668, "<b>Et</b> <b>pour</b> <em>payer moins</em> <b>aujourd'hui,</b>"], [19.668, 20.442, "<em>code promo</em>"], [20.442, 21.524, "<u>HACOO847</u>"], [21.524, 22.3, "<i>-14 %</i>"]], [[22.36, 24.416, "<b>Sur</b> <em>103 €</em> <b>d'exemple,</b>"], [24.416, 25.323, "<b>tu</b> <b>paies</b>"], [25.323, 26.53, "<em>88,58 €.</em>"]], [[26.59, 27.534, "<em>Enregistre</em> <b>la</b> <b>vidéo,</b>"], [27.534, 28.15, "<b>et</b> <i>envoie-la</i>"], [28.15, 29.6, "<b>au</b> <b>pote</b> <b>qui</b> <b>renvoie</b> <b>tout.</b>"]]];
+const CAM=0.45, PUSH=0.008;
+function extra(t){const cd=document.getElementById('cd');if(cd){const r=Math.max(0,Math.ceil(END-t));cd.textContent=Math.floor(r/60)+':'+String(r%60).padStart(2,'0');}
+ document.querySelectorAll('.dood span').forEach((s,k)=>{s.style.transform=`translate(${Math.sin(t*0.7+k)*10}px,${Math.cos(t*0.55+k*1.7)*12}px) rotate(${(k%2?1:-1)*(12+Math.sin(t*0.4+k)*6)}deg)`});
+ document.querySelectorAll('[data-wob]').forEach((s,k)=>{s.style.rotate=(Math.sin(t*2.2+k)*2.2)+'deg'});}
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
