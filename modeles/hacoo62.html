@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Liste de Noel sapin</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+#bgtex{background:linear-gradient(rgba(31,122,74,.08) 2px,transparent 2px) 0 0/100% 64px,#f8f7f1 !important}
+.ttl em{color:#1f7a4a}
+.lst{position:absolute;left:150px;width:780px;padding:30px 44px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #1f7a4a;transform:rotate(-1.5deg)}
+.lst .t{font:700 54px 'Comic Relief',cursive;color:#1f7a4a;margin-bottom:6px}
+.lst .r{display:flex;align-items:center;gap:22px;font:800 46px Inter;padding:14px 0;border-bottom:3px dashed #ccc;white-space:nowrap}
+.lst .r:last-child{border-bottom:0}
+.lst .bx{width:54px;height:54px;border:5px solid #111;border-radius:10px;display:flex;align-items:center;justify-content:center;font:900 44px Inter;color:#1f7a4a}
+.lst .r b{margin-left:auto;font:900 46px Inter;color:#999}
+.gift{position:absolute;width:400px;text-align:center}
+.gift .who{display:inline-block;font:700 52px 'Comic Relief',cursive;color:#1f7a4a;transform:rotate(-3deg)}
+.gift .card{margin-top:14px;padding:24px 10px 20px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:8px 10px 0 #1f7a4a}
+.gift .nm{font:800 40px Inter;white-space:nowrap;margin-top:6px}
+.gift .pt{display:inline-block;margin-top:10px;padding:4px 26px;border:5px solid #111;border-radius:18px;background:#ffe14d;font:900 62px Inter;white-space:nowrap}
+.pap{position:absolute;left:170px;width:740px;padding:30px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #1f7a4a}
+.pap .t{font:900 38px Inter;margin-bottom:6px}
+.pap .r{display:flex;align-items:center;gap:18px;font:800 32px Inter;white-space:nowrap;margin-top:4px}
+.pap .r b{margin-left:auto;font:900 36px Inter}
+.pap .tot{display:flex;justify-content:space-between;font:900 40px Inter;margin-top:12px;border-top:4px dashed #bbb;padding-top:12px;white-space:nowrap}
+.pap .cp{display:flex;justify-content:space-between;font:900 34px Inter;padding:16px 16px;margin-top:14px;border:5px dashed #1f7a4a;border-radius:18px;color:#1f7a4a;white-space:nowrap}
+.pap .pay{margin-top:18px;height:84px;border-radius:42px;background:#111;color:#fff;font:900 36px Inter;display:flex;align-items:center;justify-content:center;letter-spacing:2px}
+.fld{position:absolute;left:150px;width:780px;padding:34px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #1f7a4a}
+.fld .k{font:900 36px Inter;letter-spacing:2px;color:#1f7a4a;margin-bottom:16px}
+.fld .fr{display:flex;gap:16px}.fld .fr .field{flex:1}
+.fld .ap{height:100px;padding:0 26px;border-radius:18px;background:#1f7a4a;color:#fff;font:900 34px Inter;display:flex;align-items:center;border:5px solid #111}
+.fld .ok{margin-top:20px;font:900 40px Inter;color:#1f7a4a;display:flex;justify-content:space-between;white-space:nowrap}
+.loot{position:absolute;left:0;width:1080px;text-align:center}
+.loot span{display:inline-block;padding:10px 40px;border:7px solid #111;border-radius:24px;background:#ffe14d;font:900 110px Inter;box-shadow:8px 10px 0 #111;white-space:nowrap}
+.ex{position:absolute;left:0;width:1080px;text-align:center;font:700 32px 'Comic Relief',cursive;color:#555}
+.big2{position:absolute;left:0;top:480px;width:1080px;text-align:center}
+.big2 .o{display:inline-block;position:relative;font:900 110px Inter;color:#777}
+.big2 .n{font:900 190px Inter;line-height:1.1;margin-top:20px}
+.big2 .n span{background:#ffe14d;padding:0 24px}
+.pin{position:absolute;left:120px;width:840px;height:120px;border-radius:60px;background:#1f7a4a;color:#fff;display:flex;align-items:center;justify-content:center;gap:18px;font:900 31px Inter;white-space:nowrap;box-shadow:8px 10px 0 #111}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:220px;font-size:72px">4 cadeaux de Noël<br><mark>à moins de 15 €</mark></div>
+   <div class="lst" style="top:470px"><div class="t">Ma liste de Noël</div><div class="r"><div class="bx"></div><span>Maman</span><b>? €</b></div><div class="r"><div class="bx"></div><span>Papa</span><b>? €</b></div><div class="r"><div class="bx"></div><span>Frangin</span><b>? €</b></div><div class="r"><div class="bx"></div><span>Pote</span><b>? €</b></div></div>
+   <div class="ex" style="top:1180px">liste de Noël · prix d'exemple</div></div>
+  <div class="scene" data-s="1" data-in="up"><div class="ttl" style="top:230px;font-size:80px">Maman <em>&amp;</em> papa</div><div class="gift" style="left:100px;top:400px" data-g="1.1" data-fx="pop"><div class="who">pour maman</div><div class="card"><svg width="200" height="200" viewBox="0 0 200 200"><path d="M100 22 Q114 42 100 58 Q86 42 100 22 Z" fill="#ffcf5a"/><line x1="100" y1="58" x2="100" y2="70" stroke="#333" stroke-width="4"/><rect x="58" y="70" width="84" height="100" rx="12" fill="#f4efe4"/><rect x="58" y="110" width="84" height="34" fill="#c9a6ff" opacity=".8"/></svg><div class="nm">Une bougie</div><div class="pt">11 €</div></div></div><div class="gift" style="left:580px;top:400px" data-g="1.3" data-fx="pop"><div class="who">pour papa</div><div class="card"><svg width="200" height="200" viewBox="0 0 200 200"><path d="M60 170 L60 95 Q60 80 72 80 L72 45 Q72 35 82 35 Q92 35 92 45 L92 75 L92 38 Q92 28 102 28 Q112 28 112 38 L112 75 L112 42 Q112 32 122 32 Q132 32 132 42 L132 85 L140 70 Q148 58 158 66 Q164 72 158 84 L138 130 L138 170 Z" fill="#ffe4dc"/><rect x="58" y="150" width="82" height="22" rx="6" fill="#e04848"/><circle cx="82" cy="42" r="6" fill="#e04848"/></svg><div class="nm">Des gants</div><div class="pt">9 €</div></div></div>
+   <div class="note" style="left:180px;top:1040px;transform:rotate(-4deg)" data-g="1.1" data-fx="pop">✓ maman</div><div class="note" style="left:660px;top:1040px;transform:rotate(-4deg)" data-g="1.3" data-fx="pop">✓ papa</div></div>
+  <div class="scene" data-s="2" data-in="right"><div class="ttl" style="top:230px;font-size:80px">Frangin <em>&amp;</em> pote</div><div class="gift" style="left:100px;top:400px" data-g="2.1" data-fx="pop"><div class="who">pour frangin</div><div class="card"><svg width="200" height="200" viewBox="0 0 200 200"><path d="M38 120 Q38 56 100 56 Q162 56 162 120 Z" fill="#e5322d"/><path d="M100 56 V120 M70 62 Q66 90 66 120 M130 62 Q134 90 134 120" stroke="#b91c1c" stroke-width="4"/><circle cx="100" cy="56" r="7" fill="#b91c1c"/><path d="M30 120 H170 Q196 124 192 136 Q186 146 160 140 H30 Z" fill="#991b1b"/></svg><div class="nm">Une casquette</div><div class="pt">13 €</div></div></div><div class="gift" style="left:580px;top:400px" data-g="2.3" data-fx="pop"><div class="who">pour pote</div><div class="card"><svg width="200" height="200" viewBox="0 0 200 200"><rect x="50" y="50" width="86" height="115" rx="14" fill="#3fbf8f"/><rect x="50" y="50" width="86" height="22" rx="8" fill="#e9f7f0"/><path d="M136 80 Q170 80 170 108 Q170 136 136 136" fill="none" stroke="#3fbf8f" stroke-width="14"/><rect x="62" y="96" width="62" height="10" rx="5" fill="#e9f7f0" opacity=".6"/></svg><div class="nm">Un mug</div><div class="pt">8 €</div></div></div>
+   <div class="note" style="left:160px;top:1040px;transform:rotate(-4deg)" data-g="2.1" data-fx="pop">✓ frangin</div><div class="note" style="left:680px;top:1040px;transform:rotate(-4deg)" data-g="2.3" data-fx="pop">✓ pote</div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="ttl" style="top:230px;font-size:84px">Total : <em>41 €</em></div>
+   <div class="pap" style="top:380px"><div class="t">Commande</div><div class="r"><svg width="56" height="56" viewBox="0 0 200 200"><path d="M100 22 Q114 42 100 58 Q86 42 100 22 Z" fill="#ffcf5a"/><line x1="100" y1="58" x2="100" y2="70" stroke="#333" stroke-width="4"/><rect x="58" y="70" width="84" height="100" rx="12" fill="#f4efe4"/><rect x="58" y="110" width="84" height="34" fill="#c9a6ff" opacity=".8"/></svg><span>Une bougie</span><b>11,00 €</b></div><div class="r"><svg width="56" height="56" viewBox="0 0 200 200"><path d="M60 170 L60 95 Q60 80 72 80 L72 45 Q72 35 82 35 Q92 35 92 45 L92 75 L92 38 Q92 28 102 28 Q112 28 112 38 L112 75 L112 42 Q112 32 122 32 Q132 32 132 42 L132 85 L140 70 Q148 58 158 66 Q164 72 158 84 L138 130 L138 170 Z" fill="#ffe4dc"/><rect x="58" y="150" width="82" height="22" rx="6" fill="#e04848"/><circle cx="82" cy="42" r="6" fill="#e04848"/></svg><span>Des gants</span><b>9,00 €</b></div><div class="r"><svg width="56" height="56" viewBox="0 0 200 200"><path d="M38 120 Q38 56 100 56 Q162 56 162 120 Z" fill="#e5322d"/><path d="M100 56 V120 M70 62 Q66 90 66 120 M130 62 Q134 90 134 120" stroke="#b91c1c" stroke-width="4"/><circle cx="100" cy="56" r="7" fill="#b91c1c"/><path d="M30 120 H170 Q196 124 192 136 Q186 146 160 140 H30 Z" fill="#991b1b"/></svg><span>Une casquette</span><b>13,00 €</b></div><div class="r"><svg width="56" height="56" viewBox="0 0 200 200"><rect x="50" y="50" width="86" height="115" rx="14" fill="#3fbf8f"/><rect x="50" y="50" width="86" height="22" rx="8" fill="#e9f7f0"/><path d="M136 80 Q170 80 170 108 Q170 136 136 136" fill="none" stroke="#3fbf8f" stroke-width="14"/><rect x="62" y="96" width="62" height="10" rx="5" fill="#e9f7f0" opacity=".6"/></svg><span>Un mug</span><b>8,00 €</b></div>
+    <div class="tot"><span>Total</span><span>41,00 €</span></div><div class="cp" data-g="3.2" data-fx="pop"><span>Code promo</span><span>›</span></div><div class="pay">PAYER</div></div>
+   <div class="note" style="left:600px;top:1180px;transform:rotate(-5deg)" data-g="3.1" data-fx="pop">avant Payer !</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="ttl" style="top:230px;font-size:70px">La case <em>code promo</em></div>
+   <div class="fld" style="top:400px"><div class="k">CODE PROMO</div><div class="fr"><div class="field"><span data-g="4.1" data-fx="type">hzklink</span></div><div class="ap">Appliquer</div></div>
+    <div class="ok" data-g="4.2" data-fx="stamp"><span>✓ Appliqué</span><span>-14 %</span></div></div>
+   <div class="loot" style="top:830px" data-g="4.3" data-fx="stamp"><span>-5,74 €</span></div>
+   <div class="ex" style="top:1060px" data-g="4.3" data-fx="fade">41,00 € × 14 % = 5,74 € · prix d'exemple</div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="ttl" style="top:220px;font-size:90px">Tu paies</div>
+   <div class="big2"><div class="o">41,00 €<svg class="abs red" style="left:-20px;top:40px;overflow:visible" width="500" height="40" viewBox="0 0 500 40"><path class="dr" pathLength="1" d="M0 30 L480 6" data-g="5.0" data-fx="draw"/></svg></div>
+    <div class="n" data-g="5.1" data-fx="stamp" data-slow="5.1"><span>35,26 €</span></div></div>
+   <div class="ex" style="top:1030px" data-g="5.2" data-fx="fade">4 cadeaux · prix d'exemple · code promo hzklink (-14 %)</div></div>
+  <div class="scene" data-s="6" data-in="pop">
+   <div class="endw" data-g="6.0" data-fx="up"><div class="k">CODE PROMO</div><div class="c">hzklink</div><div class="d">-14 % avec le code hzklink</div>
+    <div class="b">liens des articles tendance en bio</div><div class="x">Prix d'exemple · -14 % avec le code promo hzklink · Offre soumise aux conditions en vigueur</div></div>
+   <div class="pin" style="top:1000px" data-g="6.1" data-fx="pop">↗ ENVOIE-LA À CELUI QUI N'A PAS FINI SES CADEAUX</div>
+   </div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 3.456, 7.614, 12.359, 17.001, 23.057, 26.209], END=32.27;
+const G=[[[0.04, 0.732, "Sur l'appli,"], [0.732, 2.049, "<em>4 cadeaux</em> de Noël"], [2.049, 3.456, "à moins de <em>15&nbsp;€.</em>"]], [[3.496, 4.067, "Pour maman,"], [4.067, 5.707, "une bougie : <em>11&nbsp;€.</em>"], [5.707, 6.237, "Pour papa,"], [6.237, 7.614, "des gants : <em>9&nbsp;€.</em>"]], [[7.654, 8.502, "Pour le frangin,"], [8.502, 10.212, "une casquette : <em>13&nbsp;€.</em>"], [10.212, 11.108, "Et pour ton pote,"], [11.108, 12.359, "un mug : <em>8&nbsp;€.</em>"]], [[12.399, 13.708, "Total : <em>41&nbsp;€.</em>"], [13.708, 15.381, "Mais avant de payer,"], [15.381, 17.001, "la case <i>code promo</i>."]], [[17.041, 18.284, "<em>Code promo :</em>"], [18.284, 19.206, "<em>hzklink.</em>"], [19.206, 20.939, "<i>-14&nbsp;%</i>, soit"], [20.939, 23.057, "<em>5,74&nbsp;€</em> de moins."]], [[23.097, 23.78, "Tu paies"], [23.78, 24.711, "<em>35,26&nbsp;€</em>"], [24.711, 26.209, "pour 4 cadeaux."]], [[26.249, 27.004, "Envoie cette vidéo"], [27.004, 27.796, "à celui qui n'a pas"], [27.796, 28.515, "fait ses cadeaux."], [28.515, 30.27, "Les liens sont dans ma bio."]]];
+const CAM=0.6, PUSH=0.010;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
