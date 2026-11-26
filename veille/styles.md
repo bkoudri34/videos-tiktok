@@ -1,3 +1,5 @@
+> ⚠️ Depuis le 26/11/2026 : le mot « Hacoo » n'est jamais écrit à l'image (titres, bandeaux, sous-titres, cartes, écran de fin), seulement dit à l'oral. Voir la règle prioritaire en haut de STYLE.md.
+
 # Catalogue des styles Hacoo
 
 | Code | Nom | Statut | Fichiers | Repéré chez |

@@ -1,3 +1,14 @@
+# ⚠️ RÈGLE PRIORITAIRE : le mot « Hacoo » n'est JAMAIS écrit dans les vidéos (règle de Badr du 26/11/2026)
+
+Le compte TikTok d'affiliation s'est fait signaler plusieurs fois. Cette règle passe avant toutes les autres de ce fichier, des briefs de `veille/briefs/` et des modèles existants (qui l'écrivent encore : ne les recopie pas tels quels).
+- À l'image, aucune occurrence écrite de « Hacoo », « HACOO », « Hacou » ni d'un logo ou d'une icône d'appli Hacoo : ni dans les titres, bandeaux, étiquettes, cartes, champs de code, reçus, téléphones dessinés, écran de fin, mentions légales à l'écran, ni dans les SOUS-TITRES.
+- On le dit seulement à l'oral : « l'appli Hacou », « code promo Hacou, H Z K link » (au moins 2 fois, dont une dans les 3 premières secondes).
+- À l'écran, on écrit à la place : « code promo », « CODE PROMO : hzklink », « l'appli », « -14 % avec le code hzklink ». Dans les sous-titres, le mot dit « Hacou » est remplacé par « l'appli » ou simplement retiré (voix « code promo Hacou, H Z K link » -> sous-titre « code promo hzklink »).
+- Contrôle qualité : si « Hacoo » (ou « Hacou ») apparaît écrit sur une seule image, c'est un POINT BLOQUANT : la vidéo est corrigée et re-rendue, ou n'est ni publiée ni programmée. Vérifie-le sur la planche de contact ET en cherchant « acoo » / « ACOO » / « acou » dans le BODY, les LINES (2e élément : textes affichés) et le HTML généré (grep -i "haco" sur le fichier HTML ne doit rien trouver d'affiché).
+- Message de commit de chaque vidéo Hacoo : ajoute « Hacoo seulement à l'oral » (la tâche qui programme les vidéos s'en sert pour vérifier).
+- La section plus bas « Hacoo : dire clairement que c'est un code Hacoo » (règle du 10/11) est remplacée : c'est la voix qui le dit clairement, plus l'image.
+
+---
 # Style des vidéos (v2, à partir du 28/10/2026)
 
 Objectif : un rendu moins « IA / pub », plus natif TikTok et plus viral. S'applique aux vidéos parrainage (@htm.invest) et Hacoo.
@@ -71,6 +82,7 @@ Badr a validé la voix et l'univers visuel de sa vidéo de référence (pâtisse
 `modeles/outils/` : `build.py` (découpe de la voix, timeline, génération du modèle HTML + sfx, images fixes, mixage, rendu 60 i/s en 2 morceaux + grain), `engine.js`, `base_luxe.css`, `sfx_luxe_template.py`, et `cfg/luxe.py` (briques : habillage caméra, titres tapés, personnage, comptoir). Exemples : `cfg/luxe_fortuneo.py`, `cfg/luxe_hacoo.py` (tests du 08/11, à ne pas recopier tels quels).
 
 # Hacoo : dire clairement que c'est un code Hacoo (règle de Badr du 10/11/2026)
+> Remplacée le 26/11/2026 par la règle prioritaire en haut du fichier : « Hacoo » seulement à l'oral, jamais écrit à l'image.
 
 Dans chaque vidéo Hacoo, le spectateur doit comprendre sans hésiter que `hzklink` est un **code promo à utiliser sur l'appli Hacoo** :
 - Voix off : toujours « code promo Hacou H Z K link » (ou « le code Hacou H Z K link »), jamais « le code » tout seul. Le mot « Hacou » est dit au moins 2 fois dans la vidéo, dont une fois dans les 3 premières secondes.

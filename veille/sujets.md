@@ -1,3 +1,5 @@
+> ⚠️ Depuis le 26/11/2026 : le mot « Hacoo » n'est jamais écrit à l'image (titres, bandeaux, sous-titres, cartes, écran de fin), seulement dit à l'oral. Voir la règle prioritaire en haut de STYLE.md.
+
 # Sujets Hacoo à faire tourner (idées de Badr)
 
 Les tâches vidéo Hacoo lisent ce fichier en plus du brief de l'agent veille. Chaque sujet se traite dans n'importe quel style de `veille/styles.md` (le style A « Alerte stickers » lui va bien, mais varie), avec un script, des exemples et une accroche nouveaux à chaque fois : jamais la même vidéo deux fois.
