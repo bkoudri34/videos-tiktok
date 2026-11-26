@@ -27,7 +27,7 @@ Sources : politique « contenu de marque » de TikTok, règles communautaires Ti
    - Petit bandeau lisible du début à la fin, dans la zone de sécurité : « Lien de parrainage : je touche une prime · Offre soumise à conditions ».
    - Les mêmes mentions dans la description.
    - Trade Republic / investissement : « Investir comporte un risque de perte en capital ».
-   - Dans la légende envoyée à Badr : « Activer l'option contenu commercial ».
+   - Dans la légende envoyée à Badr : « Activer l'option contenu commercial et l'étiquette contenu généré par IA ».
 5. **Hashtags** : 3 à 5, informatifs, dont #parrainage et #<banque>. Jamais #argent ni #gagnerdelargent.
 6. **Contrôle qualité** (QUALITE.md) : chacun de ces points est **bloquant**. Une vidéo bloquée est livrée avec « ⚠️ À NE PAS PUBLIER » et la raison.
    - un montant écrit ;
@@ -35,7 +35,7 @@ Sources : politique « contenu de marque » de TikTok, règles communautaires Ti
    - de l'argent à l'image ;
    - le bandeau de mentions absent pendant une partie de la vidéo ;
    - un mot interdit ;
-   - un total de gain.
+   - un total de gain écrit, non officiel, additionnant plusieurs banques, ou sans « au maximum », « seulement si chacun de tes amis remplit les conditions » et « ce n'est pas garanti ».
 
 ## C. Scénario « Parraine à ton tour » (au moins la moitié des vidéos parrainage)
 - **Combien** : en alternance, 2 des 3 vidéos un jour, 1 des 3 le lendemain. Regarde QUALITE.md pour savoir où tu en es.
@@ -45,11 +45,26 @@ Sources : politique « contenu de marque » de TikTok, règles communautaires Ti
   3. Une fois client, tu as toi aussi ton lien.
   4. Tu peux le partager à tes amis : la banque verse une prime pour chaque ami qui remplit les conditions, dans la limite du plafond qu'elle fixe par an (si la banque n'a pas de plafond annuel officiel : « dans la limite fixée par la banque »).
 - **Ce que la voix peut dire**, à l'oral seulement : la prime par ami et le plafond annuel (« jusqu'à », « fixés par la banque »), et seulement s'ils viennent tous les deux du site officiel vérifié le jour même. Sinon : « la banque prévoit une prime pour chaque ami, montant et plafond sur son site ».
+- **Total maximum à l'oral** (décision de Badr du 26/11/2026, malgré l'avis contraire de la Conformité) :
+  - la voix annonce aussi, **à l'oral seulement et une seule fois**, le potentiel maximum par an = prime parrain par ami × plafond annuel de filleuls ;
+  - seulement si ces deux chiffres sont sur le site officiel de la banque, vérifiés le jour même, et si la prime parrain est en euros (pas de total si elle est en bons d'achat ou en points, ou s'il n'y a pas de plafond officiel) ;
+  - formulation obligatoire : « au maximum, jusqu'à <total> euros par an, plafond fixé par la banque, seulement si chacun de tes amis remplit les conditions : ce n'est pas garanti » ;
+  - jamais écrit (écran, titre, description, hashtags, couverture), une seule banque par total, jamais d'addition de plusieurs banques ;
+  - le total vaut aux conditions actuelles : pas de total si l'offre se termine avant 12 mois (ex. une offre qui finit le 30/11) ; si la banque fixe un plafond annuel en euros, le total est ce plafond, sans multiplication.
+  - note la source et le calcul dans `videos/legendes/AAAA-MM-JJ.md`.
 - **Interdit** :
-  - tout « total à gagner », toute multiplication prime × nombre d'amis, le mot « revenu » ;
+  - tout total en dehors de cette règle, le mot « revenu » ;
   - tout arbre ou toute chaîne : un seul niveau, toi → tes amis.
 - **À dire clairement** : « je ne touche rien sur les amis de mes filleuls ».
 - **À l'écran** : 3 ou 4 étapes animées et « plafond fixé par la banque » en mots, sans aucun chiffre en euros.
+
+## D. Gardien anti-bannissement (avant d'envoyer chaque vidéo parrainage)
+- Après le contrôle qualité, lance un **autre** sous-agent (outil Task) qui n'a pas fabriqué la vidéo. Donne-lui comme consigne le contenu de `GARDIEN-ANTI-BAN.md` (racine du dépôt), avec :
+  - le chemin du MP4, le titre, la description et la transcription de la voix ;
+  - la liste des vidéos des 7 derniers jours (`videos/`, `videos-qg/`).
+- **Verdict « À NE PAS PUBLIER »** : corrige, refais le rendu une fois, puis redemande l'avis du gardien.
+- **Toujours bloquée** : envoie-la quand même à Badr avec « ⚠️ À NE PAS PUBLIER (gardien anti-ban) » et la raison.
+- Ajoute la ligne « Gardien anti-ban : RISQUE <niveau> · <note>/100 · <verdict> » dans la légende envoyée à Badr et dans `videos/legendes/AAAA-MM-JJ.md`.
 <!-- fin règles 26/11 -->
 
 # ⚠️ RÈGLE PRIORITAIRE : le mot « Hacoo » n'est JAMAIS écrit dans les vidéos (règle de Badr du 26/11/2026)
