@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Duo dessine black friday bordeaux</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style D2 « Duo dessiné » : le format du Duo 3D (le malin vs le pigeon) en 2D au trait, sur le papier du style T.
+   Deux bonshommes SVG posés par duo2d.js (poses, bouche qui parle, « boil » du trait), coupe + zoom « punch » à chaque réplique,
+   sous-titres énormes mot par mot, cartes au feutre qui surgissent au-dessus des têtes. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 1000px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#duo2d{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+#duo2d .k{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+#duo2d .kf{fill:#fff;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+#duo2d .h{fill:none;stroke:#111;stroke-width:4;stroke-linecap:round;opacity:.55}
+
+/* Sous-titres : énormes, noirs avec un halo papier, mot clé surligné rouge, code en jaune */
+#sub{position:absolute;left:40px;top:1400px;width:1000px;text-align:center;font:900 84px/1.08 'Inter','Arial Black',sans-serif;text-transform:uppercase;letter-spacing:-1px;color:#111;
+ -webkit-text-stroke:14px #faf9f6;paint-order:stroke fill;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;color:#fff;background:#e63946;-webkit-text-stroke:0;padding:0 14px;border-radius:12px;box-shadow:5px 6px 0 #111;display:inline-block}
+#sub i{font-style:normal;color:#111;background:#ffe14d;-webkit-text-stroke:0;padding:0 14px;border-radius:12px;box-shadow:5px 6px 0 #111;display:inline-block;text-transform:none}
+
+/* Étiquettes écrites à la main au-dessus des têtes (positionnées par duo2d.js) */
+.lbl{position:absolute;left:0;top:0;transform:translate(-50%,-100%) rotate(-3deg);font:700 36px 'Comic Relief','Comic Sans MS',cursive;color:#e63946;white-space:nowrap;z-index:4}
+.anc{position:absolute;left:0;top:0;width:0;height:0;z-index:5}
+
+/* Accroche fixe en haut dès la 1re image */
+.hook{position:absolute;left:50px;top:230px;width:980px;text-align:center;font:900 80px/1.08 'Inter','Arial Black',sans-serif;text-transform:uppercase;color:#111}
+.hook mark{background:#ffe14d;color:#111;padding:0 10px}
+.hook em{font-style:normal;color:#e63946}
+.note{position:absolute;font:700 46px 'Comic Relief','Comic Sans MS',cursive;color:#e63946;white-space:nowrap}
+
+/* Cartes au feutre */
+.card{position:absolute;transform-origin:50% 100%;background:#fff;color:#111;border:6px solid #111;border-radius:26px;box-shadow:9px 11px 0 #111;text-align:center;white-space:nowrap}
+.card .t{font:800 24px 'Inter',sans-serif;letter-spacing:3px;color:#555;text-transform:uppercase}
+.card .p{font:900 72px 'Inter','Arial Black',sans-serif;letter-spacing:-2px}
+.card .x{font:700 20px 'Inter',sans-serif;letter-spacing:2px;color:#777;text-transform:uppercase}
+.card .ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.tag{position:absolute;padding:8px 22px;border:5px solid #111;border-radius:16px;background:#ffe14d;color:#111;font:900 52px 'Inter','Arial Black',sans-serif;white-space:nowrap;box-shadow:6px 7px 0 #111}
+.tag.red{background:#e63946;color:#fff}
+.tag.green{background:#2bb673;color:#fff}
+.tag s{color:#555;font-size:34px;text-decoration-color:#e63946;text-decoration-thickness:5px;margin-right:10px}
+.bub{position:absolute;width:180px;height:180px;border-radius:50%;background:#fff;border:6px solid #111;color:#e63946;display:flex;align-items:center;justify-content:center;font:700 100px 'Comic Relief',cursive;box-shadow:7px 8px 0 #111}
+.phone{position:absolute;width:520px;padding:30px 30px 26px;border-radius:40px;background:#fff;border:7px solid #111;box-shadow:10px 12px 0 #111;text-align:left;white-space:nowrap}
+.phone .t{font:900 28px 'Inter',sans-serif;letter-spacing:2px;color:#e63946}
+.phone .f{margin-top:14px;height:104px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 64px 'DejaVu Sans Mono',monospace}
+.phone .f .ph{color:#b9b4aa;font:700 36px Inter}
+.phone .ok{margin-top:14px;font:700 40px 'Comic Relief',cursive;color:#2bb673}
+.endc{position:absolute;left:110px;top:220px;width:860px;padding:38px 30px 32px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endc .k{font:900 50px Inter;letter-spacing:2px}
+.endc .c{display:inline-block;margin:10px 0;font:900 128px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endc .d{font:800 42px Inter}
+.endc .b{margin-top:16px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endc .x{margin-top:16px;font:600 23px Inter;color:#555;white-space:normal}
+
+
+#sub{left:90px;width:840px;font-size:68px}
+.hook{left:90px;width:840px;font-size:60px}
+#sub em{background:#8e1b3a;color:#fff}
+.hook em{color:#8e1b3a}
+.hook mark{background:#f6d6de}
+.tag.bx{background:#8e1b3a;color:#fff}
+.tag.pk{background:#f6d6de;color:#5c0f24}
+.tk{position:absolute;width:600px;padding:14px 34px 12px;background:#fff;border:6px solid #111;border-radius:22px;box-shadow:9px 11px 0 #111;font:700 32px 'Inter',sans-serif;color:#111;white-space:nowrap;transform:rotate(-2deg)}
+.tk .h{font:900 26px Inter;letter-spacing:3px;text-align:center;color:#555;border-bottom:4px dashed #bbb;padding-bottom:10px;margin-bottom:10px}
+.tk .r{display:flex;justify-content:space-between;line-height:1.4}
+.tk .r.cd{color:#8e1b3a;font-weight:900;font-size:38px;margin:8px 0}
+.tk .r.tt{border-top:4px dashed #bbb;margin-top:8px;padding-top:6px;font:900 38px Inter}
+.tk .x{text-align:center;font:700 18px Inter;letter-spacing:2px;color:#888;text-transform:uppercase;margin-top:6px}
+.list{position:absolute;width:420px;padding:16px 28px;background:#fffbe8;border:5px solid #111;border-radius:16px;box-shadow:8px 9px 0 #111;font:700 34px 'Comic Relief','Comic Sans MS',cursive;color:#111;transform:rotate(3deg);white-space:nowrap}
+.list .h{font:900 28px Inter;letter-spacing:2px;color:#8e1b3a;margin-bottom:6px}
+.list s{text-decoration-color:#8e1b3a;text-decoration-thickness:4px}
+.bf{position:absolute;padding:8px 22px;background:#111;color:#fff;font:900 40px Inter;letter-spacing:3px;border-radius:12px;transform:rotate(-6deg);white-space:nowrap}
+.endc .nt{margin-top:12px;font:700 32px 'Comic Relief','Comic Sans MS',cursive;color:#8e1b3a}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+  <svg id="duo2d" viewBox="0 0 1080 1920"></svg>
+  <div class="lbl" id="lblM">le malin</div><div class="lbl" id="lblP">le pigeon</div>
+
+  <div class="scene" data-s="0"><div class="hook">Black Friday partout…<br>et il <em>oublie</em> encore <mark>ça</mark></div>
+   <div class="list" style="left:310px;top:420px"><div class="h">LISTE DE CADEAUX</div>bottines ✓<br>écharpe ✓<br>gants ✓<br><s>code promo</s> ?</div></div>
+<div class="scene" data-s="1" data-in="pop"><div class="anc" data-who="M"><div class="tag pk" style="left:-200px;top:-150px" data-g="1.2" data-fx="stamp">CODE PROMO ?</div></div></div>
+<div class="scene" data-s="2" data-in="pop"><div class="anc" data-who="P"><div class="bub" style="left:-120px;top:-230px" data-g="2.0" data-fx="stamp">?!</div><div class="bf" style="left:-200px;top:-330px" data-g="2.2" data-fx="pop">TOUT EST EN PROMO</div></div></div>
+  <div class="scene" data-s="3" data-in="pop">
+   <div class="phone" style="left:270px;top:230px" data-g="3.2" data-fx="up"><div class="t">CODE PROMO</div>
+    <div class="f"></div><div class="ok" data-g="3.3" data-fx="fade">avant de payer</div><div class="ok" data-g="3.4" data-fx="fade">peu importe le jour</div></div>
+  </div>
+  <div class="scene" data-s="4" data-in="pop">
+   <div class="phone" style="left:270px;top:230px" data-g="4.0" data-fx="up"><div class="t">CODE PROMO</div>
+    <div class="f"><span data-g="4.1" data-fx="type">hzklink</span></div><div class="ok" data-g="4.3" data-fx="fade">Appliquer ✓ -14 %</div></div>
+  </div>
+  <div class="scene" data-s="5" data-in="pop"><div class="card" style="left:110px;top:230px;width:240px;padding:10px 0 12px" data-g="5.0" data-fx="pop"><span class="ico"><svg width="110" height="110" viewBox="0 0 200 200"><path d="M50 40 H95 V125 Q140 125 160 140 Q168 150 160 160 H50 Z" fill="#c9a27a"/><rect x="50" y="155" width="112" height="14" rx="5" fill="#4a3424"/><path d="M60 60 H90 M60 80 H90 M60 100 H90" stroke="#7a5a3a" stroke-width="5"/></svg></span><div class="t">bottines</div><div class="p" style="font-size:56px">43 €</div><div class="x">prix d'exemple</div></div><div class="card" style="left:420px;top:210px;width:240px;padding:10px 0 12px" data-g="5.1" data-fx="pop"><span class="ico"><svg width="110" height="110" viewBox="0 0 200 200"><path d="M50 50 Q100 80 150 50 L150 75 Q100 105 50 75 Z" fill="#d9a24c"/><rect x="110" y="70" width="32" height="95" rx="6" fill="#d9a24c"/><path d="M114 165 v12 M122 165 v12 M130 165 v12 M138 165 v12" stroke="#d9a24c" stroke-width="4"/><path d="M60 62 H140" stroke="#7a5016" stroke-width="5" opacity=".5"/></svg></span><div class="t">écharpe</div><div class="p" style="font-size:56px">16 €</div><div class="x">prix d'exemple</div></div><div class="card" style="left:700px;top:230px;width:220px;padding:10px 0 12px" data-g="5.2" data-fx="pop"><span class="ico"><svg width="110" height="110" viewBox="0 0 200 200"><path d="M60 170 L60 95 Q60 80 72 80 L72 45 Q72 35 82 35 Q92 35 92 45 L92 75 L92 38 Q92 28 102 28 Q112 28 112 38 L112 75 L112 42 Q112 32 122 32 Q132 32 132 42 L132 85 L140 70 Q148 58 158 66 Q164 72 158 84 L138 130 L138 170 Z" fill="#ffe4dc"/><rect x="58" y="150" width="82" height="22" rx="6" fill="#e04848"/><circle cx="82" cy="42" r="6" fill="#e04848"/></svg></span><div class="t">gants</div><div class="p" style="font-size:56px">12 €</div><div class="x">prix d'exemple</div></div>
+   <div class="tag" style="left:395px;top:540px" data-g="5.3" data-fx="stamp">= 71,00 €</div></div>
+  <div class="scene" data-s="6" data-in="pop"><div class="tk" style="left:230px;top:220px"><div class="h">MON PANIER CADEAUX</div><div class="r"><span>bottines</span><span>43,00 €</span></div><div class="r"><span>écharpe</span><span>16,00 €</span></div><div class="r"><span>gants</span><span>12,00 €</span></div><div class="r"><span>sous-total</span><span>71,00 €</span></div><div class="r cd" data-g="6.1" data-fx="right"><span>code promo -14 %</span><span>-9,94 €</span></div><div class="r tt" data-g="6.2" data-fx="fade"><span>total</span><span>61,06 €</span></div><div class="x">prix d'exemple</div></div></div>
+  <div class="scene" data-s="7" data-in="pop">
+   <div class="tag bx" style="left:330px;top:220px" data-g="7.0" data-fx="stamp">-14 % = -9,94 €</div>
+   <div class="card" style="left:240px;top:330px;width:600px;padding:18px 0" data-g="7.0" data-fx="stamp" data-slow="7.0"><div class="t">avec le code promo</div><div class="p" style="font-size:120px;color:#8e1b3a">61,06 €</div><div class="x"><span style="text-transform:none">hzklink</span> · -14 % · prix d'exemple</div></div>
+  </div>
+  <div class="scene" data-s="8" data-in="pop" style="z-index:7">
+   <div class="endc" style="top:215px;left:95px;width:820px" data-g="8.0" data-fx="up"><div class="k">CODE PROMO</div><div class="c">hzklink</div><div class="d">-14 % avec le code hzklink</div>
+    <div class="b" data-g="8.2" data-fx="pop">liens des articles tendance en bio</div><div class="nt" data-g="8.1" data-fx="pop">envoie ça au pote qui fait ses cadeaux</div><div class="x">Prix d'exemple · -14 % avec le code promo hzklink · Offre soumise aux conditions en vigueur</div></div>
+  </div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.732, 5.072, 6.892, 10.234, 14.554, 17.608, 19.66, 22.489], END=29.945;
+const G=[[[0.04, 0.782, "C'est le <em>Black&nbsp;Friday</em>"], [0.782, 1.064, "partout,"], [1.064, 1.616, "je fais tous"], [1.616, 1.975, "mes <em>cadeaux</em>"], [1.975, 2.812, "aujourd'hui&nbsp;!"]], [[2.772, 3.485, "Et sur l'appli,"], [3.485, 4.169, "t'as tapé"], [4.169, 5.152, "le <em>code promo&nbsp;?</em>"]], [[5.112, 5.535, "Un code&nbsp;?"], [5.535, 6.224, "Tout est déjà"], [6.224, 6.972, "en <em>promo&nbsp;!</em>"]], [[6.932, 7.393, "Peu importe"], [7.393, 8.114, "le jour :"], [8.114, 9.027, "avant de payer,"], [9.027, 9.553, "t'as une case"], [9.553, 10.314, "<em>code promo.</em>"]], [[10.274, 11.535, "<em>Code promo</em>"], [11.535, 12.555, "<i>hzklink</i>."], [12.555, 13.064, "Moins"], [13.064, 14.634, "<em>14&nbsp;%.</em>"]], [[14.594, 15.12, "Mes bottines,"], [15.12, 15.691, "mon écharpe"], [15.691, 16.218, "et mes gants…"], [16.218, 17.688, "<em>71&nbsp;€.</em>"]], [[17.648, 17.962, "Ça fait"], [17.962, 19.063, "<em>9,94&nbsp;€</em>"], [19.063, 19.74, "de moins."]], [[19.7, 20.892, "<em>61,06&nbsp;€&nbsp;?</em>"], [20.892, 21.601, "Je le tape"], [21.601, 22.569, "tout de <em>suite&nbsp;!</em>"]], [[22.529, 23.38, "Envoie cette vidéo"], [23.38, 24.149, "au pote qui fait"], [24.149, 25.035, "ses cadeaux"], [25.035, 25.789, "aujourd'hui."], [25.789, 26.977, "<em>Code promo</em>"], [26.977, 28.245, "<i>hzklink</i>."]]];
+const CAM=0.3;const DUO={"lines": [{"who": "P", "M": "idle", "P": "talk", "shot": "wide", "lbl": false}, {"who": "M", "M": "think", "P": "idle", "shot": "M"}, {"who": "P", "M": "idle", "P": "shrug", "shot": "P"}, {"who": "M", "M": "point", "P": "idle", "shot": "M"}, {"who": "M", "M": "cool", "P": "think", "shot": "wide", "lbl": false}, {"who": "P", "M": "idle", "P": "think", "shot": "P", "lbl": false}, {"who": "M", "M": "hip", "P": "idle", "shot": "M", "lbl": false}, {"who": "P", "M": "cool", "P": "shock", "shot": "P"}, {"who": "M", "M": "point", "P": "idle", "shot": "wide", "lbl": false}], "bun": false, "cap": "#8e1b3a"};
+// Style D2 « Duo dessiné » : deux bonshommes au trait (SVG), posés image par image par extra(t). Déterministe : tout dépend de t.
+// La config (avant ce fichier) définit DUO = {lines:[{who:'M'|'P', M:'pose', P:'pose', shot:'wide'|'M'|'P'}...], bun:bool, cap:'#couleur'}
+// Poses : idle, talk, point, shrug, hip, shock, head (mains sur la tête), cool (bras levés), think.
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('duo2d');
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e}
+// « boil » : léger tremblement du trait (bruit qui change de graine toutes les 0,15 s)
+const defs=el('defs',{});
+const flt=el('filter',{id:'boil',x:'-20%',y:'-20%',width:'140%',height:'140%'},defs);
+const turb=el('feTurbulence',{type:'fractalNoise',baseFrequency:'0.035',numOctaves:'2',seed:'1',result:'n'},flt);
+el('feDisplacementMap',{in:'SourceGraphic',in2:'n',scale:'5',xChannelSelector:'R',yChannelSelector:'G'},flt);
+const world=el('g',{id:'world'});
+const FEET=1330;
+// sol au feutre + ombres
+el('path',{class:'k',d:'M-200 '+(FEET+6)+' Q300 '+(FEET-4)+' 540 '+(FEET+4)+' T1280 '+(FEET+2),filter:'url(#boil)'},world);
+el('ellipse',{cx:330,cy:FEET+8,rx:130,ry:16,fill:'rgba(0,0,0,.08)'},world);
+el('ellipse',{cx:760,cy:FEET+8,rx:100,ry:14,fill:'rgba(0,0,0,.08)'},world);
+
+// personnages : origine aux pieds ; in = côté intérieur (vers l'autre)
+const C={
+ P:{x:330,in:1,sh:[85,-330],Lu:95,Lf:92,head:[0,-470],r:62,mouth:[0,-438],eyes:[[-22,-482],[22,-482]],top:-532},
+ M:{x:760,in:-1,sh:[44,-412],Lu:100,Lf:96,head:[0,-490],r:52,mouth:[-8,-462],eyes:[[-26,-498],[8,-498]],top:-560},
+};
+function build(w){
+ const c=C[w];const g=el('g',{transform:`translate(${c.x},${FEET})`,filter:'url(#boil)'},world);
+ const b=el('g',{},g);c.g=g;c.b=b;
+ if(w==='P'){
+  el('path',{class:'k',d:'M-42 -140 L-58 0 M-72 0 L-40 0 M42 -140 L58 0 M40 0 L72 0'},b);
+  const cp=el('clipPath',{id:'clipP'},defs);el('ellipse',{cx:0,cy:-255,rx:105,ry:135},cp);
+  el('ellipse',{class:'kf',cx:0,cy:-255,rx:105,ry:135},b);
+  const hz=el('g',{'clip-path':'url(#clipP)'},b);
+  for(let k=-6;k<7;k++)el('path',{class:'h',d:`M${k*34-80} -120 L${k*34+80} -400`},hz);
+  if(DUO.bun)el('circle',{class:'kf',cx:46,cy:-530,r:24},b);
+ } else {
+  el('path',{class:'k',d:'M-22 -200 L-38 0 M-56 0 L-34 0 M22 -200 L38 0 M34 0 L56 0'},b);
+  el('rect',{class:'kf',x:-48,y:-430,width:96,height:236,rx:24},b);
+  el('path',{class:'k',d:'M0 -430 L0 -415'},b);
+ }
+ c.arm={};
+ for(const s of [-1,1]){c.arm[s]=el('path',{class:'k',d:''},b)}
+ el('circle',{class:'kf',cx:c.head[0],cy:c.head[1],r:c.r},b);
+ if(w==='M'){
+  el('path',{d:'M-54 -500 Q0 -585 54 -500 Z',fill:DUO.cap||'#e63946',stroke:'#111','stroke-width':7,'stroke-linejoin':'round'},b);
+  el('path',{class:'k',d:'M-50 -502 L-104 -494'},b);
+ }
+ c.eye=c.eyes.map(([x,y])=>el('path',{class:'k',d:''},b));c.eyesXY=c.eyes;
+ c.mo=el('path',{class:'k',d:''},b);
+ c.brow=el('path',{class:'k',d:''},b);
+}
+build('P');build('M');
+
+// poses : [haut, avant-bras] en degrés depuis la verticale basse, positif = vers l'extérieur ; I = bras intérieur, O = bras extérieur
+const PO={
+ idle:{I:[12,6],O:[12,6]},
+ talk:{I:[48,95],O:[16,10]},
+ point:{I:[92,90],O:[12,6]},
+ shrug:{I:[50,125],O:[50,125]},
+ hip:{I:[40,95],O:[42,-55]},
+ shock:{I:[140,165],O:[140,165]},
+ head:{I:[150,-140],O:[150,-140]},
+ cool:{I:[160,178],O:[160,178]},
+ think:{I:[22,-150],O:[14,-30]},
+};
+const MOUTH={shock:'O',head:'O',cool:'big'};
+function armD(c,s,u,f){
+ const [sx,sy]=[s*c.sh[0],c.sh[1]];const r=Math.PI/180;
+ const ex=sx+s*Math.sin(u*r)*c.Lu,ey=sy+Math.cos(u*r)*c.Lu;
+ const hx=ex+s*Math.sin(f*r)*c.Lf,hy=ey+Math.cos(f*r)*c.Lf;
+ return `M${sx.toFixed(1)} ${sy.toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)} L${hx.toFixed(1)} ${hy.toFixed(1)} M${(hx-8).toFixed(1)} ${hy.toFixed(1)} a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0`;
+}
+function lineAt(t){let i=0;for(let k=0;k<S.length;k++)if(t>=S[k]-0.05)i=k;return i}
+function lerp(a,b,k){return a+(b-a)*k}
+function poseFor(name,t,talking){
+ const p=JSON.parse(JSON.stringify(PO[name]||PO.idle));
+ const w=Math.sin(t*7.3);
+ if(name==='talk'){p.I[0]+=12*w;p.I[1]+=18*Math.sin(t*4.1)}
+ if(name==='head'){p.I[0]+=5*Math.sin(t*9);p.O[0]+=5*Math.sin(t*9+1)}
+ if(name==='cool'){p.I[0]+=6*Math.sin(t*6);p.O[0]+=6*Math.sin(t*6+2)}
+ if(talking&&name!=='talk'){p.I[1]+=6*w}
+ return p;
+}
+// plans : large / serré sur un personnage (point du monde -> point de l'écran, échelle)
+const SHOT={wide:{s:1,c:[545,1000],to:[540,1000]},P:{s:1.55,c:[330,960],to:[560,980]},M:{s:1.55,c:[760,960],to:[520,980]}};
+const lbl={P:document.getElementById('lblP'),M:document.getElementById('lblM')};
+const ancs=[...document.querySelectorAll('.anc')];
+window.extra=function(t){
+ turb.setAttribute('seed',String(1+Math.floor(t/0.15)%7));
+ const i=lineAt(t),L=DUO.lines[i],prev=DUO.lines[Math.max(0,i-1)];
+ const k=Math.min(1,Math.max(0,(t-S[i]+0.05)/0.22)),ke=1-Math.pow(1-k,3);
+ const lp=t-(END-0.45);
+ for(const w of ['P','M']){
+  const c=C[w];
+  const talking=(L.who===w)&&(t<S[i]+0.1+(G[i][G[i].length-1][1]-S[i]));
+  const a=poseFor(i>0?prev[w]:L[w],t,false),b=poseFor(L[w],t,talking),kk=i>0?ke:1;
+  for(const s of [-1,1]){const A=(s===c.in)?'I':'O';c.arm[s].setAttribute('d',armD(c,s,lerp(a[A][0],b[A][0],kk),lerp(a[A][1],b[A][1],kk)))}
+  // bouche
+  const mt=MOUTH[L[w]]||'smile';const [mx,my]=c.mouth;
+  let md;
+  if(talking){const o=Math.abs(Math.sin(t*15))*14+3;md=`M${mx-14} ${my} Q${mx} ${my+o*2} ${mx+14} ${my} Q${mx} ${my-4} ${mx-14} ${my}`}
+  else if(mt==='O')md=`M${mx-11} ${my+4} a11 14 0 1 0 22 0 a11 14 0 1 0 -22 0`;
+  else if(mt==='big')md=`M${mx-20} ${my-4} Q${mx} ${my+26} ${mx+20} ${my-4} Z`;
+  else md=`M${mx-15} ${my} Q${mx} ${my+12} ${mx+15} ${my}`;
+  c.mo.setAttribute('d',md);
+  // yeux (ronds quand choqué), sourcils
+  const big=(mt==='O');const blink=(Math.floor(t*10+(w==='M'?3:0))%37===0);
+  c.eye.forEach((e,j)=>{const [ex,ey]=c.eyesXY[j];e.setAttribute('d',blink?`M${ex-6} ${ey} L${ex+6} ${ey}`:big?`M${ex-7} ${ey} a7 9 0 1 0 14 0 a7 9 0 1 0 -14 0`:`M${ex} ${ey-6} L${ex} ${ey+6}`)});
+  const [e1,e2]=c.eyesXY;const by=e1[1]-(big?24:18)-(L[w]==='think'?6:0);
+  c.brow.setAttribute('d',L[w]==='think'?`M${e1[0]-10} ${by+6} L${e1[0]+8} ${by} M${e2[0]-8} ${by-2} L${e2[0]+10} ${by+6}`:`M${e1[0]-9} ${by} L${e1[0]+9} ${by-2} M${e2[0]-9} ${by-2} L${e2[0]+9} ${by}`);
+  // rebond quand il parle + respiration
+  const bob=(talking?-Math.abs(Math.sin(t*9))*8:0)+Math.sin(t*2.2+(w==='M'?1:0))*2+((L[w]==='cool'||L[w]==='shock')?-Math.abs(Math.sin(t*6))*10:0);
+  c.b.setAttribute('transform',`translate(0 ${bob.toFixed(1)})`);
+ }
+ // caméra : coupe franche à chaque réplique + zoom « punch »
+ const sh=SHOT[L.shot||'wide'];
+ const since=t-S[i];const punch=since>=0&&since<0.4?Math.pow(1-Math.min(1,since/0.4),2)*0.12:0;
+ let s=sh.s*(1+punch+0.03*Math.min(1,since/3)),cx=sh.c[0],cy=sh.c[1],tx=sh.to[0],ty=sh.to[1];
+ if(lp>0){const w0=SHOT[DUO.lines[0].shot||'wide'];const q=Math.min(1,lp/0.4);s=lerp(s,w0.s,q);cx=lerp(cx,w0.c[0],q);cy=lerp(cy,w0.c[1],q);tx=lerp(tx,w0.to[0],q);ty=lerp(ty,w0.to[1],q)}
+ const ox=tx-s*cx+6*Math.sin(t*0.7),oy=ty-s*cy;
+ world.setAttribute('transform',`translate(${ox.toFixed(2)} ${oy.toFixed(2)}) scale(${s.toFixed(4)})`);
+ // étiquettes + ancres au-dessus des têtes
+ for(const w of ['P','M']){
+  const c=C[w];const x=ox+s*(c.x),y=oy+s*(FEET+c.top-20);
+  if(lbl[w]){lbl[w].style.left=x+'px';lbl[w].style.top=y+'px';lbl[w].style.opacity=(i===0||lp>0||L.lbl===false||(L.shot&&L.shot!=='wide'&&L.shot!==w))?0:1}
+  for(const a of ancs)if(a.dataset.who===w){a.style.left=x+'px';a.style.top=(y-50)+'px'}
+ }
+};
+})();
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
