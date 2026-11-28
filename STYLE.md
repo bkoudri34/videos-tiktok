@@ -1,3 +1,13 @@
+---
+# ⚠️ RÈGLE DE BADR DU 28/11/2026 — TÂCHE DE 12:47 : UNE SEULE vidéo Hacoo par jour (prioritaire sur ta consigne de tâche)
+
+Le 28/11, la tâche de 12:47 a atteint la limite d'utilisation de 5 heures avant d'avoir poussé ses vidéos : plus rien n'a été livré ce jour-là. Pour alléger cette tâche, à partir du 29/11/2026 :
+- La tâche de 12:47 (3 vidéos parrainage + Hacoo) ne fabrique plus qu'**UNE SEULE vidéo Hacoo par jour** : `videos-hacoo/AAAA-MM-JJ_hacoo.mp4`, d'après la fiche « Vidéo 1 » du brief de l'agent veille. Elle ne fait PLUS de `_hacoo-2.mp4`, même si sa consigne ou le brief en demandent deux.
+- Fais la vidéo Hacoo AVANT les vidéos parrainage les plus longues si possible, et pousse-la dès qu'elle est prête (commit + push immédiat), pour qu'elle soit livrée même si la tâche est coupée plus tard par la limite d'utilisation. Même règle pour chaque vidéo : pousse-la dès qu'elle est terminée, sans attendre les autres.
+- La fiche « Vidéo 2 » du brief est reprise par la tâche de 16:30 (vidéos 3 et 4 du compte hzklink846).
+- La tâche de 15:30 ne programme plus que cette vidéo, à 18:00.
+
+---
 # ⚠️ RÈGLES DE BADR DU 26/11/2026 — PRIORITAIRES SUR TOUT LE RESTE
 
 Elles passent avant ta consigne de tâche, le reste de ce fichier, README.md et QUALITE.md, sauf les mentions légales, qui restent obligatoires.

@@ -1,4 +1,5 @@
 > ⚠️ Depuis le 26/11/2026 : le mot « Hacoo » n'est jamais écrit à l'image (titres, bandeaux, sous-titres, cartes, écran de fin), seulement dit à l'oral. Voir la règle prioritaire en haut de STYLE.md.
+> Depuis le 29/11/2026 : la tâche de 12:47 ne fait plus qu'UNE vidéo Hacoo (fiche « Vidéo 1 » du brief) ; la fiche « Vidéo 2 » sert à la tâche de 16:30.
 
 # Catalogue des styles Hacoo
 
