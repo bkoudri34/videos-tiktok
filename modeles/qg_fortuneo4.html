@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>QG Fortuneo parraine a ton tour</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+.bub{position:absolute;background:#fff;border:6px solid #111;border-radius:34px;padding:22px 28px;font-weight:900;font-family:Inter;text-align:center;line-height:1.1;box-shadow:8px 9px 0 #111}
+.bub .tl{position:absolute;bottom:-34px;width:40px;height:40px;background:#fff;border-right:6px solid #111;border-bottom:6px solid #111;transform:rotate(45deg) skew(10deg,10deg)}
+.bub em{font-style:normal;background:#ffe14d;padding:0 8px}
+.bub b{color:#e63946}
+.phone{position:absolute;width:440px;height:800px;border:9px solid #111;border-radius:64px;background:#fff;box-shadow:12px 14px 0 #111;overflow:hidden}
+.phone:before{content:'';position:absolute;left:150px;top:18px;width:120px;height:26px;border-radius:13px;background:#111}
+.phone .scr{position:absolute;left:34px;right:34px;top:80px;font-family:Inter}
+.phone .tt{font:900 40px Inter;margin-bottom:22px}
+.phone .ln{height:26px;border-radius:13px;background:#e9e5dc;margin:14px 0}
+.phone .bt{height:96px;border-radius:48px;background:#111;color:#fff;font:900 34px Inter;display:flex;align-items:center;justify-content:center;margin-top:26px;white-space:nowrap}
+.phone .fl{height:90px;border:5px solid #111;border-radius:18px;display:flex;align-items:center;padding:0 18px;font:800 30px Inter;white-space:nowrap;margin-top:14px}
+.tag{position:absolute;font:900 38px Inter;letter-spacing:1px;padding:8px 22px;border:5px solid #111;border-radius:16px;background:#fff;white-space:nowrap}
+.cond{position:absolute;left:110px;width:820px;font:600 25px/1.35 Inter;color:#444;text-align:center}
+.endc{position:absolute;left:110px;top:240px;width:820px;padding:40px 30px 36px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endc .k{font:900 46px Inter}
+.endc .c{display:inline-block;margin:14px 0;font:900 100px Inter;background:#ffe14d;padding:0 22px;line-height:1.15}
+.endc .d{font:800 40px Inter}
+.endc .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+
+#bgtex{background:linear-gradient(rgba(70,110,200,.14) 2px,transparent 2px) 0 0/48px 48px,linear-gradient(90deg,rgba(70,110,200,.14) 2px,transparent 2px) 0 0/48px 48px,#f6f4ee !important}
+#sub{left:80px;width:840px;font-size:66px}
+.ment{position:absolute;left:110px;top:196px;width:780px;padding:10px 16px 12px;border:5px solid #111;border-radius:18px;background:#fff;text-align:center;z-index:9;box-shadow:6px 7px 0 #111}
+.ment b{display:block;font:900 27px Inter;color:#111;white-space:nowrap}
+.ment span{display:block;font:700 23px Inter;color:#e63946;white-space:nowrap}
+.ttl{top:330px;left:80px;width:840px}
+.qm{position:absolute;font:700 140px/1 'Comic Relief',cursive;color:#e63946}
+.ck{display:flex;align-items:center;gap:20px;font:800 44px Inter;white-space:nowrap;height:104px}
+.ck b{color:#1b8a3c;font:900 60px Inter;width:56px}
+.env{position:absolute;width:250px;height:160px;border:6px solid #111;border-radius:14px;background:#fff;overflow:hidden}
+.env:before{content:'';position:absolute;left:-6px;top:-70px;width:250px;height:150px;border:6px solid #111;transform:scaleY(.55) rotate(45deg);transform-origin:50% 100%;background:#ffe14d}
+.env .w{position:absolute;left:0;right:0;bottom:12px;text-align:center;font:900 26px Inter;letter-spacing:1px}
+.head{position:absolute;width:104px;height:104px}
+.stampr{position:absolute;padding:12px 26px;border:8px solid #e63946;border-radius:22px;color:#e63946;font:900 50px/1.15 Inter;text-align:center;background:rgba(250,249,246,.92);white-space:nowrap}
+.cmt{position:absolute;left:90px;top:520px;width:820px;padding:30px 34px 34px}
+.cmt .h{font:900 38px Inter;border-bottom:4px solid #111;padding-bottom:16px;margin-bottom:22px}
+.cmt .q{font:900 54px/1.15 Inter}
+.cmt .in{margin-top:28px;height:96px;border:5px solid #111;border-radius:48px;display:flex;align-items:center;padding:0 30px;font:700 34px Inter;color:#888;white-space:nowrap}
+.cmt .cur{display:inline-block;width:5px;height:46px;background:#111;margin-left:6px}
+.endw{top:330px;left:110px;width:780px}
+.endw .c{font-size:112px}
+.endw .k{font-size:42px}
+.cond{left:110px;width:780px;font-size:25px}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="ment"><b>Lien de parrainage : je touche une prime</b><span>Offre soumise à conditions</span></div>
+  <div class="scene" data-s="0"><div class="ttl" style="top:330px;font-size:100px">Parrainage<br><mark>Fortuneo</mark></div>
+   <div class="note" style="left:200px;top:560px;font-size:58px;transform:rotate(-3deg)">à ton tour de parrainer ?</div><svg class="abs ink" style="left:400px;top:700px;overflow:visible" width="240" height="470" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M98 72 l0 8 M142 72 l0 8"/><ellipse cx="120" cy="112" rx="14" ry="16"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 90"/></g><g class="armR"><path d="M120 190 L190 90"/></g><path d="M92 132 Q120 150 148 132 L154 146 Q120 168 86 146 Z" style="fill:#ffe14d"/><path d="M130 150 L138 204 L158 196 L146 146" style="fill:#ffe14d"/></g></svg><svg class="abs red" style="left:330px;top:650px;overflow:visible" width="400" height="560" viewBox="0 0 400 560"><path class="dr" pathLength="1" d="M32.0 308.0 C20.0 56.0,340.0 -28.0,388.0 252.0 C408.0 504.0,80.0 588.0,24.0 347.2 L48.0 224.0" data-g="0.1" data-fx="draw" style="transform:rotate(-3deg)"/></svg>
+   <div class="tag" style="left:150px;top:900px;background:#ffe14d" data-g="0.1" data-fx="stamp">TOI</div>
+   <div class="qm" style="left:700px;top:700px" data-g="0.2" data-fx="pop">?</div><div class="qm" style="left:180px;top:1060px" data-g="0.2" data-fx="pop">?</div></div>
+  <div class="scene" data-s="1" data-in="right"><div class="ttl" style="top:330px;font-size:84px"><mark>1</mark> je te parraine</div><svg class="abs ink" style="left:70px;top:470px;overflow:visible" width="192" height="376" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M64 66 Q120 0 176 66 Z" style="fill:#111"/><path d="M168 64 L222 70"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 290"/></g><g class="armR"><path d="M120 190 L240 160"/></g></g></svg><svg class="abs ink" data-g="1.1" data-fx="right" style="left:640px;top:470px;overflow:visible" width="192" height="376" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M98 72 l0 8 M142 72 l0 8"/><ellipse cx="120" cy="112" rx="14" ry="16"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 90"/></g><g class="armR"><path d="M120 190 L190 90"/></g><path d="M92 132 Q120 150 148 132 L154 146 Q120 168 86 146 Z" style="fill:#ffe14d"/><path d="M130 150 L138 204 L158 196 L146 146" style="fill:#ffe14d"/></g></svg>
+   <div class="tag" style="left:90px;top:860px">MOI</div><div class="tag" style="left:690px;top:860px;background:#ffe14d" data-g="1.1" data-fx="stamp">TOI</div>
+   <div class="env" style="left:380px;top:560px" data-g="1.0" data-fx="left"><div class="w">EN PRIVÉ</div></div>
+   <div class="paper" style="left:120px;top:990px;width:760px;padding:14px 34px">
+    <div class="ck" data-g="1.0" data-fx="left"><b>✓</b>tu ouvres ton compte</div>
+    <div class="ck" data-g="1.2" data-fx="left"><b>✓</b>tu remplis les conditions</div></div></div>
+  <div class="scene" data-s="2" data-in="up"><div class="ttl" style="top:330px;font-size:84px"><mark>2</mark> une fois client</div>
+   <div class="phone" style="left:420px;top:470px;height:760px">
+    <div class="scr"><div class="tt">Parrainage</div><div class="ln" style="width:70%"></div><div class="ln" style="width:50%"></div>
+     <div class="fl" data-g="2.1" data-fx="stamp" data-slow="2.1">ton code parrain ✓</div>
+     <div class="bt" data-g="2.1" data-fx="up">Partager</div><div class="ln" style="width:80%;margin-top:30px"></div><div class="ln" style="width:60%"></div></div></div><svg class="abs ink" style="left:90px;top:640px;overflow:visible" width="204" height="399" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 290"/></g><g class="armR"><path d="M120 190 L240 160"/></g><path d="M92 132 Q120 150 148 132 L154 146 Q120 168 86 146 Z" style="fill:#ffe14d"/><path d="M130 150 L138 204 L158 196 L146 146" style="fill:#ffe14d"/></g></svg>
+   <div class="note" style="left:40px;top:1150px;font-size:42px;transform:rotate(-4deg)" data-g="2.0" data-fx="pop">ton propre code</div></div>
+  <div class="scene" data-s="3" data-in="right"><div class="ttl" style="top:330px;font-size:84px"><mark>3</mark> tes amis</div><svg class="abs ink" style="left:450px;top:440px;overflow:visible" width="144" height="282" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 90"/></g><g class="armR"><path d="M120 190 L190 90"/></g><path d="M92 132 Q120 150 148 132 L154 146 Q120 168 86 146 Z" style="fill:#ffe14d"/><path d="M130 150 L138 204 L158 196 L146 146" style="fill:#ffe14d"/></g></svg><svg class="abs red" style="left:160px;top:620px;overflow:visible" width="300" height="150" viewBox="0 0 300 150"><path class="dr" pathLength="1" d="M290 10 Q120 30 30 140 M20 100 L30 142 L70 128" data-g="3.0" data-fx="draw"/></svg><svg class="abs red" style="left:590px;top:620px;overflow:visible" width="300" height="150" viewBox="0 0 300 150"><path class="dr" pathLength="1" d="M10 10 Q180 30 270 140 M232 128 L272 142 L280 100" data-g="3.0" data-fx="draw"/></svg><svg class="head ink" style="left:110px;top:780px" viewBox="0 0 104 104" data-g="3.0" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M34 64 Q52 80 70 64"/></svg><svg class="head ink" style="left:270px;top:780px" viewBox="0 0 104 104" data-g="3.0" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M36 66 Q52 76 68 66"/></svg><svg class="head ink" style="left:430px;top:780px" viewBox="0 0 104 104" data-g="3.0" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M34 64 Q52 80 70 64"/></svg><svg class="head ink" style="left:590px;top:780px" viewBox="0 0 104 104" data-g="3.0" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M36 66 Q52 76 68 66"/></svg><svg class="head ink" style="left:750px;top:780px" viewBox="0 0 104 104" data-g="3.1" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M34 64 Q52 80 70 64"/></svg><svg class="head ink" style="left:110px;top:920px" viewBox="0 0 104 104" data-g="3.1" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M36 66 Q52 76 68 66"/></svg><svg class="head ink" style="left:270px;top:920px" viewBox="0 0 104 104" data-g="3.1" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M34 64 Q52 80 70 64"/></svg><svg class="head ink" style="left:430px;top:920px" viewBox="0 0 104 104" data-g="3.1" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M36 66 Q52 76 68 66"/></svg><svg class="head ink" style="left:590px;top:920px" viewBox="0 0 104 104" data-g="3.2" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M34 64 Q52 80 70 64"/></svg><svg class="head ink" style="left:750px;top:920px" viewBox="0 0 104 104" data-g="3.2" data-fx="pop"><circle cx="52" cy="52" r="44" style="fill:#fff"/><path d="M38 44 l0 6 M66 44 l0 6"/><path d="M36 66 Q52 76 68 66"/></svg>
+   <div class="paper" style="left:110px;top:1060px;width:780px;padding:12px 26px;font:800 36px/1.25 Inter;text-align:center" data-g="3.1" data-fx="up">une prime par ami<br><span class="hl">si conditions remplies</span></div>
+   <div class="stampr" style="left:170px;top:1215px;font-size:36px;transform:rotate(-3deg)" data-g="3.3" data-fx="stamp">jusqu'à 10 amis par an<br>plafond fixé par la banque</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="ttl" style="top:330px;font-size:96px">Et moi ?</div><svg class="abs ink" style="left:90px;top:520px;overflow:visible" width="228" height="446" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M64 66 Q120 0 176 66 Z" style="fill:#111"/><path d="M168 64 L222 70"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M102 112 L138 112"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 170 L30 120"/></g><g class="armR"><path d="M120 190 L190 170 L210 120"/></g></g></svg>
+   <div class="tag" style="left:120px;top:990px">MOI</div>
+   <div class="stampr" style="left:400px;top:560px;transform:rotate(-6deg)" data-g="4.1" data-fx="stamp">RIEN</div>
+   <div class="note" style="left:400px;top:720px;font-size:60px;color:#111;line-height:1.2;white-space:normal;width:500px" data-g="4.2" data-fx="pop">sur les amis<br>de mes filleuls</div>
+   <div class="paper" style="left:380px;top:930px;width:520px;padding:18px 24px;font:900 40px/1.25 Inter;text-align:center" data-g="4.3" data-fx="up">UN SEUL NIVEAU<br><span class="hl">toi → tes amis</span></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="ttl" style="top:330px;font-size:84px">À toi de jouer</div>
+   <div class="paper cmt" data-g="5.0" data-fx="up"><div class="h">Commentaires</div><div class="q">Tu inviterais qui<br>en <span class="hl">premier</span> ?</div>
+    <div class="in" data-g="5.2" data-fx="pop">Dis-le en commentaire<span class="cur"></span></div></div><svg class="abs ink" style="left:560px;top:940px;overflow:visible" width="148" height="291" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L70 240 L110 290"/></g><g class="armR"><path d="M120 190 L170 240 L130 290"/></g><path d="M92 132 Q120 150 148 132 L154 146 Q120 168 86 146 Z" style="fill:#ffe14d"/><path d="M130 150 L138 204 L158 196 L146 146" style="fill:#ffe14d"/></g></svg>
+   <div class="qm" style="left:180px;top:1000px" data-g="5.1" data-fx="pop">?</div><div class="qm" style="left:370px;top:1060px;font-size:100px" data-g="5.1" data-fx="pop">?</div></div>
+  <div class="scene" data-s="6" data-in="pop">
+   <div class="endw" data-g="6.0" data-fx="up"><div class="k">SI TU VEUX QUE JE TE PARRAINE</div><div class="c">ÉCRIS-MOI</div><div class="d">en privé</div><div class="b">@htm.invest</div></div><svg class="abs ink" style="left:110px;top:830px;overflow:visible" width="132" height="258" viewBox="0 0 240 470"><g class="ink live"><circle cx="120" cy="80" r="56" style="fill:#fff"/><path d="M64 66 Q120 0 176 66 Z" style="fill:#111"/><path d="M168 64 L222 70"/><path d="M98 72 l0 8 M142 72 l0 8"/><path d="M100 104 Q120 124 140 104"/><path d="M120 136 L120 330"/><path d="M120 330 L72 460 M120 330 L168 460"/><g class="armL"><path d="M120 190 L50 90"/></g><g class="armR"><path d="M120 190 L190 90"/></g></g></svg>
+   <div class="cond" style="top:860px;left:300px;width:600px;text-align:left">Offre soumise aux conditions en vigueur.<br>Parrainage Fortuneo : une prime pour le parrain par filleul qui remplit les conditions, montant selon l'offre en cours, dans la limite de 10 filleuls par an (plafond fixé par la banque). Un seul niveau de parrainage.<br>Lien de parrainage : je touche une prime.</div></div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 2.664, 6.649, 9.33, 15.584, 18.798, 22.13], END=26.353;
+const G=[[[0.04, 0.931, "<em>Parrainage Fortuneo</em> :"], [0.931, 1.653, "à ton tour"], [1.653, 2.584, "de <i>parrainer</i> ?"]], [[2.704, 3.45, "Je te parraine,"], [3.45, 4.584, "tu ouvres ton compte,"], [4.584, 5.523, "tu remplis"], [5.523, 6.569, "les <em>conditions</em>."]], [[6.689, 7.564, "Une fois <em>client</em>,"], [7.564, 9.25, "tu as ton propre code."]], [[9.37, 10.313, "Une prime <i>par ami</i>"], [10.313, 11.727, "qui remplit les conditions,"], [11.727, 13.15, "jusqu'à <em>10 amis</em> par an :"], [13.15, 14.403, "<em>plafond</em> fixé"], [14.403, 15.504, "par la banque."]], [[15.624, 16.061, "Et moi,"], [16.061, 16.934, "je ne touche <i>rien</i>"], [16.934, 17.589, "sur les amis"], [17.589, 18.718, "de mes filleuls."]], [[18.838, 19.692, "Tu inviterais qui"], [19.692, 20.333, "en <em>premier</em> ?"], [20.333, 22.05, "Dis-le en <i>commentaire</i>."]], [[22.17, 22.742, "Si tu veux"], [22.742, 23.998, "que je te parraine,"], [23.998, 24.525, "écris-moi"], [24.525, 25.353, "en <em>privé</em>."]]];
+const CAM=0.6, PUSH=0.011;
+const LIVE=[...document.querySelectorAll('.live')];
+function extra(t){LIVE.forEach((g,i)=>{const p=i*1.7;
+ const al=g.querySelector('.armL'),ar=g.querySelector('.armR');
+ g.parentNode.style.translate=`0 ${Math.sin(t*5.2+p)*7}px`;
+ if(al){al.style.transformOrigin='100% 0%';al.style.transformBox='fill-box';al.style.transform=`rotate(${Math.sin(t*4.1+p)*7}deg)`}
+ if(ar){ar.style.transformOrigin='0% 0%';ar.style.transformBox='fill-box';ar.style.transform=`rotate(${Math.sin(t*3.6+p+1)*9}deg)`}
+});}
+
+const QM=[...document.querySelectorAll('.qm')];
+const _ex=extra; extra=function(t){_ex(t);QM.forEach((q,i)=>{q.style.translate=`0 ${Math.sin(t*6+i*2)*10}px`;q.style.rotate=`${Math.sin(t*3+i)*8}deg`});
+ const cu=document.querySelector('.cur'); if(cu) cu.style.opacity=(Math.floor(t*2.4)%2)?0:1;
+ document.querySelectorAll('.env').forEach(e=>{e.style.translate=`0 ${Math.sin(t*4)*6}px`});};
+
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
