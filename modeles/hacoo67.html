@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Tailles tuto bleu encre</title>
+
+<style>
+:root{--bg:#faf9f6}
+/* Style T « Tuto illustré » : papier blanc cassé, dessins au trait noir, annotations au feutre rouge, surligneur jaune.
+   Sous-titres façon TikTok mot par mot (noir, pastille jaune pour le mot clé), au centre-bas hors des 380 px du bas. */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#faf9f6}
+body{font-family:'Inter',sans-serif;color:#111;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#faf9f6}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+#bgtex{position:absolute;inset:0;background:linear-gradient(rgba(60,90,160,.07) 2px,transparent 2px) 0 0/100% 64px,#faf9f6}
+.abs{position:absolute}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#grain{position:absolute;inset:-200px;opacity:.05;mix-blend-mode:multiply;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,rgba(0,0,0,0) 60%,rgba(60,40,10,.12) 100%)}
+#flash{position:absolute;inset:0;background:#fff3a0;opacity:0;mix-blend-mode:multiply}
+#sub{position:absolute;left:60px;top:1375px;width:960px;text-align:center;font:900 70px/1.12 'Inter',sans-serif;color:#111;transform-origin:50% 50%;z-index:6}
+#sub em{font-style:normal;background:#ffe14d;padding:0 12px;border-radius:10px}
+#sub i{font-style:normal;color:#e63946}
+.ttl{position:absolute;left:60px;top:220px;width:960px;text-align:center;font:900 76px/1.08 'Inter',sans-serif;text-transform:uppercase;color:#111}
+.ttl em{font-style:normal;color:#e63946}
+.ttl mark{background:#ffe14d;color:#111;padding:0 10px}
+.hand{font-family:'Comic Relief','Comic Sans MS',cursive;font-weight:700}
+.note{position:absolute;font:700 46px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.ink path,.ink line,.ink circle,.ink rect,.ink ellipse,.ink polyline{fill:none;stroke:#111;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.red path,.red ellipse,.red line,.red polyline{fill:none;stroke:#e63946;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.dr{stroke-dasharray:1;stroke-dashoffset:1}
+.paper{position:absolute;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #111}
+.row{display:flex;align-items:center;gap:24px;font:800 40px Inter;white-space:nowrap}
+.row .p{margin-left:auto;font:900 44px Inter}
+.ico{filter:drop-shadow(3px 0 0 #111) drop-shadow(-3px 0 0 #111) drop-shadow(0 3px 0 #111) drop-shadow(0 -3px 0 #111)}
+.field{height:100px;border:5px solid #111;border-radius:18px;background:#fff;display:flex;align-items:center;padding:0 24px;font:900 54px 'DejaVu Sans Mono',monospace;white-space:nowrap}
+.field .ph{color:#b9b4aa;font:700 38px Inter}
+.hl{background:#ffe14d;padding:0 8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:100px;padding:0 44px;border-radius:50px;background:#111;color:#fff;font:900 44px Inter;white-space:nowrap}
+.num{position:absolute;width:110px;height:110px;border:7px solid #e63946;border-radius:50%;color:#e63946;font:700 66px 'Comic Relief',cursive;display:flex;align-items:center;justify-content:center;background:#faf9f6}
+.endw{position:absolute;left:110px;top:220px;width:860px;padding:40px 30px 34px;border:7px solid #111;border-radius:40px;background:#fff;text-align:center;box-shadow:12px 14px 0 #111}
+.endw .k{font:900 50px Inter;letter-spacing:2px}
+.endw .c{display:inline-block;margin:10px 0;font:900 130px 'DejaVu Sans Mono',monospace;background:#ffe14d;padding:0 20px;line-height:1.15}
+.endw .d{font:800 42px Inter}
+.endw .b{margin-top:18px;display:inline-block;padding:12px 30px;border-radius:30px;background:#111;color:#fff;font:800 32px Inter}
+.endw .x{margin-top:18px;font:600 24px Inter;color:#555}
+svg *{transform-box:fill-box;transform-origin:center}
+
+
+#bgtex{background:linear-gradient(rgba(29,63,143,.09) 2px,transparent 2px) 0 0/100% 64px,#f8f8f4 !important}
+.ttl em{color:#1d3f8f}
+.ttl mark{background:#ffe14d}
+.note.b{color:#1d3f8f}
+.ph{position:absolute;width:470px;height:720px;border:7px solid #111;border-radius:56px;background:#fff;box-shadow:12px 14px 0 #1d3f8f}
+.ph .hd2{margin:46px 0 0;text-align:center;font:900 36px Inter;color:#1d3f8f;letter-spacing:1px}
+.ph .it{margin:30px auto 0;width:260px;height:260px;border:5px solid #111;border-radius:26px;display:flex;align-items:center;justify-content:center;background:#f2f4fb}
+.ph .lb{margin-top:26px;text-align:center;font:800 28px Inter;color:#555}
+.ph .sz{display:flex;justify-content:center;gap:18px;margin-top:16px}
+.ph .sz b{width:82px;height:82px;border:5px solid #111;border-radius:18px;display:flex;align-items:center;justify-content:center;font:900 40px Inter;background:#fff}
+.bub{position:absolute;background:#fff;border:6px solid #111;border-radius:40px;padding:18px 34px;font:900 52px Inter;white-space:nowrap;box-shadow:8px 8px 0 #1d3f8f}
+.bigm{position:absolute;font:700 330px/1 'Comic Relief',cursive;color:#1d3f8f}
+.shop{position:absolute;width:350px;padding:24px 20px;border:6px solid #111;border-radius:26px;background:#fff;text-align:center;box-shadow:8px 10px 0 #1d3f8f}
+.shop .n{font:800 32px Inter;color:#555}
+.shop .m{font:900 70px Inter;margin-top:4px}
+.shop .c{font:900 46px Inter;color:#1d3f8f;margin-top:4px;white-space:nowrap}
+.lbl{position:absolute;font:700 44px 'Comic Relief',cursive;color:#e63946;white-space:nowrap}
+.tab{position:absolute;left:150px;width:780px;border:6px solid #111;border-radius:26px;background:#fff;box-shadow:10px 12px 0 #1d3f8f;overflow:hidden}
+.tab .r{display:flex;font:800 54px Inter;border-top:4px solid #111;height:130px;align-items:center}
+.tab .r:first-child{border-top:0;background:#1d3f8f;color:#fff;font:900 34px Inter;height:90px}
+.tab .r span{flex:1;text-align:center;white-space:nowrap}
+.tab .r span+span{border-left:4px solid #111;height:100%;display:flex;align-items:center;justify-content:center}
+.tab .r:first-child span+span{border-left-color:#fff}
+.rev{position:absolute;left:150px;width:780px;padding:26px 30px;border:6px solid #111;border-radius:26px;background:#fff;box-shadow:10px 12px 0 #1d3f8f}
+.rev .st{font:900 52px Inter;color:#f2b705;letter-spacing:6px}
+.rev .ph3{display:flex;gap:18px;margin-top:16px}
+.rev .ph3 i{width:220px;height:200px;border:5px solid #111;border-radius:18px;background:#e8ecf7;display:flex;align-items:center;justify-content:center}
+.rev .tx{margin-top:16px;font:700 34px 'Comic Relief',cursive;color:#333;white-space:nowrap}
+.warn{position:absolute;left:150px;width:780px;padding:26px 32px;border:6px solid #111;border-radius:26px;background:#ffe14d;font:800 42px Inter;line-height:1.25;box-shadow:10px 12px 0 #111}
+.warn small{display:block;margin-top:12px;font:600 28px Inter;color:#333}
+.pap{position:absolute;left:150px;width:780px;padding:28px 40px;background:#fff;border:6px solid #111;border-radius:28px;box-shadow:10px 12px 0 #1d3f8f}
+.pap .t{font:900 38px Inter;margin-bottom:6px}
+.pap .r{display:flex;align-items:center;gap:18px;font:800 34px Inter;white-space:nowrap;margin-top:4px}
+.pap .r b{margin-left:auto;font:900 36px Inter}
+.pap .tot{display:flex;justify-content:space-between;font:900 40px Inter;margin-top:12px;border-top:4px dashed #bbb;padding-top:12px;white-space:nowrap}
+.pap .k{margin-top:16px;font:900 30px Inter;letter-spacing:2px;color:#1d3f8f}
+.pap .fr{display:flex;gap:16px;margin-top:8px}.pap .fr .field{flex:1;height:90px}
+.pap .ap{height:90px;padding:0 24px;border-radius:18px;background:#1d3f8f;color:#fff;font:900 32px Inter;display:flex;align-items:center;border:5px solid #111}
+.pap .ds{display:flex;justify-content:space-between;font:900 38px Inter;color:#e63946;margin-top:14px;white-space:nowrap}
+.newt{position:absolute;left:0;width:1080px;text-align:center}
+.newt span{display:inline-block;padding:6px 36px;border:7px solid #111;border-radius:24px;background:#ffe14d;font:900 120px Inter;box-shadow:8px 10px 0 #111;white-space:nowrap}
+.ex{position:absolute;left:0;width:1080px;text-align:center;font:700 32px 'Comic Relief',cursive;color:#555}
+.endw .k2{font:900 46px/1.15 Inter;margin-bottom:12px;color:#1d3f8f}
+.bm{position:absolute;left:470px;width:140px;height:170px}
+
+</style></head><body>
+<div id="stage">
+ <div id="cam">
+  <div id="bgtex" class="abs"></div>
+
+  <div class="scene" data-s="0"><div class="ttl" style="top:220px;font-size:70px">Avant de valider ta taille,<br><mark>regarde ça</mark></div>
+   <div class="ph" style="left:90px;top:480px;transform:rotate(-3deg)"><div class="hd2">Ma commande</div><div class="it"><svg width="230" height="230" viewBox="0 0 200 200"><path d="M55 45 L80 32 Q100 44 120 32 L145 45 L162 120 L142 124 L140 170 L60 170 L58 124 L38 120 Z" fill="#cfd9f5"/><path d="M58 70 H142 M58 98 H142 M60 126 H140 M60 152 H140" stroke="#7d93cc" stroke-width="5"/><line x1="100" y1="40" x2="100" y2="170" stroke="#4a5f99" stroke-width="5"/></svg></div>
+    <div class="lb">Choisis ta taille</div><div class="sz"><b>S</b><b>M</b><b>L</b></div></div>
+   <svg class="abs ink" style="left:610px;top:700px;overflow:visible" width="288" height="564" viewBox="0 0 240 470"><g class="ink"><circle cx="120" cy="80" r="56"/><path d="M98 72 l0 6 M142 72 l0 6"/><path d="M100 108 Q120 120 140 108"/>
+ <path d="M120 136 L120 330"/><path d="M120 330 L70 460 M120 330 L170 460"/><path d="M120 190 L40 270"/><path d="M120 190 L230 170"/></g></svg>
+   <div class="bub" style="left:590px;top:520px;transform:rotate(4deg)" data-g="0.2" data-fx="pop">S, M ou L ?</div></div>
+  <div class="scene" data-s="1" data-in="right"><div class="ttl" style="top:230px;font-size:64px">La lettre <em>ne suffit pas</em></div>
+   <div class="bigm" style="left:420px;top:380px">M</div><svg class="abs red" style="left:380px;top:430px;overflow:visible" width="320" height="300" viewBox="0 0 320 300"><path class="dr" pathLength="1" d="M10 20 L300 280" data-g="1.1" data-fx="draw"/><path class="dr" pathLength="1" d="M300 20 L10 280" data-g="1.1" data-fx="draw"/></svg>
+   <div class="shop" style="left:120px;top:820px;transform:rotate(-3deg)" data-g="1.2" data-fx="pop"><div class="n">boutique 1</div><div class="m">M</div><div class="c">53 cm</div></div>
+   <div class="shop" style="left:570px;top:800px;transform:rotate(3deg)" data-g="1.3" data-fx="pop"><div class="n">boutique 2</div><div class="m">M</div><div class="c">49 cm</div></div>
+   <div class="ex" style="top:1200px" data-g="1.3" data-fx="fade">demi-tour de poitrine · valeurs d'exemple</div></div>
+  <div class="scene" data-s="2" data-in="up"><div class="num" style="left:70px;top:205px">1</div><div class="ttl" style="left:200px;width:820px;text-align:left;top:225px;font-size:76px">Mesure <em>à plat</em></div><div style="position:absolute;left:0;top:0;width:1080px;height:1920px;transform:scale(1.28);transform-origin:560px 420px"><svg class="abs ink" style="left:340px;top:470px;overflow:visible" width="400" height="400" viewBox="0 0 400 400"><g class="ink"><path d="M150 40 Q200 70 250 40 L330 70 L390 200 L340 225 L320 180 L320 400 L80 400 L80 180 L60 225 L10 200 L70 70 Z" style="fill:#e8ecf7"/>
+ <path d="M150 40 Q200 95 250 40"/><path d="M80 370 H320"/></g></svg><svg class="abs red" style="left:380px;top:455px;overflow:visible" width="320" height="40" viewBox="0 0 320 40"><path class="dr" pathLength="1" d="M0 20 L320 20 M0 20 l22 -16 M0 20 l22 16 M320 20 l-22 -16 M320 20 l-22 16" data-g="2.2" data-fx="draw"/></svg><div class="lbl" style="left:440px;top:380px" data-g="2.2" data-fx="pop">épaules</div><svg class="abs red" style="left:420px;top:700px;overflow:visible" width="240" height="40" viewBox="0 0 240 40"><path class="dr" pathLength="1" d="M0 20 L240 20 M0 20 l22 -16 M0 20 l22 16 M240 20 l-22 -16 M240 20 l-22 16" data-g="2.2" data-fx="draw"/></svg><div class="lbl" style="left:440px;top:735px" data-g="2.2" data-fx="pop">poitrine</div><svg class="abs red" style="left:780px;top:520px;overflow:visible" width="40" height="350" viewBox="0 0 40 350"><path class="dr" pathLength="1" d="M20 0 L20 350 M20 0 l-16 22 M20 0 l16 22 M20 350 l-16 -22 M20 350 l16 -22" data-g="2.3" data-fx="draw"/></svg><div class="lbl" style="left:640px;top:900px;transform:rotate(-4deg)" data-g="2.3" data-fx="pop">longueur</div></div>
+   <div class="note b" style="left:160px;top:1170px;transform:rotate(-3deg)" data-g="2.1" data-fx="pop">un vêtement qui te va bien</div></div>
+  <div class="scene" data-s="3" data-in="left"><div class="num" style="left:70px;top:205px">2</div><div class="ttl" style="left:200px;width:820px;text-align:left;top:225px;font-size:76px">Le guide <em>en cm</em></div>
+   <div class="tab" style="top:420px" data-g="3.0" data-fx="up"><div class="r"><span>Taille</span><span>Poitrine (à plat)</span></div>
+    <div class="r"><span>S</span><span>50 cm</span></div><div class="r"><span>M</span><span>53 cm</span></div><div class="r"><span>L</span><span>56 cm</span></div></div><svg class="abs red" style="left:120px;top:640px;overflow:visible" width="840" height="150" viewBox="0 0 840 150"><path class="dr" pathLength="1" d="M67.2 82.5 C42.0 15.0,714.0 -7.5,814.8 67.5 C856.8000000000001 135.0,168.0 157.5,50.4 93.0 L100.8 60.0" data-g="3.2" data-fx="draw" style="transform:rotate(-4deg)"/></svg>
+   <div class="ex" style="top:960px" data-g="3.1" data-fx="fade">guide des tailles · valeurs d'exemple</div>
+   <div class="note" style="left:170px;top:1040px;transform:rotate(-3deg)" data-g="3.3" data-fx="pop">tu hésites ?</div>
+   <div class="note b" style="left:200px;top:1120px;transform:rotate(-3deg);font-size:58px" data-g="3.4" data-fx="stamp">→ prends la plus grande</div></div>
+  <div class="scene" data-s="4" data-in="up"><div class="num" style="left:70px;top:205px">3</div><div class="ttl" style="left:200px;width:820px;text-align:left;top:225px;font-size:64px">Les avis <em>avec photos</em></div>
+   <div class="rev" style="top:400px" data-g="4.0" data-fx="up"><div class="st">★★★★☆</div><div class="ph3"><i><svg width="170" height="170" viewBox="0 0 200 200"><path d="M55 40 L82 30 Q100 46 118 30 L145 40 L165 95 L145 102 L142 120 L58 120 L55 102 L35 95 Z" fill="#c9b8ff"/><path d="M62 118 H138 L142 175 H108 L100 135 L92 175 H58 Z" fill="#a993f0"/><circle cx="100" cy="62" r="5" fill="#fff"/><circle cx="100" cy="82" r="5" fill="#fff"/><circle cx="100" cy="102" r="5" fill="#fff"/><path d="M70 60 l6 6 M120 70 l6 6 M80 140 l6 6" stroke="#fff" stroke-width="4"/></svg></i><i><svg width="170" height="170" viewBox="0 0 200 200"><path d="M55 45 L80 32 Q100 44 120 32 L145 45 L162 120 L142 124 L140 170 L60 170 L58 124 L38 120 Z" fill="#cfd9f5"/><path d="M58 70 H142 M58 98 H142 M60 126 H140 M60 152 H140" stroke="#7d93cc" stroke-width="5"/><line x1="100" y1="40" x2="100" y2="170" stroke="#4a5f99" stroke-width="5"/></svg></i><i><svg width="170" height="170" viewBox="0 0 200 200"><path d="M55 40 L82 30 Q100 46 118 30 L145 40 L165 95 L145 102 L142 120 L58 120 L55 102 L35 95 Z" fill="#c9b8ff"/><path d="M62 118 H138 L142 175 H108 L100 135 L92 175 H58 Z" fill="#a993f0"/><circle cx="100" cy="62" r="5" fill="#fff"/><circle cx="100" cy="82" r="5" fill="#fff"/><circle cx="100" cy="102" r="5" fill="#fff"/><path d="M70 60 l6 6 M120 70 l6 6 M80 140 l6 6" stroke="#fff" stroke-width="4"/></svg></i></div>
+    <div class="tx">« taille un peu petit, prenez au-dessus »</div></div>
+   <div class="warn" style="top:960px" data-g="4.2" data-fx="pop">Trop petit quand même ?<br>→ revends-le en seconde main
+    <small>Des utilisateurs racontent des comptes bloqués après des demandes de remboursement.</small></div></div>
+  <div class="scene" data-s="5" data-in="pop"><div class="ttl" style="top:210px;font-size:74px"><em>Code promo</em></div>
+   <div class="pap" style="top:320px"><div class="t">Commande</div>
+    <div class="r"><svg width="60" height="60" viewBox="0 0 200 200"><path d="M55 45 L80 32 Q100 44 120 32 L145 45 L162 120 L142 124 L140 170 L60 170 L58 124 L38 120 Z" fill="#cfd9f5"/><path d="M58 70 H142 M58 98 H142 M60 126 H140 M60 152 H140" stroke="#7d93cc" stroke-width="5"/><line x1="100" y1="40" x2="100" y2="170" stroke="#4a5f99" stroke-width="5"/></svg><span>Doudoune</span><b>46,00 €</b></div><div class="r"><svg width="60" height="60" viewBox="0 0 200 200"><path d="M55 40 L82 30 Q100 46 118 30 L145 40 L165 95 L145 102 L142 120 L58 120 L55 102 L35 95 Z" fill="#c9b8ff"/><path d="M62 118 H138 L142 175 H108 L100 135 L92 175 H58 Z" fill="#a993f0"/><circle cx="100" cy="62" r="5" fill="#fff"/><circle cx="100" cy="82" r="5" fill="#fff"/><circle cx="100" cy="102" r="5" fill="#fff"/><path d="M70 60 l6 6 M120 70 l6 6 M80 140 l6 6" stroke="#fff" stroke-width="4"/></svg><span>Pyjama</span><b>22,00 €</b></div>
+    <div class="tot"><span>Sous-total</span><span>68,00 €</span></div>
+    <div class="k">CODE PROMO</div><div class="fr"><div class="field"><span data-g="5.1" data-fx="type">hzklink</span></div><div class="ap">Appliquer</div></div>
+    <div class="ds" data-g="5.2" data-fx="stamp"><span>Code promo -14 %</span><span>-9,52 €</span></div></div>
+   <div class="newt" style="top:1000px" data-g="5.2" data-fx="stamp" data-slow="5.2"><span>58,48 €</span></div>
+   <div class="ex" style="top:1200px" data-g="5.3" data-fx="fade">au lieu de 68,00 € · prix d'exemple</div></div>
+  <div class="scene" data-s="6" data-in="pop">
+   <div class="endw" data-g="6.0" data-fx="up"><div class="k2">ENREGISTRE AVANT TA<br>PROCHAINE COMMANDE</div><div class="k">CODE PROMO :</div><div class="c">hzklink</div><div class="d">-14 % avec le code hzklink</div>
+    <div class="b">liens des articles tendance en bio</div><div class="x">Prix d'exemple · Offre soumise aux conditions en vigueur</div></div>
+   <svg class="abs" data-g="6.1" data-fx="stamp" style="left:470px;top:1010px;overflow:visible" width="140" height="170" viewBox="0 0 140 170"><path d="M10 0 H130 V170 L70 120 L10 170 Z" style="fill:#1d3f8f;stroke:#111;stroke-width:6"/></svg>
+  </div>
+
+  <div id="sub" class="abs"></div>
+ </div>
+ <div id="flash"></div><div id="grain"></div><div id="vig"></div>
+</div>
+<script>
+// Timeline computed from the real voice-over (Speko, speed 1.08): scene starts S, subtitle groups G[scene] = [start, end, text]
+const S=[0.0, 3.395, 6.351, 10.574, 14.352, 19.622, 24.405], END=29.362;
+const G=[[[0.04, 0.938, "Tu commandes des vêtements"], [0.938, 1.434, "sur l'appli ?"], [1.434, 2.567, "Avant de choisir ta taille,"], [2.567, 3.455, "<em>regarde&nbsp;ça.</em>"]], [[3.435, 3.82, "La lettre"], [3.82, 4.397, "<em>ne suffit pas :</em>"], [4.397, 5.213, "un M peut changer"], [5.213, 6.411, "d'une boutique à l'autre."]], [[6.391, 7.33, "1 : mesure à plat"], [7.33, 8.698, "un vêtement qui te va bien :"], [8.698, 9.763, "les épaules, la poitrine,"], [9.763, 10.634, "<em>la longueur.</em>"]], [[10.614, 11.374, "2 : compare avec"], [11.374, 12.133, "le guide des tailles"], [12.133, 12.658, "en <em>centimètres.</em>"], [12.658, 13.186, "Tu hésites ?"], [13.186, 14.412, "Prends <em>la plus grande.</em>"]], [[14.392, 15.319, "3 : regarde les avis"], [15.319, 15.801, "<em>avec photos.</em>"], [15.801, 16.826, "Trop petit quand même ?"], [16.826, 17.571, "Ne demande pas"], [17.571, 18.214, "de remboursement,"], [18.214, 19.682, "<i>revends-le</i> en seconde main."]], [[19.662, 20.738, "<em>Code promo :</em>"], [20.738, 21.533, "<i>hzklink.</i>"], [21.533, 22.615, "<em>58,48&nbsp;€</em>"], [22.615, 24.465, "au lieu de 68&nbsp;€."]], [[24.445, 25.363, "Enregistre avant"], [25.363, 26.827, "ta prochaine commande."], [26.827, 27.649, "Code promo"], [27.649, 28.562, "<i>hzklink.</i>"]]];
+const CAM=0.6, PUSH=0.010;
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eb=x=>{x=cl(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+// G[i][j] = start time of subtitle group j of scene i (absolute, seconds, from the real voice-over)
+const GT=(i,j)=>G[i][Math.min(j,G[i].length-1)][0];
+(function(){const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');const d=x.createImageData(512,512);
+ let s=23;for(let i=0;i<d.data.length;i+=4){s=(s*16807)%2147483647;const v=(s%255);d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=255}
+ x.putImageData(d,0,0);$('grain').style.backgroundImage=`url(${c.toDataURL()})`;})();
+function tr(el,o,tx=0,ty=0,sc=1,rot=0){el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;el.style.visibility=o<=0.001?'hidden':'visible'}
+const scenes=[...document.querySelectorAll('.scene')].map(el=>{const [a,b]=el.dataset.s.split('-').map(Number);return {el,a,b:b===undefined?a:b,inn:el.dataset.in||'up'}});
+document.querySelectorAll('[data-fx=tw]').forEach(el=>{const t=el.textContent;el.innerHTML=[...t].map(c=>`<span class=ch>${c===' '?'&nbsp;':c}</span>`).join('');});
+const CAMA=(typeof CAM!=='undefined')?CAM:1;
+const items=[...document.querySelectorAll('[data-g]')].map(el=>{const [i,j]=el.dataset.g.split('.').map(Number);return {el,i,j,fx:el.dataset.fx||'pop',cnt:el.dataset.count?Number(el.dataset.count):null,suf:el.dataset.suf||' €'}});
+const SLOW=document.querySelector('[data-slow]');
+const slowT=SLOW?GT(...SLOW.dataset.slow.split('.').map(Number)):-9;
+function itemAt(it,t,final){
+ const d=final?9:t-GT(it.i,it.j); const el=it.el;
+ if(d<0){el.style.opacity=0;el.style.visibility='hidden';return}
+ if(it.fx==='tw'){el.style.visibility='visible';el.style.opacity=1;const cs=el.querySelectorAll('.ch');const n=cs.length;const k=d/0.032;cs.forEach((c,i)=>{const v=cl(k-i,0,4)/4;c.style.opacity=v;c.style.filter=v<1?`blur(${(1-v)*8}px)`:'none';});return}
+ if(it.fx==='draw'){el.style.visibility='visible';el.style.opacity=1;el.style.strokeDashoffset=1-eo(d/0.45);return}
+ if(it.fx==='growY'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleY(${cl(d/1.6)})`;return}
+ if(it.fx==='sweep'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`rotate(${-90+360*eo(d/1.4)}deg)`;return}
+ if(it.fx==='fade'){el.style.visibility='visible';el.style.opacity=cl(d/0.35);el.style.transform='none';return}
+ if(it.fx==='strike'){el.style.visibility='visible';el.style.opacity=1;el.style.transform=`scaleX(${eo(d/0.25)})`;return}
+ el.style.visibility='visible';
+ let o=cl(d/0.12),tx=0,ty=0,sc=1,rot=0;
+ if(it.fx==='pop'){sc=0.6+0.4*eb(d/0.35)}
+ else if(it.fx==='up'){ty=(1-eb(d/0.4))*160}
+ else if(it.fx==='right'){tx=(1-eb(d/0.4))*420}
+ else if(it.fx==='left'){tx=-(1-eb(d/0.4))*420}
+ else if(it.fx==='stamp'){sc=1+0.7*(1-eo(d/0.28));rot=-6*(1-eo(d/0.28))}
+ else if(it.fx==='tick'){sc=1+0.35*(1-eo(d/0.3))}
+ if(el===SLOW){const md=d;sc*=1+0.12*Math.pow(1-cl(md/1.3),2.5)}
+ if(it.fx==='type'){el.style.opacity=1;el.style.transform='none';const n=el.textContent.length,k=Math.min(n,Math.floor(cl(d/0.7)*n+0.999));el.style.clipPath=`inset(0 ${100-100*k/n}% 0 0)`;}
+ else if(it.fx==='grow'){el.style.opacity=1;el.style.transform=`scaleX(${eb(d/0.5)})`;}
+ else {el.style.opacity=o;el.style.transform=`translate(${tx}px,${ty}px) scale(${sc}) rotate(${rot}deg)`;}
+ if(it.cnt!==null){const dur=el===SLOW?1.1:0.55;el.querySelector('.v').textContent=Math.round(it.cnt*eo(d/dur))+it.suf}
+}
+function sceneAt(sc,t){
+ const t0=S[sc.a], t1=S[sc.b+1]??END;
+ const d=t-t0, o2=t-(t1-0.08);
+ if(d<0||o2>0.18){sc.el.style.opacity=0;sc.el.style.visibility='hidden';return}
+ let o=cl(d/0.1),tx=0,ty=0,s=1;
+ if(sc.a>0){ if(sc.inn==='up')ty=(1-eb(d/0.42))*520; else if(sc.inn==='right')tx=(1-eb(d/0.42))*900; else if(sc.inn==='left')tx=-(1-eb(d/0.42))*900; else if(sc.inn==='pop')s=0.7+0.3*eb(d/0.4);}
+ else o=1;
+ if(o2>0){const k=eo(o2/0.18);o*=1-k;tx-=k*260;}
+ tr(sc.el,o,tx,ty,s);
+}
+function renderAt(t){
+ const hx=(Math.sin(t*1.05)*9+Math.sin(t*3.4+2)*3)*CAMA, hy=(Math.cos(t*0.85)*7+Math.sin(t*2.7)*3)*CAMA, hr=Math.sin(t*0.6+1)*0.6*CAMA;
+ let pz=0;for(const s of S.slice(1)){const d=t-s;if(d>=0&&d<0.35)pz=Math.max(pz,(1-eo(d/0.35))*0.07*CAMA)}
+ const md=t-slowT; let mz=0; if(md>0&&md<1.4) mz=0.05*Math.sin(cl(md/1.4)*Math.PI);
+ const push=(typeof PUSH!=='undefined')?PUSH*((t-(S.filter(x=>x<=t).pop()||0))):0;
+ $('cam').style.transform=`translate(${hx}px,${hy}px) rotate(${hr}deg) scale(${1+pz+mz+push})`;
+ if($('tm')){const r=Math.max(0,END-t);$('tm').textContent='00:'+String(Math.floor(r)).padStart(2,'0')+'.'+String(Math.floor((r%1)*100)).padStart(2,'0');}
+ if($('rec'))$('rec').style.opacity=(Math.floor(t*1.6)%2)?0.25:1;
+ $('flash').style.opacity=(md>=0&&md<0.12)?0.35*(1-md/0.12):0;
+ const lp=t-(END-0.45);
+ for(const sc of scenes){ if(lp>0&&sc.a===0){tr(sc.el,eo(lp/0.25),0,0,1.06-0.06*eo(lp/0.4));} else if(lp>0){sceneAt(sc,t);const o=parseFloat(sc.el.style.opacity||0)*(1-eo(lp/0.2));sc.el.style.opacity=o;} else sceneAt(sc,t);}
+ for(const it of items) itemAt(it,t,lp>0&&it.i===0);
+ if(typeof extra==='function')extra(t);
+ // subtitles
+ let txt='',st=-1;
+ for(let i=0;i<G.length;i++)for(const [ts,te,s] of G[i]){if(t>=ts&&t<te){txt=s;st=ts}}
+ const sub=$('sub');if(sub.dataset.cur!==txt){sub.innerHTML=txt;sub.dataset.cur=txt}
+ sub.style.transform=`scale(${txt?1+0.12*(1-eo((t-st)/0.12)):1})`;sub.style.opacity=txt?1:0;
+ $('grain').style.transform=`translate(${Math.floor((Math.sin(t*91.3)*.5+.5)*180)}px,${Math.floor((Math.cos(t*77.9)*.5+.5)*180)}px)`;
+}
+renderAt(0);
+window.READY=true;
+</script></body></html>
